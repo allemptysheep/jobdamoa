@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	-ms-overflow-style: none;
+
+	/* IE, Edge */
+	// scrollbar-width: none;
+	/* 스크롤바 색 */
+	::-webkit-scrollbar {
+		-webkit-appearance: none;
+	}
+
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #f1f1f1 !important;
+		border: 0px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: #909090;
+		border: 0px;
+		height: 100px;
+		border-radius: 5px;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: #3182F6;
+	}
+
+	/* Firefox */
+	// background-image: url("/img/pastel.png");
+	background-color: #f1f1f1 !important; //aliceblue
+	font-family: "Noto Sans KR",
+	sans-serif;
+}
+
+::-webkit-scrollbar {
+	display: none;
+	/* Chrome, Safari, Opera*/
+}
+
+.body-main {
+	font-family: "Noto Sans KR", sans-serif;
+	/* position: relative; */
+	background-color: #ffffff;
+	min-height: 100%;
+	height: auto;
+	
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.body-main-home {
+	font-family: "Noto Sans KR", sans-serif;
+	/* position: relative; */
+	background-color: #ffffff;
+	min-height: 100%;
+	height: auto;
+}
+
+/* header */
+nav.navbar.fixed-top.navbar-expand-lg.navbar-light.bg-light {
+	font-family: "Noto Sans KR", sans-serif;
+}
+
+.container-fluid {
+	padding: 0 !important;
+}
+
+/* header title */
+a.navbar-title {
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: black;
+}
+
+/* header menu */
+a.nav-link.header {
+	font-size: 1.3rem;
+}
+
+div#navbarSupportedContent {
+	justify-content: end;
+}
+
+div#navbarNavM {
+	justify-content: end;
+	margin-right: 15px;
+}
+
+a.navbar-brand {
+	margin-left: 15px;
+}
+
+.blur {
+	filter: blur(7px);
+	-webkit-filter: blur(7px);
+}
+
+/* language */
+.dropdown {
+	margin: 0;
+	padding: 0;
+	display: inline-flex;
+}
+
+.row.language {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+button.btn.language {
+	width: 100%;
+}
+
+.fixed-top {
+	height: 5rem;
+}

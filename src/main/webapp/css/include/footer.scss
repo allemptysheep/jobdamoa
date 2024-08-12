@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.footer {
+    position: relative;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    /* transform: translateY(53%); */
+    width: 100%;
+    display: inline-flex;
+    background-color: #f1f3f5;
+    padding: 20px;
+	font-family: "Noto Sans KR", sans-serif;
+
+	.footer-left {
+		padding: 10px;
+		width: 50%;
+	}
+
+	.footer-right {
+		padding: 10px;
+		width: 50%;
+	}
+}
