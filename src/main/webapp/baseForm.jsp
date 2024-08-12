@@ -18,6 +18,8 @@
 	// Servlet 파일 뒤 Serv 표기 ex) MemberServ, SetLocaleServ
 	// 폴더 제목 양식 ex) main-img, test-img
 
+	// 데이터 베이스 양식
+
 	// 
 	// 작업 전 항상 깃에서 코드 다운.
 	// 커밋 시 작업 표기 
