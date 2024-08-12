@@ -1,5 +1,6 @@
 package incruit;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class IncruitJobCrawling {
@@ -14,11 +17,15 @@ public class IncruitJobCrawling {
         System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         
+        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // 페이지 로드까지 최대 30초까지 대기한다
+        
+        
         driver.get("https://job.incruit.com/jobdb_list/searchjob.asp?ct=3&ty=2&cd=11");
         
         // 여기에 원하는 동작을 구현합니다.
         try {
-        	Thread.sleep(1000);
+        	// "dropFirstList1 아이디를 가진 엘리멘트가 보일때까지 대기(최대 60초)"
+        	wait.until(ExpectedConditions.presenceOfElementLocated(By.id("dropFirstList1")));
     		//WebElement는 html의 태그를 가지는 클래스이다.
         	List<WebElement> navEl = driver.findElements(By.id("dropFirstList1"));
     		
@@ -29,7 +36,7 @@ public class IncruitJobCrawling {
     			}
     		}
     		
-    		Thread.sleep(2000);
+    		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("occ1_div")));
 			WebElement secitEl = driver.findElement(By.id("occ1_div")); // 1차카테고리 선택
 			List<WebElement> findtag = secitEl.findElements(By.tagName("li"));
 			for (int i = 0; i < findtag.size(); i++) {
@@ -39,8 +46,7 @@ public class IncruitJobCrawling {
 				}
 			}
 			
-			Thread.sleep(1000);
-			
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.id("occ2_div")));
 			WebElement second_list = driver.findElement(By.id("occ2_div"));
 			List<WebElement> findtag_detail = second_list.findElements(By.tagName("li"));
 	        for (int i = 0; i < findtag_detail.size(); i++) {
@@ -50,9 +56,8 @@ public class IncruitJobCrawling {
 				}
 	        }
 	        
-	        Thread.sleep(1000);
+	        wait.until(ExpectedConditions.elementToBeClickable(By.className("shb-btn-search")));
 	        driver.findElement(By.className("shb-btn-search")).click();
-	        Thread.sleep(5000);
 	        
 	        WebElement cBbslist_contenst = driver.findElement(By.className("cBbslist_contenst"));
 	        // 채용목록 담기
@@ -87,7 +92,7 @@ public class IncruitJobCrawling {
 	        for(int i = 0; i < incruit_company_name.size(); i++) {
 	        	System.out.println(incruit_company_name.get(i) + " , " + incruit_title.get(i) + " , " + incruit_link.get(i) + " , " + incruit_info_career.get(i) + " , " + incruit_info_education.get(i) + " , " + incruit_info_region.get(i) + " , " + incruit_info_salary.get(i));
 	        }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
         	
         }
        
