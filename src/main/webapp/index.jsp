@@ -18,7 +18,7 @@
 		});
 	</script>
 <fmt:bundle basename="resource.language">
-	<div class="container" id="fullpage">
+	<div class="container main" id="fullpage">
 		<div class="section main-slider" data-anchor="firstPage">
 			<img src="/img/2.jpg" class="d-inline-block align-top" alt="">
 		</div>
