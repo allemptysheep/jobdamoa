@@ -11,6 +11,9 @@
 	// xml 파일 수정 혹은 fmt message 수정이 필요할 경우 직접 수정하지 말고 수정 요청.
 	
 	//
+	// 
+	
+	//
 	// JSP 파일 제목 camelCase 기법으로 작성 ex) loginForm, memberEdit, memberFunctionTest
 	// scss 파일 제목 소문자 고정 아무 기법 적용 하지 안고 작성 ex) testmemberinfo.scss
 	// JAVA 파일 제목 PascalCase 기법으로 작성 ex) LoginServ, MemberEditServ, MemberFunctionTestServ
@@ -18,7 +21,10 @@
 	// Servlet 파일 뒤 Serv 표기 ex) MemberServ, SetLocaleServ
 	// 폴더 제목 양식 ex) main-img, test-img
 
-	// 데이터 베이스 양식
+	// 데이터 베이스
+	// DB name : jobdanawa
+	// DB user : user
+	// DB pass : 1234
 
 	// 
 	// 작업 전 항상 깃에서 코드 다운.
@@ -33,7 +39,7 @@
 	// css 파일 생성 후 baseform.scss 파일 내역 복사
 	
 	%>
-	<div class="container">
+	<div class="container main">
 		<%@ include file="/include/footer.jsp"%>
 	</div>
 </fmt:bundle>
