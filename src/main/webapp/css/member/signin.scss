@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.container {
+	padding-top: 5rem;
+	padding-bottom: 5rem;
+
+	.row {
+		.col {
+			font-size: 30px;
+		}
+	}
+
+	.row2 {
+		.col {
+			font-size: 15px;
+		}
+	}
+}
