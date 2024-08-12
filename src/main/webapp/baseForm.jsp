@@ -3,6 +3,8 @@
 <link href="/css/baseform.scss" rel="stylesheet" type="text/css">
 <fmt:bundle basename="resource.language">
 	<%
+	
+	// jdk 21 tomcat 9
 	//
 	// include 폴더는 header, footer 와 같이 사이트에 중복적으로 포함되는 페이지를 포함
 	// 일반적인 jsp 페이지는 view 폴더 안에 새로운(기능의 이름 지정) 폴더를 생성하여 기재
@@ -11,7 +13,10 @@
 	// xml 파일 수정 혹은 fmt message 수정이 필요할 경우 직접 수정하지 말고 수정 요청.
 	
 	//
-	// 
+	// 패키지 명은 소문자로 한 단어로 작성
+	// 표준 패턴을 따른다. Ex) [com].[Company].[Project].[toppackage].[lowerpackage]
+	// 좋은 예: com.jobdamoa.saramin.search.object
+	// 나쁜 예:  com.jobdamoa.saraminSearchObject
 	
 	//
 	// JSP 파일 제목 camelCase 기법으로 작성 ex) loginForm, memberEdit, memberFunctionTest
@@ -21,10 +26,15 @@
 	// Servlet 파일 뒤 Serv 표기 ex) MemberServ, SetLocaleServ
 	// 폴더 제목 양식 ex) main-img, test-img
 
+	//
 	// 데이터 베이스
-	// DB name : jobdanawa
+	// DB name : jobdamoa
 	// DB user : user
 	// DB pass : 1234
+	// table 이름 작성 법 : snake_case (맨 앞 문자도 소문자)
+	// column 이름 작성 법 : snake_case (맨 앞 문자도 소문자)
+	// 인덱스 표기 idx
+	// 기본적으로 외래키 사용 없음.
 
 	// 
 	// 작업 전 항상 깃에서 코드 다운.
@@ -36,7 +46,7 @@
 	
 	
 	// 새로운 작업 시 baseForm 내역 붙여넣어서 사용
-	// css 파일 생성 후 baseform.scss 파일 내역 복사
+	// container main 클레스는 헤더에 지정. 건들지 않는다.
 	
 	%>
 	<div class="container main">
