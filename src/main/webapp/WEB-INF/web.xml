@@ -21,7 +21,7 @@
 	</context-param>
 	<context-param>
 		<param-name>mysqlUrl</param-name>
-		<param-value>jdbc:mysql://localhost:3336/mdwdb</param-value>
+		<param-value>jdbc:mysql://localhost:3336/jobdamoa</param-value>
 	</context-param>
 	<context-param>
 		<param-name>mysqlId</param-name>
