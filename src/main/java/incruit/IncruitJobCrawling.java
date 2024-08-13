@@ -73,17 +73,17 @@ public class IncruitJobCrawling {
 	        List<String> incruit_info_salary = new ArrayList<String>(); // 월급여부(값 없을 시 회사내규)
 	        
 	        for(int i = 0; i < incruit_list.size(); i++) {
-	        	incruit_company_name.add(incruit_list.get(i).findElement(By.className("cpname")).getText());
-	        	incruit_title.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.tagName("a")).getText());
-	        	incruit_link.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.tagName("a")).getAttribute("href"));
-	        	incruit_info_career.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(1)")).getText());
-	        	incruit_info_education.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(2)")).getText());
-	        	incruit_info_region.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(3)")).getText());
-	        	incruit_info_contract_type.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(4)")).getText());
+	        	incruit_company_name.add(incruit_list.get(i).findElement(By.cssSelector("#JobList_Area > div:nth-child(2) > div.cBbslist_contenst > ul> li > div.cell_first > div.cl_top > a")).getText());
+	        	incruit_title.add(incruit_list.get(i).findElement(By.cssSelector("#JobList_Area > div > div.cBbslist_contenst > ul > li > div.cell_mid > div.cl_top")).getText());
+	        	incruit_link.add(incruit_list.get(i).findElement(By.cssSelector("#JobList_Area > div:nth-child(2) > div.cBbslist_contenst > ul> li > div.cell_first > div.cl_top > a")).getAttribute("href"));
+	        	incruit_info_career.add(incruit_list.get(i).findElement(By.cssSelector("#JobList_Area > div:nth-child(2) > div.cBbslist_contenst > ul > li > div.cell_mid > div.cl_md > span:nth-child(1)")).getText());
+	        	incruit_info_education.add(incruit_list.get(i).findElement(By.cssSelector("#JobList_Area > div:nth-child(2) > div.cBbslist_contenst > ul > li > div.cell_mid > div.cl_md > span:nth-child(2)")).getText());
+	        	incruit_info_region.add(incruit_list.get(i).findElement(By.cssSelector("#JobList_Area > div:nth-child(2) > div.cBbslist_contenst > ul > li > div.cell_mid > div.cl_md > span:nth-child(3)")).getText());
+	        	incruit_info_contract_type.add(incruit_list.get(i).findElement(By.cssSelector("#JobList_Area > div:nth-child(2) > div.cBbslist_contenst > ul > li > div.cell_mid > div.cl_md > span:nth-child(4)")).getText());
 	        	
 	        	// 5번째 필드는 월급,연봉 정보, 없는 경우 예외처리(회사내규)
 	        	try {
-	        		incruit_info_salary.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(5)")).getText());
+	        		incruit_info_salary.add(incruit_list.get(i).findElement(By.cssSelector("#JobList_Area > div:nth-child(2) > div.cBbslist_contenst > ul > li > div.cell_mid > div.cl_md > span:nth-child(5)")).getText());
 	        	} catch (Exception e) {
 	        		incruit_info_salary.add("회사내규");
 	        	}
@@ -93,7 +93,7 @@ public class IncruitJobCrawling {
 	        	System.out.println(incruit_company_name.get(i) + " , " + incruit_title.get(i) + " , " + incruit_link.get(i) + " , " + incruit_info_career.get(i) + " , " + incruit_info_education.get(i) + " , " + incruit_info_region.get(i) + " , " + incruit_info_salary.get(i));
 	        }
         } catch (Exception e) {
-        	
+        		
         }
        
     }
