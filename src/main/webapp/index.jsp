@@ -17,12 +17,24 @@
 			});
 		});
 	</script>
+	<script>
+	</script>
 <fmt:bundle basename="resource.language">
 	<div class="container main" id="fullpage">
 		<div class="section main-slider" data-anchor="firstPage">
-			<img src="/img/2.jpg" class="d-inline-block align-top" alt="">
+			<div class="row">
+				<div class="col">
+					<form action="/mainSearchServ" method="post">
+						<input class="form-control" type="text" id="keysword" name="keyword">
+						<select class="form-control" id="region" name="region">
+							<option value="">지역선택</option>
+						</select>
+						<button type="submit" class="btn btn-light" id="search_btn" name="operator" value="search" >검색</button>
+					</form>
+				</div>
+			</div>
 		</div>
-	
+
 		<div class="section main-container" data-anchor="secondPage">
 			<img src="/img/1.jpg" class="d-inline-block align-top" alt="">
 		</div>

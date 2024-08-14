@@ -26,6 +26,10 @@
 	// Servlet 파일 뒤 Serv 표기 ex) MemberServ, SetLocaleServ
 	// 폴더 제목 양식 ex) main-img, test-img
 
+	// html class 	saramin-btn
+	//		id		saramin_btn
+	//		name	saraminBtn
+
 	//
 	// 데이터 베이스
 	// DB name : jobdamoa
