@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class IncruitJobCrawling {
 	public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
+
         WebDriver driver = new ChromeDriver();
         
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // 페이지 로드까지 최대 30초까지 대기한다
