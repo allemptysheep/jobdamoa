@@ -68,7 +68,7 @@ public class IncruitControllerServ extends HttpServlet {
 
 		//
 		String op = request.getParameter("operator");
-		String viewPage = "view/test/incruit.jsp";
+		String viewPage = "view/test/incruittest.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		/*
 		 <button type="submit" class="btn btn-light" id="submit_delete" name="operator" value="delete" ><fmt:message key="Member.Delete" /></button>

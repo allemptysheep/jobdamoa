@@ -1,10 +1,12 @@
 package incruit;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +18,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 import common.DBConnect;
+import search.MainSearchDTO;
 
 public class IncruitRegionDAO extends DBConnect {
 	public IncruitRegionDAO (ServletContext application) {
@@ -77,7 +81,7 @@ public class IncruitRegionDAO extends DBConnect {
 	                 wait.until(ExpectedConditions.elementToBeClickable(RegionList.get(i)));
 	                 RegionList.get(i).click();
 	//                 System.out.println("지역 클릭 하기");
-	                 region_name = RegionList.get(i).getText();
+	                 region_name = RegionList.get(i).getText().substring(0,2); // 지역명 통합을 위해 ~특별자치도등 제외하고 반환
 	                 System.out.println(RegionList.get(i).getText() + " 클릭 됨 "); // 대분류 이름 호출
 	                 rgn2 = RegionList.get(i).getAttribute("value");
 	                 region_code = rgn2.substring(6); // &rgn2=11 , 파라미터 키값은 제외하고 호출
@@ -161,6 +165,34 @@ public class IncruitRegionDAO extends DBConnect {
 	      }
 
 	      return rs;
+	   }
+	   
+	   public MainSearchDTO selectRegion () {
+		   MainSearchDTO mainSearchDTO = new MainSearchDTO();
+		   List<Object> regionList = new ArrayList<Object>(); 
+		   
+		   String sql = "SELECT * FROM region ORDER BY region_code";
+		   
+		   try {
+			   psmt = con.prepareStatement(sql);
+			   rs = psmt.executeQuery();
+			   
+			   while(rs.next()) {
+				   JSONObject jsonObject = new JSONObject();
+				   jsonObject.put("regionIdx", rs.getInt("idx"));
+				   jsonObject.put("regionName", rs.getString("region_name"));
+				   jsonObject.put("regionCode", rs.getString("region_code"));
+				   jsonObject.put("regionSiteCode", rs.getString("job_site"));
+				   
+				   regionList.add(jsonObject);
+			   }
+			   System.out.println(regionList);
+			   mainSearchDTO.setRegionData(regionList);
+		   } catch (Exception e) {
+			   System.out.println("검색 DB오류 : " + e);
+		   }
+		   
+		   return mainSearchDTO;
 	   }
 	
 	

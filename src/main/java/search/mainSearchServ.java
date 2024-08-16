@@ -9,20 +9,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
+import incruit.IncruitRegionDAO;
 import saramin.SaraminRegionDAO;
 
 /**
  * Servlet implementation class mainSearchServ
  */
-@WebServlet("/mainSearchServ")
-public class mainSearchServ extends HttpServlet {
+@WebServlet("/MainSearchServ")
+public class MainSearchServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public mainSearchServ() {
+    public MainSearchServ() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,7 +53,6 @@ public class mainSearchServ extends HttpServlet {
 		// 분기
 		String op = request.getParameter("operator");
 		String viewPage = "";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 
 		try {
 			if(op.equals("search")) {
@@ -61,7 +62,16 @@ public class mainSearchServ extends HttpServlet {
 				
 				System.out.println("keyword : " + keyword);
 				System.out.println("region : " + region);
+				
+				viewPage = "/view/result/mainSearchResult.jsp";
+			} else if (op.equals("select")) {
+				viewPage = "/view/result/mainSearchResult.jsp";
+				IncruitRegionDAO incruitRegionDAO = new IncruitRegionDAO(application);
+				MainSearchDTO region_list =  incruitRegionDAO.selectRegion();
+				request.setAttribute("regionList", region_list);
 			}
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
 		} catch (ServletException e) {
 			System.out.println("keyword serv error : " + e);
