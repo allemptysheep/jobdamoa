@@ -8,7 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 import common.DBConnect;
 import member.MemberDTO;
