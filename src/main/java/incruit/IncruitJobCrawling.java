@@ -5,96 +5,156 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class IncruitJobCrawling {
    public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
+//	   System.setProperty("webdriver.chrome.driver", "/driver/chromedriver.exe");
+		 ChromeOptions chromeOptions = new ChromeOptions();
+	        
+	     chromeOptions.setExperimentalOption("debuggerAddress", "127.0.0.1:9222");
+	     WebDriver driver = new ChromeDriver(chromeOptions);
         
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // 페이지 로드까지 최대 30초까지 대기한다
         
+     // Stating the Javascript Executor driver
+        JavascriptExecutor js = (JavascriptExecutor)driver; 
         
-        driver.get("https://job.incruit.com/jobdb_list/searchjob.asp?ct=3&ty=2&cd=11");
+        
+        // Stating the actions
+        Actions a = new Actions(driver);
+
+        String url = "https://job.incruit.com/jobdb_list/searchjob.asp?";
+        
+        String keyword = "";
+        String keywordQuery = "kw=";       
+        String lastParameter = "&today=y";
+        
+        if(keyword != "") {
+         url = url + keywordQuery + keyword + lastParameter;
+        }
+
+        
+        driver.get(url);
         
         // 여기에 원하는 동작을 구현합니다.
         try {
-           // "dropFirstList1 아이디를 가진 엘리멘트가 보일때까지 대기(최대 60초)"
-           wait.until(ExpectedConditions.presenceOfElementLocated(By.id("dropFirstList1")));
-          //WebElement는 html의 태그를 가지는 클래스이다.
-           List<WebElement> navEl = driver.findElements(By.id("dropFirstList1"));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#dropFirstList2"))).click(); // 지역 선택 버튼 대기 후 클릭
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#rgn1_list_149"))).click(); // 국내지역 선택 버튼 대기 후 클릭
+            // 지역 가져오기
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#rgn2_div > .shb-list-depth.listCell2 > li")));
+            
+            List<WebElement> RegionList = driver.findElements(By.cssSelector("#rgn2_div > .shb-list-depth.listCell2 > li > button"));
+            System.out.println();
+            WebElement clearbtn = driver.findElement(By.cssSelector("#incruit_contents > div.shb_body > div > div > div > div.shb-search-output > div.shb-search-output-btn > button.shb-btn-ref"));
+            String rgn3 = ""; // 구 파라미터
+            String rgn2 = "";
+            String gu_code = "";
+            String region_code = "";
+            
+            // 17개시도 정보가 나올때까지 클릭하여 정보를 호출 해준다.
+            for (int i = 0; i < RegionList.size(); i++) {
+                if(!RegionList.get(i).getText().equals("전국")) {
+                    // 지역 클릭가능 할때 까지 대기
+                    wait.until(ExpectedConditions.elementToBeClickable(RegionList.get(i)));
+                    RegionList.get(i).click();
+//                    System.out.println("지역 클릭 하기");
+                    System.out.println(RegionList.get(i).getText() + " 클릭 됨 "); // 대분류 이름 호출
+                    rgn2 = RegionList.get(i).getAttribute("value");
+                    region_code = rgn2.substring(6); // &rgn2=11 , 파라미터 키값은 제외하고 호출
+                    // 지역 5개 선택제한으로 인해 초기화버튼
+                    wait.until(ExpectedConditions.elementToBeClickable(clearbtn));
+//                    System.out.println("초기화버튼 클릭 대기");
+                    clearbtn.click();                        
+                }
+            }
+            
+            List<WebElement> gu_list_container = driver.findElements(By.cssSelector("#rgn3_div > ul")); // 3차 선택지 (XX군,XX구) 각 div > ul 저장
           
-          for (int i = 0; i < navEl.size(); i++) {
-             if(navEl.get(i).getText().equals("직종 · 직무선택")) {
-                navEl.get(i).click();
-                break;
-             }
-          }
-          
-          wait.until(ExpectedConditions.presenceOfElementLocated(By.id("occ1_div")));
-         WebElement secitEl = driver.findElement(By.id("occ1_div")); // 1차카테고리 선택
-         List<WebElement> findtag = secitEl.findElements(By.tagName("li"));
-         for (int i = 0; i < findtag.size(); i++) {
-            if(findtag.get(i).getText().equals("인터넷·IT·통신·모바일·게임")) {
-               findtag.get(i).click();
-               break;
+            for(int i = 0; i < gu_list_container.size(); i++) {
+                List<WebElement> gu_list = gu_list_container.get(i).findElements(By.tagName("li")); // 각 구 정보 저장
+                
+                for (int j = 0; j < gu_list.size(); j++) {
+                    WebElement guli = gu_list.get(j);
+                    System.out.println(guli.getAttribute("textContent"));
+                    rgn3 = guli.findElement(By.className("shb-chk")).getAttribute("value");
+                    gu_code = rgn3.substring(6); // &rgn3=1111 , 서울 강남구, 파라미터 키값은 제외하고 호출
+                    System.out.println("값은" + gu_code); 
             }
          }
          
-         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("occ2_div")));
-         WebElement second_list = driver.findElement(By.id("occ2_div"));
-         List<WebElement> findtag_detail = second_list.findElements(By.tagName("li"));
-           for (int i = 0; i < findtag_detail.size(); i++) {
-              if(findtag_detail.get(i).getText().equals("전체보기")) {
-                 findtag_detail.get(i).click();
-               break;
+
+            
+            /*
+             * 직무 선택 하기
+             */
+            /*
+            String occ3 = "";
+            String job_code = "";
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#dropFirstList1"))).click(); // 직무 선택 버튼 대기 후 클릭
+//            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#dropFirstDown1 > div.shb-tablay.dropFirst > ul"))); // 직종, 직무 대분류 버튼 대기
+            List<WebElement> job_selector_1st = driver.findElements(By.cssSelector("#dropFirstDown1 > div.shb-tablay.dropFirst > ul > li")); // 1차 카테고리 담기
+            String job_category_first = "";
+            */
+            
+            /*
+             * 모든 직종 div를 호출할때까지 실행한다.
+             */
+            /*
+            for(int i = 0; i < job_selector_1st.size(); i++) {
+                job_selector_1st.get(i).click();
+//                wait.until(ExpectedConditions.elementToBeClickable(job_selector_1st.get(i))).click(); // 대분류 버튼 클릭가능 대기 후 클릭
+                job_category_first = job_selector_1st.get(i).getAttribute("textContent");
+                System.out.println(job_selector_1st.get(i).getAttribute("textContent")); // 대분류 이름 호출
+                
+                if(!job_category_first.equals("전체보기")) {
+//                    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#dropFirstDown1 > div.shb-tablay.dropFirst > div#occ2_div > ul")));
+                    List<WebElement> job_selector_2nd_container = driver.findElements(By.cssSelector("#dropFirstDown1 > div.shb-tablay.dropFirst > div#occ2_div > ul:nth-child(1)"));
+                    
+                    for(int j = 0; j < job_selector_2nd_container.size(); j++) {
+//                        System.out.println(job_selector_2nd_container.size());
+                        List<WebElement> job_selector_2nd = job_selector_2nd_container.get(j).findElements(By.cssSelector("#dropFirstDown1 > div.shb-tablay.dropFirst > div#occ2_div > ul:nth-child(1) > li"));
+                        for(int k = 0; k < job_selector_2nd.size(); k++) {
+                            if(!job_selector_2nd.get(k).getAttribute("textContent").equals("전체보기")) {
+//                                System.out.println( job_selector_2nd.get(k).getAttribute("textContent"));
+                                job_selector_2nd.get(k).click();
+                                //  초기화버튼
+//                                wait.until(ExpectedConditions.elementToBeClickable(clearbtn));
+//                                System.out.println("초기화버튼 클릭 대기");    
+                                clearbtn.click();
+                            }
+                        }
+                    }
+                }  
             }
-           }
            
-           wait.until(ExpectedConditions.elementToBeClickable(By.className("shb-btn-search")));
-           driver.findElement(By.className("shb-btn-search")).click();
-           
-           WebElement cBbslist_contenst = driver.findElement(By.className("cBbslist_contenst"));
-           // 채용목록 담기
-           List<WebElement> incruit_list = cBbslist_contenst.findElements(By.className("c_row"));
-           
-           List<String> incruit_company_name = new ArrayList<String>(); // 회사명
-           List<String> incruit_title = new ArrayList<String>(); // 채용 공고 타이틀
-           List<String> incruit_link = new ArrayList<String>(); // 채용 공고 링크
-           List<String> incruit_info_career = new ArrayList<String>(); // 연차(신입,경력 X년)
-           List<String> incruit_info_education = new ArrayList<String>(); // 졸업 여부(고졸, 대졸 등)
-           List<String> incruit_info_region = new ArrayList<String>(); // 지역
-           List<String> incruit_info_contract_type = new ArrayList<String>(); // 계약 타입(정규직, 계약직)
-           List<String> incruit_info_salary = new ArrayList<String>(); // 월급여부(값 없을 시 회사내규)
-           
-           for(int i = 0; i < incruit_list.size(); i++) {
-              incruit_company_name.add(incruit_list.get(i).findElement(By.className("cpname")).getText());
-              incruit_title.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.tagName("a")).getText());
-              incruit_link.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.tagName("a")).getAttribute("href"));
-              incruit_info_career.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(1)")).getText());
-              incruit_info_education.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(2)")).getText());
-              incruit_info_region.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(3)")).getText());
-              incruit_info_contract_type.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(4)")).getText());
-              
-              // 5번째 필드는 월급,연봉 정보, 없는 경우 예외처리(회사내규)
-              try {
-                 incruit_info_salary.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(5)")).getText());
-              } catch (Exception e) {
-                 incruit_info_salary.add("회사내규");
-              }
-           }
-           
-           for(int i = 0; i < incruit_company_name.size(); i++) {
-              System.out.println(incruit_company_name.get(i) + " , " + incruit_title.get(i) + " , " + incruit_link.get(i) + " , " + incruit_info_career.get(i) + " , " + incruit_info_education.get(i) + " , " + incruit_info_region.get(i) + " , " + incruit_info_salary.get(i));
-           }
+            List<WebElement> job_list_container = driver.findElements(By.cssSelector("#occ3_div > ul")); // 3차 선택지 (XX군,XX구) 각 div > ul 저장
+            System.out.println("직업코드 추출 시작");
+            for(int i = 0; i < job_list_container.size(); i++) {
+                List<WebElement> job_list = job_list_container.get(i).findElements(By.tagName("li")); // 각 구 정보 저장
+                
+                for (int j = 0; j < job_list.size(); j++) {
+                    WebElement jobli = job_list.get(j);
+                    System.out.println(jobli.getAttribute("textContent"));
+                    occ3 = jobli.findElement(By.className("shb-chk")).getAttribute("value");
+                    job_code = occ3.substring(6); // &occ3=16539 , 서울 강남구, 파라미터 키값은 제외하고 호출
+                    System.out.println("값은" + job_code); 
+                }
+            }  
+            */  
         } catch (Exception e) {
-           
+            System.out.println("Incruit Error : " + e);
+            e.printStackTrace();
         }
-       
     }
+   
+   	
 }
