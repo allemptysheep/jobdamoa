@@ -39,7 +39,11 @@
 	%>
 	<fmt:setLocale value="<%=language%>"/>
 	<fmt:bundle basename="resource.language">
-	
+	<%
+		String mEmail = (String) session.getAttribute("mEmail");
+		String mNickName = (String) session.getAttribute("mNickName");
+		Integer mLevel = (Integer) session.getAttribute("mLevel");
+	%>
 	<% 
 	/**
 		<div class="test-session">
@@ -59,7 +63,7 @@
 		  <a class="navbar-brand" href="#">
 			  <img src="/img/logo.png" width="45" height="45" class="d-inline-block align-top" alt="">
 		  </a>
-		  <a class="navbar-title" href="/index.jsp">BLOG SEARCH</a>
+		  <a class="navbar-title" href="/index.jsp">JOBDAMOA</a>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    	<span class="navbar-toggler-icon"></span>
 	  	  </button>
@@ -88,6 +92,40 @@
 						</form>
 					  </div>
 					</li>
+					
+				<%
+					if (mEmail == null) {
+				%> 
+					<li class="nav-item">
+				      <a class="nav-link" href="/view/member/signIn.jsp"><fmt:message key="SignIn" /></a> 
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="/view/member/signUp.jsp"><fmt:message key="SignUp" /></a>
+				    </li>
+				<% 
+					} else if(mLevel == 10) {	// 관리자일 경우
+				%>
+					<li class="nav-item">
+				      <a class="nav-link" href="/view/member/signOut.jsp"><fmt:message key="SignOut" /></a> 
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="/view/member/memberEdit.jsp"><fmt:message key="MemberInfo" /></a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="/view/admin/adminPage.jsp"><fmt:message key="Admin.Page" /></a>
+				    </li>
+				<%
+					} else {	// 일반 유저일 경우
+				%> 
+					<li class="nav-item">
+				      <a class="nav-link" href="/view/member/signOut.jsp"><fmt:message key="SignOut" /></a> 
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="/view/member/memberEdit.jsp"><fmt:message key="MemberInfo" /></a>
+				    </li>
+				<%
+					}
+				%>	
 				</ul>
 				
 		   </div>
