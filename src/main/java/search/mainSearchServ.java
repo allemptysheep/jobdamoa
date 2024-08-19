@@ -67,7 +67,8 @@ public class MainSearchServ extends HttpServlet {
 			} else if (op.equals("select")) {
 				viewPage = "/view/result/mainSearchResult.jsp";
 				IncruitRegionDAO incruitRegionDAO = new IncruitRegionDAO(application);
-				MainSearchDTO region_list =  incruitRegionDAO.selectRegion();
+				MainSearchDTO region_list =  incruitRegionDAO.selectRegionName();
+
 				request.setAttribute("regionList", region_list);
 			}
 

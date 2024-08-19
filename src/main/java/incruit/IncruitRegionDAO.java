@@ -167,11 +167,11 @@ public class IncruitRegionDAO extends DBConnect {
 	      return rs;
 	   }
 	   
-	   public MainSearchDTO selectRegion () {
+	   public MainSearchDTO selectRegionName () {
 		   MainSearchDTO mainSearchDTO = new MainSearchDTO();
 		   List<Object> regionList = new ArrayList<Object>(); 
 		   
-		   String sql = "SELECT * FROM region ORDER BY region_code";
+		   String sql = "SELECT DISTINCT region_name FROM region ORDER BY region_code";
 		   
 		   try {
 			   psmt = con.prepareStatement(sql);
@@ -179,7 +179,32 @@ public class IncruitRegionDAO extends DBConnect {
 			   
 			   while(rs.next()) {
 				   JSONObject jsonObject = new JSONObject();
-				   jsonObject.put("regionIdx", rs.getInt("idx"));
+				   jsonObject.put("regionName", rs.getString("region_name"));
+				   
+				   regionList.add(jsonObject);
+			   }
+			   System.out.println(regionList);
+			   mainSearchDTO.setRegionData(regionList);
+		   } catch (Exception e) {
+			   System.out.println("검색 DB오류 : " + e);
+		   }
+		   
+		   return mainSearchDTO;
+	   }
+	   
+	   public MainSearchDTO selectRegion () {
+		   MainSearchDTO mainSearchDTO = new MainSearchDTO();
+		   List<Object> regionList = new ArrayList<Object>(); 
+		   
+		   String sql = "SELECT DISTINCT region_name FROM region ORDER BY region_code";
+		   
+		   try {
+			   psmt = con.prepareStatement(sql);
+			   rs = psmt.executeQuery();
+			   
+			   while(rs.next()) {
+				   JSONObject jsonObject = new JSONObject();
+//				   jsonObject.put("regionIdx", rs.getInt("idx"));
 				   jsonObject.put("regionName", rs.getString("region_name"));
 				   jsonObject.put("regionCode", rs.getString("region_code"));
 				   jsonObject.put("regionSiteCode", rs.getString("job_site"));
