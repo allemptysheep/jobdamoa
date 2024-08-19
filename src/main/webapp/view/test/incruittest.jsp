@@ -10,7 +10,7 @@
 					<button type="submit" class="btn btn-light" id="get_region_btn" name="operator" value="getRegion" >검색</button>
 				</form>
 				<form action="/MainSearchServ" method="post">
-					<button type="submit" class="btn btn-light" id="get_region_btn" name="operator" value="select" >검색2</button>
+					<button type="submit" class="btn btn-light" id="get_region_btn" name="operator" value="select" >검색2  </button>
 				</form>
 			</div>
 		</div>
