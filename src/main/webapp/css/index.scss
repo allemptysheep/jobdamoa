@@ -1,14 +1,34 @@
 @charset "UTF-8";
 
 .carousel-inner.mainSlider {
-    height: 100%;
+	height: 100%;
+}
+
+@media (min-width: 1200px) {
+	.container {
+		max-width: 100%;
+		margin: 0;
+		width: 100%;
+	}
 }
 
 .section {
-    text-align: center;
+	text-align: center;
 }
 
 .row {
-    align-items: center;
-    justify-content: center;
+	align-items: center;
+	justify-content: center;
+}
+
+form {
+	display: inline-flex;
+
+	input#keysword {
+		width: 400px;
+	}
+
+	select#region {
+		width: 200px;
+	}
 }
