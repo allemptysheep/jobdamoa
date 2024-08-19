@@ -1,11 +1,13 @@
 package saramin;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -180,5 +182,66 @@ public class SaraminRegionDAO extends DBConnect {
 	      }
 
 	      return rs;
+	   }
+	   
+	   // select region
+	   public SaraminRegionDTO getRegion() {
+		  SaraminRegionDTO saraminRegionDTO = new SaraminRegionDTO();
+		  List<Object> regionList = new ArrayList<Object>(); 
+	      String query = "SELECT * FROM region WHERE job_site=(?)";
+	      String jobSite = "saramin";
+	      
+	      try {
+	         psmt = con.prepareStatement(query);
+	         psmt.setString(1, jobSite);
+	         rs = psmt.executeQuery();
+	         
+	         while (rs.next()) {
+				   JSONObject jsonObject = new JSONObject();
+				   jsonObject.put("idx", rs.getString("idx"));
+				   jsonObject.put("regionName", rs.getString("region_name"));
+				   jsonObject.put("regionCode", rs.getString("region_code"));
+				   jsonObject.put("jobSite", rs.getString("job_site"));
+				   
+				   regionList.add(jsonObject);
+	         }
+	         System.out.println(regionList);
+	         saraminRegionDTO.setSaraminRegionData(regionList);
+	      } catch (Exception e) {
+	         // TODO: handle exception
+	         e.printStackTrace();
+	      }
+
+	      return saraminRegionDTO;
+	   }
+	   
+	   // select gu
+	   public SaraminRegionDTO getGu() {
+		  SaraminRegionDTO saraminRegionDTO = new SaraminRegionDTO();
+		  List<Object> guList = new ArrayList<Object>(); 
+	      String query = "SELECT * FROM gu WHERE job_site=(?)";
+	      String jobSite = "saramin";
+	      
+	      try {
+	         psmt = con.prepareStatement(query);
+	         psmt.setString(1, jobSite);
+	         rs = psmt.executeQuery();
+	         
+	         while (rs.next()) {
+				   JSONObject jsonObject = new JSONObject();
+				   jsonObject.put("guName", rs.getString("gu_name"));
+				   jsonObject.put("guCode", rs.getString("gu_code"));
+				   jsonObject.put("regionCode", rs.getString("region_code"));
+				   jsonObject.put("jobSite", rs.getString("job_site"));
+				   
+				   guList.add(jsonObject);
+	         }
+	         saraminRegionDTO.setSaraminGuData(guList);
+	      } catch (Exception e) {
+	         // TODO: handle exception
+	         e.printStackTrace();
+	      }
+
+	      return saraminRegionDTO;
 	   }
 }
