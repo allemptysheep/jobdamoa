@@ -17,8 +17,14 @@
 			});
 		});
 	</script>
-	<script>
-	</script>
+	<%
+		//<fmt:setLocale value="en_us"/>
+		String mEmail = (String)session.getAttribute("mEmail");
+		String mName = (String) session.getAttribute("mName");
+		String mPhoneNum = (String) session.getAttribute("mPhoneNum");
+		String mNickName = (String)session.getAttribute("mNickName");
+		Integer mLevel = (Integer) session.getAttribute("mLevel");				
+	%>
 <fmt:bundle basename="resource.language">
 	<div class="container main" id="fullpage">
 		<div class="section main-slider" data-anchor="firstPage">
