@@ -1,100 +1,183 @@
 package incruit;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class IncruitJobCrawling {
-	public static void main(String[] args) {
+   public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
-        
+
         Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // 페이지 로드까지 최대 30초까지 대기한다
         
+        // Stating the Javascript Executor driver
+        JavascriptExecutor js = (JavascriptExecutor)driver; 
         
-        driver.get("https://job.incruit.com/jobdb_list/searchjob.asp?ct=3&ty=2&cd=11");
+        // Stating the actions
+        Actions a = new Actions(driver);
+        ////////////////////////////////////////////////////////
         
-        // 여기에 원하는 동작을 구현합니다.
+        // String url = "https://www.saramin.co.kr/";
+        String url = "https://www.jobkorea.co.kr/recruit/joblist?menucode=local&localorder=1";   
+
+        driver.get(url);
+        
+        ////////////////////////////////////////////////////////
+        
         try {
-        	// "dropFirstList1 아이디를 가진 엘리멘트가 보일때까지 대기(최대 60초)"
-        	wait.until(ExpectedConditions.presenceOfElementLocated(By.id("dropFirstList1")));
-    		//WebElement는 html의 태그를 가지는 클래스이다.
-        	List<WebElement> navEl = driver.findElements(By.id("dropFirstList1"));
-    		
-    		for (int i = 0; i < navEl.size(); i++) {
-    			if(navEl.get(i).getText().equals("직종 · 직무선택")) {
-    				navEl.get(i).click();
-    				break;
-    			}
-    		}
-    		
-    		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("occ1_div")));
-			WebElement secitEl = driver.findElement(By.id("occ1_div")); // 1차카테고리 선택
-			List<WebElement> findtag = secitEl.findElements(By.tagName("li"));
-			for (int i = 0; i < findtag.size(); i++) {
-				if(findtag.get(i).getText().equals("인터넷·IT·통신·모바일·게임")) {
-					findtag.get(i).click();
-					break;
-				}
-			}
-			
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.id("occ2_div")));
-			WebElement second_list = driver.findElement(By.id("occ2_div"));
-			List<WebElement> findtag_detail = second_list.findElements(By.tagName("li"));
-	        for (int i = 0; i < findtag_detail.size(); i++) {
-	        	if(findtag_detail.get(i).getText().equals("전체보기")) {
-	        		findtag_detail.get(i).click();
-					break;
-				}
-	        }
-	        
-	        wait.until(ExpectedConditions.elementToBeClickable(By.className("shb-btn-search")));
-	        driver.findElement(By.className("shb-btn-search")).click();
-	        
-	        WebElement cBbslist_contenst = driver.findElement(By.className("cBbslist_contenst"));
-	        // 채용목록 담기
-	        List<WebElement> incruit_list = cBbslist_contenst.findElements(By.className("c_row"));
-	        
-	        List<String> incruit_company_name = new ArrayList<String>(); // 회사명
-	        List<String> incruit_title = new ArrayList<String>(); // 채용 공고 타이틀
-	        List<String> incruit_link = new ArrayList<String>(); // 채용 공고 링크
-	        List<String> incruit_info_career = new ArrayList<String>(); // 연차(신입,경력 X년)
-	        List<String> incruit_info_education = new ArrayList<String>(); // 졸업 여부(고졸, 대졸 등)
-	        List<String> incruit_info_region = new ArrayList<String>(); // 지역
-	        List<String> incruit_info_contract_type = new ArrayList<String>(); // 계약 타입(정규직, 계약직)
-	        List<String> incruit_info_salary = new ArrayList<String>(); // 월급여부(값 없을 시 회사내규)
-	        
-	        for(int i = 0; i < incruit_list.size(); i++) {
-	        	incruit_company_name.add(incruit_list.get(i).findElement(By.className("cpname")).getText());
-	        	incruit_title.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.tagName("a")).getText());
-	        	incruit_link.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.tagName("a")).getAttribute("href"));
-	        	incruit_info_career.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(1)")).getText());
-	        	incruit_info_education.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(2)")).getText());
-	        	incruit_info_region.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(3)")).getText());
-	        	incruit_info_contract_type.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(4)")).getText());
-	        	
-	        	// 5번째 필드는 월급,연봉 정보, 없는 경우 예외처리(회사내규)
-	        	try {
-	        		incruit_info_salary.add(incruit_list.get(i).findElement(By.className("cell_mid")).findElement(By.className("cl_md")).findElement(By.cssSelector("span:nth-child(5)")).getText());
-	        	} catch (Exception e) {
-	        		incruit_info_salary.add("회사내규");
-	        	}
-	        }
-	        
-	        for(int i = 0; i < incruit_company_name.size(); i++) {
-	        	System.out.println(incruit_company_name.get(i) + " , " + incruit_title.get(i) + " , " + incruit_link.get(i) + " , " + incruit_info_career.get(i) + " , " + incruit_info_education.get(i) + " , " + incruit_info_region.get(i) + " , " + incruit_info_salary.get(i));
-	        }
-        } catch (Exception e) {
+           
+        	// 지역 파라미터 local=F000
+        	// 직종 파라미터
         	
-        }
-       
-    }
+           /**
+            * 지역 가져오기
+            * 
+            * 
+            */
+
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#devSearchForm > div.detailArea > div > div:nth-child(1) > dl.loc.circleType.dev-tab.dev-local.on > dt > p")));
+            System.out.println("기다림");
+            WebElement citySelectBTN = driver.findElement(By.cssSelector("#devSearchForm > div.detailArea > div > div:nth-child(1) > dl.loc.circleType.dev-tab.dev-local.on > dd.ly_sub > div.ly_sub_cnt.colm2-ty2.clear > dl.detail_sec.barType > dd > div.nano-content.dev-main"));
+        	
+            List<WebElement> list = citySelectBTN.findElements(By.tagName("li"));
+            System.err.println(list.size());
+            
+            for(int i = 0; i < list.size(); i++) {
+            	WebElement li = list.get(i);
+            	if(li.getAttribute("class").equals("item hyphen")) {
+            		continue;
+            	}
+            	
+            	System.out.println(li.getAttribute("class"));
+            	System.err.println(li.getText());
+            	System.out.println(li.getAttribute("data-value-json"));
+            }
+            
+            /**
+            // 지역 선택 누르기
+           wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#sp_main_wrapper > div.main_option > ul > li.area_section > button")));
+           System.out.println("지역 선택 버튼 기다리기");
+            WebElement citySelectBTN = driver.findElement(By.cssSelector("#sp_main_wrapper > div.main_option > ul > li.area_section > button"));
+
+            // 지역 선택 버튼 클릭
+          citySelectBTN.click();
+          System.out.println("지역 선택 버튼 클릭");
+          
+          // 지역 누르기 (서울, 경기)
+            for (int i = 1; i <=18; i++) {
+               
+               String selectorId = (100000 + i*1000) + "";
+               //// 지역 버튼 클릭
+               String selector = "depth1_btn_" + selectorId;
+               // System.out.println(selector);
+               // 버튼 찾기
+                WebElement button = driver.findElement(By.id(selector));
+                // 버튼 으로 이동
+                a.moveToElement(button).perform();
+                // 버튼 클릭
+                if (button.isDisplayed() && button.isEnabled()) {
+                   button.click();
+                }
+                System.out.println("지역 : " + button.getText());
+                System.out.println("값 : " + selectorId);
+                System.out.println();
+
+                
+                //// 지역 버튼 해제
+               String selectorSelected = "sp_preview_area_" + selectorId;
+               // System.out.println(selectorSelected);
+               // 버튼 찾기
+                WebElement btnSelected = driver.findElement(By.id(selectorSelected));
+                // 버튼 으로 이동
+                a.moveToElement(btnSelected).perform();
+                // 버튼 다시 클릭 후 해제
+                if (btnSelected.isDisplayed() && btnSelected.isEnabled()) {
+                   btnSelected.click();
+                }
+
+                
+                // 구 데이터 가져오기
+                String guSelector =  "#sp_area_lastDepth_" + selectorId + " > li";
+                List<WebElement> guUl = driver.findElements(By.cssSelector(guSelector));
+                System.out.println("지역 수 : " + guUl.size());
+              for (int j = 0; j < guUl.size(); j++) {
+                 WebElement guli = guUl.get(j);
+                    a.moveToElement(guli).perform();
+                    String guDataCode = guli.findElement(By.tagName("input")).getAttribute("value");
+                 System.out.println("구 : " + guli.getText());
+                    System.out.println("값 : " + guDataCode);
+                 }
+                System.out.println();
+                System.out.println();
+            }
+            
+            **/
+        	
+            /*
+             * 직군 가져오기
+             * 
+             * 
+             */
+            /*
+           // <button type="button" class="btn_job" data-mcls_cd_no="16">기획·전략</button>
+           // #sp_main_wrapper > div.main_option.active > div > div.option_content.job_category_section.on > div.details > div.box_jobs > button
+           
+           // <button type="button" data-mcls_cd_no="16" class="first_depth depth1_btn_16">
+          //    <span class="txt">기획·전략 </span>
+          //    <span class="count">(11,848)</span>
+          //  </button>
+           // #depth1_btn_16 > button
+            // 직군 누르기
+            // 직군 선택 누르기
+           System.out.println("직군 찾기 시작");
+           wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#sp_main_wrapper > div.main_option > ul > li.job_category_section > button")));
+            WebElement jobSelectBTN = driver.findElement(By.cssSelector("#sp_main_wrapper > div.main_option > ul > li.job_category_section > button"));
+
+            // 지역 선택 버튼 클릭
+            jobSelectBTN.click();
+          System.out.println("직군 선택 버튼 클릭");
+
+          // job box 나오기 기다리기
+           wait.until(ExpectedConditions.presenceOfElementLocated(By.className("box_jobs")));
+          //job box 가져오기
+            WebElement jobBox = driver.findElement(By.className("box_jobs"));
+            WebElement firstButton = jobBox.findElement(By.tagName("button"));
+           // 기획 전약 버튼 클릭
+            firstButton.click();
+
+            // job box 데이터 다시 가져오기
+            List<WebElement> jobList = driver.findElements(By.className("item_job"));
+            System.out.println("jobList Size : " + jobList.size());
+            
+            for (int i = 0; i < jobList.size(); i++) {
+               WebElement jobBtn = jobList.get(i);
+               // 버튼 클릭 시 자동으로 아래 버튼이 보여서 이동 안해도 됨
+                // a.moveToElement(jobBtn).perform();
+                // 버튼 클릭
+                if (jobBtn.isDisplayed() && jobBtn.isEnabled()) {
+                   System.out.println("직업 분야 : " + jobBtn.getText());
+                   System.out.println("직업 분야 코드 : " + jobBtn.findElement(By.tagName("button")).getAttribute("data-mcls_cd_no"));
+                   jobBtn.click();
+                }
+            }
+          */
+      } catch (Exception e) {
+         // TODO: handle exception
+         System.out.println("error saramin : " + e);
+      }
+        
+        // 드라이버 닫기
+      // driver.quit();
+      
+   }
 }

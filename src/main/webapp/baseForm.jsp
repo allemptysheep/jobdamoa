@@ -1,3 +1,8 @@
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp"%>
 <link href="/css/baseform.scss" rel="stylesheet" type="text/css">
@@ -49,7 +54,63 @@
 	// container main 클레스는 헤더에 지정. 건들지 않는다.
 	
 	%>
+	
+	<%
+	String field = "";
+	String search = "";
+	Class.forName("org.mariadb.jdbc.Driver");
+	
+	String url = "jdbc:mariadb://localhost:3306/jobdamoa";
+	String user = "user";
+	String password = "1234";
+	
+	if (request.getParameter("field") != null) {
+		field = request.getParameter("field");
+		search = request.getParameter("search");
+	}
+	String sql_count = "";
+
+	if (!field.equals("")) {
+		sql_count = "select count(*) from gu where 1=1 and " + field + " like '%" + search + "%'";
+	} else {
+		sql_count = "select count(*) from gu";
+	}
+	
+	Connection con_count = DriverManager.getConnection(url, user, password);
+	Statement stmt_count = con_count.createStatement();
+	ResultSet rs_count = stmt_count.executeQuery(sql_count);
+
+	int total_count = 0;
+
+	if (rs_count.next()) {
+		total_count = rs_count.getInt(1);
+	}
+
+	%>
 	<div class="container main">
+	<br><br><br><br><br>
+		<h3>JobKorea</h3>
+			<table width="98%" border="0">
+		<tr>
+			<td align="left"><h5>
+				<font color=black>전체 <%=total_count%> 건</font></h5></td>
+			<td align="right">
+				<form>
+					<select name="field">
+						<option value="region_name" <%if(field.equals("region_name")){%> selected <%} %>>지역</option>
+					</select> 
+				    <input name="search" type="text" <%if(search != null || search.equals("")){ %>value="<%=search%><%}%>">	
+					<button class="btn btn-primary">검색</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+	
 		<%@ include file="/include/footer.jsp"%>
 	</div>
 </fmt:bundle>
