@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
-import incruit.IncruitRegionDAO;
-import saramin.SaraminRegionDAO;
+import region.RegionDAO;
 
 /**
  * Servlet implementation class mainSearchServ
@@ -66,10 +65,7 @@ public class MainSearchServ extends HttpServlet {
 				viewPage = "/view/result/mainSearchResult.jsp";
 			} else if (op.equals("select")) {
 				viewPage = "/view/result/mainSearchResult.jsp";
-				IncruitRegionDAO incruitRegionDAO = new IncruitRegionDAO(application);
-				MainSearchDTO region_list =  incruitRegionDAO.selectRegionName();
 
-				request.setAttribute("regionList", region_list);
 			}
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

@@ -1,17 +1,17 @@
-<%@page import="saramin.SaraminRegionDTO"%>
+<%@page import="region.RegionDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="saramin.SaraminRegionDAO"%>
+<%@page import="region.RegionDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp"%>
-<link href="/css/saramin/saraminsearch.scss" rel="stylesheet" type="text/css">
+<link href="/css/search/search.scss" rel="stylesheet" type="text/css">
 <fmt:bundle basename="resource.language">
 	<%
-		SaraminRegionDAO saraminRegionDAO = new SaraminRegionDAO(application);
-		SaraminRegionDTO saraminRegionDTO = saraminRegionDAO.getRegion();
-		SaraminRegionDTO saraminGuDTO = saraminRegionDAO.getGu();
+		RegionDAO regionDAO = new region.RegionDAO(application);
+		RegionDTO regionDTO = regionDAO.getRegion();
+		RegionDTO saraminGuDTO = regionDAO.getGu();
 		
-		List<Object> regionList = saraminRegionDTO.getSaraminRegionData();
-		List<Object> guList = saraminGuDTO.getSaraminGuData();
+		List<Object> regionList = regionDTO.getRegionData();
+		List<Object> guList = saraminGuDTO.getGuData();
 		
 		pageContext.setAttribute("regionList", regionList);
 		pageContext.setAttribute("guList", guList);
@@ -19,6 +19,9 @@
 		pageContext.setAttribute("gThisList", guList);
 	%>
 	<script>
+	
+		var selectedRegion = [];
+		
 		function selectRegion(){
 			let area = document.getElementById('area');
 			if(area.style.display == "none" || area.style.display == ""){
@@ -30,29 +33,48 @@
 		
 		function regionClick(regionCode){
 			let reCode = regionCode;
-			console.log(reCode);
+			// console.log(reCode);
 			const RList = <%=regionList%>;
 			const gList = <%=guList%>;
 			const gThisList = gList.filter(item => item.regionCode == reCode);
-			console.log(gThisList);
+			// console.log(gThisList);
 			
 			var html = "";
 			
 			gThisList.map(function(item){
-				console.log(item.guName);
+				// console.log(item.guName);
 				let code = item.guCode
 				let name = item.guName;
-				html += `<button type="button" class="btn gu" id="` + code + `" onclick="guClick(` + code + `)">` + name + `</button>`;
+				html += `<button type="button" class="btn gu" id="` + code + `" onclick="guClick(` + code + `,` + name + `)">` + name + `</button>`;
 			});
 			
-			console.log(html);
+			// console.log(html);
 			$('.col-8.gu').empty();
 			$('.col-8.gu').append(html);
 				 
 		}
 		
-		function guClick(guCode){
-			console.log(guCode);
+		function guClick(guCode, guName){
+			if(selectedRegion.length >= 10){
+				alert("10개 이상 선택 할 수 없습니다.");
+				return false;	
+			}
+			
+			let isIn = selectedRegion.indexOf(guCode);
+			if(isIn == -1){
+				// 데이터가 배열 안에 없음.
+				selectedRegion.push(guCode);
+				
+			} else if (isIn >= 0){
+				// 데이터가 배열 안에 있음.
+				selectedRegion.splice(isIn, 1);
+			}
+			console.log(selectedRegion);
+			
+			let html = "";
+			selectedRegion.map(function(item){
+				htrml += `<div>` + guName + `<button type="button" class="btn seleted-gu">X</button></div>`;
+			});
 		}
 		
 	</script>
@@ -90,6 +112,8 @@
 								</c:choose>
 							</c:forEach>
 						</div>
+					</div>
+					<div class="selected-region">
 					</div>
 				</div>
 				<div class="row">

@@ -1,11 +1,11 @@
-package saramin;
+package region;
 
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class SaraminRegionDTO {
-	private List<Object> saraminRegionData;
-	private List<Object> saraminGuData;
+public class RegionDTO {
+	private List<Object> RegionData;
+	private List<Object> GuData;
 }
