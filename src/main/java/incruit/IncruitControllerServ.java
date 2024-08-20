@@ -69,7 +69,7 @@ public class IncruitControllerServ extends HttpServlet {
 		//
 		String op = request.getParameter("operator");
 		String viewPage = "view/test/incruittest.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		
 		/*
 		 <button type="submit" class="btn btn-light" id="submit_delete" name="operator" value="delete" ><fmt:message key="Member.Delete" /></button>
 		 */
@@ -77,8 +77,15 @@ public class IncruitControllerServ extends HttpServlet {
 			if(op.equals("getRegion")) {
 				System.out.println("getRegion");
 				IncruitRegionDAO incruitRegionDAO = new IncruitRegionDAO(application);
-				incruitRegionDAO.crawlingIncruitRegion();
+//				incruitRegionDAO.crawlingIncruitRegion();
+			} else if (op.equals("getIncruitTop20")) {
+				viewPage = "view/incruit/incruitSearch.jsp";
+				System.out.println("getIncruitTop20");
+				System.out.println("keyword : " + keyword);
+//				IncruitRegionDAO incruitRegionDAO = new IncruitRegionDAO(application);
+//				incruitRegionDAO.crawlingIncruitTop20(keyword);
 			}
+			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
 		} catch (ServletException e) {
 			System.out.println("keyword serv error : " + e);
