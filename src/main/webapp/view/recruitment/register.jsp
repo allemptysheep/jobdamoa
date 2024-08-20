@@ -1,12 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp"%>
-<%@ page import="member.MemberDAO" %>
+<%@page import="region.RegionDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="region.RegionDAO"%>
+<%
+		RegionDAO regionDAO = new region.RegionDAO(application);
+		RegionDTO regionDTO = regionDAO.getRegion();
+		RegionDTO saraminGuDTO = regionDAO.getGu();
+		
+		List<Object> regionList = regionDTO.getRegionData();
+		List<Object> guList = saraminGuDTO.getGuData();
+		
+		pageContext.setAttribute("regionList", regionList);
+		pageContext.setAttribute("guList", guList);
+
+		pageContext.setAttribute("gThisList", guList);
+%>
 <link href="/css/member/signup.scss" rel="stylesheet" type="text/css">
 <link href="/css/recruitment/register.scss" rel="stylesheet" type="text/css">
+<link href="/css/search/search.scss" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <fmt:bundle basename="resource.language">
+
 <script type="importmap">
 			{
 				"imports": {
@@ -40,6 +58,159 @@
 				} );
 </script>
 <script>
+	$(document).ready(function() {
+		$('#apply_startdate')
+		.datepicker({
+		    dateFormat: 'yy-mm-dd'//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+		})
+		.on('changeDate', function (e) {
+		    console.log(e);
+		});
+		
+		
+		$('#apply_enddate')
+		.datepicker({
+		    dateFormat: 'yy-mm-dd'//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+		})
+		.on('changeDate', function (e) {
+		    console.log(e);
+		});
+	});
+	
+
+	let selectedGuCode = [];
+	let selectedGuName = [];
+	let selectedRegionCode = [];
+	
+	function selectRegion(){
+		let area = document.getElementById('area');
+		if(area.style.display == "none" || area.style.display == ""){
+			area.style.display = "block";
+		} else if (area.style.display == 'block') {
+			area.style.display = "none";
+		}
+	}
+	
+	function regionClick(regionCode, regionName){
+		let reCode = regionCode;
+		let reName = regionName;
+		// console.log(reCode);
+		const RList = <%=regionList%>;
+		const gList = <%=guList%>;
+		const gThisList = gList.filter(item => item.regionCode == reCode);
+		// console.log(gThisList);
+		
+		var html = "";
+		
+		gThisList.map(function(item){
+			// console.log(item.guName);
+			let code = item.guCode
+			let recode = item.regionCode;
+			let name = item.guName;
+			html += `<button type="button" class="btn gu" id="` + code + `" onclick="guClick(` + code + `,'` + name + `',` + recode + `)">` + name + `</button>`;
+		});
+		
+		// console.log(html);
+		$('.col-8.gu').empty();
+		$('.col-8.gu').append(html);
+		
+		// 지역 선택한 경우 지역명과 지역코드 자동 입력
+		$('#regionname').val(reName);
+		$('#regioncode').val(reCode);
+		// 지역 선택한 경우 구 정보 리셋
+		$('#guname').val("");
+		$('#gucode').val("");
+	}
+	
+	function guClick(guCode, guName, regionCode){
+			
+		// 전체 눌렀을 때 개별 사라지게
+		if(guCode == regionCode){
+			
+			let reGuCode = [];
+			let reGuName = [];
+			let reReCode = [];
+			
+			console.log('selectedRegionCode : ' + selectedRegionCode);
+			console.log('selectedRegionCode : ' + selectedRegionCode.length);
+			selectedRegionCode.map(function (item, index){
+				console.log('item : ' + item);
+				console.log('regionCode : ' + regionCode);
+				if(item != regionCode){
+					reGuCode.push(item);
+					reGuName.push(selectedGuName[index]);
+					reReCode.push(selectedRegionCode[index]);
+				}
+			});
+			
+			console.log(reGuCode);
+			console.log(reGuName);
+			console.log(reReCode);
+			
+			selectedGuCode = reGuCode;
+			selectedGuName = reGuName;
+			selectedRegionCode = reReCode;
+		}
+	
+		
+		if(selectedGuCode.length >= 10){
+			alert("10개 이상 선택 할 수 없습니다.");
+			return false;	
+		}
+		
+		// 개별 눌렀을 때 전체 사라지게
+		let isInReCode = selectedGuCode.indexOf(regionCode);
+		console.log('isInReCode : ' + isInReCode);
+		if(isInReCode >= 0){
+			selectedGuCode.splice(isInReCode, 1);
+			selectedGuName.splice(isInReCode, 1);
+			selectedRegionCode.splice(isInReCode, 1);
+		}
+		
+		// 개별 눌렀을 때 배열에 들어가게
+		let html = "";
+		let isIn = selectedGuCode.indexOf(guCode);
+		if(isIn == -1){
+			// 데이터가 배열 안에 없음.
+			selectedGuCode.push(guCode);
+			selectedGuName.push(guName);
+			selectedRegionCode.push(regionCode);
+			
+		} else if (isIn >= 0){
+			// 데이터가 배열 안에 있음.
+			selectedGuCode.splice(isIn, 1);
+			selectedGuName.splice(isIn, 1);
+			selectedRegionCode.splice(isIn, 1);
+		}
+		console.log(selectedGuCode);
+		
+		selectedGuCode.map(function(item, index){
+			html += `<div class="selected-div">` + selectedGuName[index] + `<button type="button" class="btn seleted-gu" onclick="guX(` + item + `)">X</button></div>`;
+		});
+		
+		$('.selected-region').empty();
+		$('.selected-region').append(html);
+		
+		$('#guname').val(guName);
+		$('#gucode').val(guCode);
+	}
+	
+	function guX(guCode){
+		
+		let html = "";
+		let isIn = selectedGuCode.indexOf(guCode);
+		selectedGuCode.splice(isIn, 1);
+		selectedGuName.splice(isIn, 1);
+		selectedRegionCode.splice(isIn, 1);
+		
+		selectedGuCode.map(function(item, index){
+			html += `<div class="selected-div">` + selectedGuName[index] + `<button type="button" class="btn seleted-gu" onclick="guX(` + item + `)">X</button></div>`;
+		});
+		
+		$('.selected-region').empty();
+		$('.selected-region').append(html);
+	}
+	
 	function submitAgo() {
 		var email = $('#email').val();
 		var passWd = $('#passWd').val();
@@ -121,6 +292,35 @@
 							<input class="form-control" type="text" name="recruitment_work_history" id="workhistory" placeholder='<fmt:message key="Recruitment.Workhistory" />' />
 						</div>
 						<div class="signup-address-box">
+						<div class="row">
+							<div class="col">
+								<button type="button" class="btn" onclick="selectRegion()">지역선택</button>
+							</div>
+						</div>
+						<div class="row area" id="area">
+							<div class="row region-search">
+								<div class="col region-search">
+									<input>
+								</div>
+							</div>
+							<div class="row viewport">
+								<div class="col-4 region">
+									<c:forEach items="${regionList}" var="region" varStatus="regionStatus">
+										<button type="button" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')}, '${region.get('regionName')}')">${region.get('regionName')}</button>
+									</c:forEach>
+								</div>
+								<div class="col-8 gu">
+									<c:forEach items="${guList}" var="gu" varStatus="regionStatus">
+										<c:choose>
+											<c:when test="${gu.get('regionCode') eq 101000}">
+												<button type="button" class="btn gu" id="${gu.get('guCode')}" onclick="guClick(${gu.get('guCode')}, '${gu.get('guName')}', ${gu.get('regionCode')})">${gu.get('guName')}</button></c:when>
+										</c:choose>
+									</c:forEach>
+								</div>
+							</div>
+							<div class="selected-region">
+							</div>
+						</div>
 							<div class="row">
 								<div class="col-6">
 									<input class="form-control" type="text" name="recruitment_region_name" id="regionname" placeholder='<fmt:message key="Recruitment.Regionname" />'>
@@ -155,7 +355,7 @@
 						</div>
 						
 						<div class="signup-btn-box">
-							<button type="submit" class="btn btn-light" id="submit" name="operator" value="submit" disabled ><fmt:message key="Register" /></button>
+							<button type="submit" class="btn btn-light" id="submit" name="operator" value="submit" disabled ><fmt:message key="Recruitment.Register" /></button>
 						</div>
 					</div>
 				</form>
