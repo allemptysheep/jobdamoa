@@ -112,7 +112,7 @@
 				      <a class="nav-link" href="/view/member/memberEdit.jsp"><fmt:message key="MemberInfo" /></a>
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" href="/view/admin/adminPage.jsp"><fmt:message key="Admin.Page" /></a>
+				      <a class="nav-link" href="/view/admin/adminPage.jsp"><fmt:message key="Admin" /></a>
 				    </li>
 				<%
 					} else {	// 일반 유저일 경우
