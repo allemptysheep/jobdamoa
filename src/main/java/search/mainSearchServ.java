@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
-import region.RegionDAO;
-
 /**
  * Servlet implementation class mainSearchServ
  */
