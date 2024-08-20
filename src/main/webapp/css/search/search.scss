@@ -37,7 +37,8 @@
 			padding: 0;
 		}
 
-		.col-6 gu {
+		.col-8.gu {
+			overflow: scroll;
 			height: 245px;
 		}
 
@@ -47,9 +48,26 @@
 		}
 
 		button.gu {
-            width: 23%;
-            margin: 5px;
-            padding: 5px;
+			width: 23%;
+			margin: 5px;
+			padding: 5px;
+		}
+	}
+
+	.selected-region {
+
+		.selected-div {
+			background-color: antiquewhite;
+			margin: 7px;
+			padding: 0 0 0 10px;
+			justify-content: center;
+			align-items: center;
+			display: inline-flex;
+
+			button.btn.seleted-gu {
+				background: none;
+			}
+
 		}
 	}
 }
