@@ -38,7 +38,7 @@ public class RegionDAO extends DBConnect {
 	         psmt.setInt(1, idx);
 	         psmt.setString(2, regionName);
 	         psmt.setString(3, regionCode);
-	         psmt.setString(4, "saramin");
+	         psmt.setString(4, "jobdamoa");
 	         psmt.setString(5, regionName);
 	         
 	         rs = psmt.executeUpdate();
@@ -62,7 +62,7 @@ public class RegionDAO extends DBConnect {
 	         psmt.setString(1, guName);
 	         psmt.setString(2, guCode);
 	         psmt.setString(3, regionCode);
-	         psmt.setString(4, "saramin");
+	         psmt.setString(4, "jobdamoa");
 	         psmt.setString(5, guName);
 	         
 	         rs = psmt.executeUpdate();
@@ -80,7 +80,7 @@ public class RegionDAO extends DBConnect {
 		  RegionDTO regionDTO = new RegionDTO();
 		  List<Object> regionList = new ArrayList<Object>(); 
 	      String query = "SELECT * FROM region WHERE job_site=(?)";
-	      String jobSite = "saramin";
+	      String jobSite = "jobdamoa";
 	      
 	      try {
 	         psmt = con.prepareStatement(query);
@@ -111,7 +111,7 @@ public class RegionDAO extends DBConnect {
 		  RegionDTO regionDTO = new RegionDTO();
 		  List<Object> guList = new ArrayList<Object>(); 
 	      String query = "SELECT * FROM gu WHERE job_site=(?)";
-	      String jobSite = "saramin";
+	      String jobSite = "jobdamoa";
 	      
 	      try {
 	         psmt = con.prepareStatement(query);

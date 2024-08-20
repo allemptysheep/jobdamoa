@@ -20,7 +20,9 @@
 	%>
 	<script>
 	
-		var selectedRegion = [];
+		let selectedGuCode = [];
+		let selectedGuName = [];
+		let selectedRegionCode = [];
 		
 		function selectRegion(){
 			let area = document.getElementById('area');
@@ -44,8 +46,9 @@
 			gThisList.map(function(item){
 				// console.log(item.guName);
 				let code = item.guCode
+				let recode = item.regionCode;
 				let name = item.guName;
-				html += `<button type="button" class="btn gu" id="` + code + `" onclick="guClick(` + code + `,` + name + `)">` + name + `</button>`;
+				html += `<button type="button" class="btn gu" id="` + code + `" onclick="guClick(` + code + `,'` + name + `',` + recode + `)">` + name + `</button>`;
 			});
 			
 			// console.log(html);
@@ -54,29 +57,91 @@
 				 
 		}
 		
-		function guClick(guCode, guName){
-			if(selectedRegion.length >= 10){
+		function guClick(guCode, guName, regionCode){
+
+			// 전체 눌렀을 때 개별 사라지게
+			if(guCode == regionCode){
+				
+				let reGuCode = [];
+				let reGuName = [];
+				let reReCode = [];
+				
+				console.log('selectedRegionCode : ' + selectedRegionCode);
+				console.log('selectedRegionCode : ' + selectedRegionCode.length);
+				selectedRegionCode.map(function (item, index){
+					console.log('item : ' + item);
+					console.log('regionCode : ' + regionCode);
+					if(item != regionCode){
+						reGuCode.push(item);
+						reGuName.push(selectedGuName[index]);
+						reReCode.push(selectedRegionCode[index]);
+					}
+				});
+				
+				console.log(reGuCode);
+				console.log(reGuName);
+				console.log(reReCode);
+				
+				selectedGuCode = reGuCode;
+				selectedGuName = reGuName;
+				selectedRegionCode = reReCode;
+			}
+
+			
+			if(selectedGuCode.length >= 10){
 				alert("10개 이상 선택 할 수 없습니다.");
 				return false;	
 			}
 			
-			let isIn = selectedRegion.indexOf(guCode);
+			// 개별 눌렀을 때 전체 사라지게
+			let isInReCode = selectedGuCode.indexOf(regionCode);
+			console.log('isInReCode : ' + isInReCode);
+			if(isInReCode >= 0){
+				selectedGuCode.splice(isInReCode, 1);
+				selectedGuName.splice(isInReCode, 1);
+				selectedRegionCode.splice(isInReCode, 1);
+			}
+			
+			// 개별 눌렀을 때 배열에 들어가게
+			let html = "";
+			let isIn = selectedGuCode.indexOf(guCode);
 			if(isIn == -1){
 				// 데이터가 배열 안에 없음.
-				selectedRegion.push(guCode);
+				selectedGuCode.push(guCode);
+				selectedGuName.push(guName);
+				selectedRegionCode.push(regionCode);
 				
 			} else if (isIn >= 0){
 				// 데이터가 배열 안에 있음.
-				selectedRegion.splice(isIn, 1);
+				selectedGuCode.splice(isIn, 1);
+				selectedGuName.splice(isIn, 1);
+				selectedRegionCode.splice(isIn, 1);
 			}
-			console.log(selectedRegion);
+			console.log(selectedGuCode);
 			
-			let html = "";
-			selectedRegion.map(function(item){
-				htrml += `<div>` + guName + `<button type="button" class="btn seleted-gu">X</button></div>`;
+			selectedGuCode.map(function(item, index){
+				html += `<div class="selected-div">` + selectedGuName[index] + `<button type="button" class="btn seleted-gu" onclick="guX(` + item + `)">X</button></div>`;
 			});
+			
+			$('.selected-region').empty();
+			$('.selected-region').append(html);
 		}
 		
+		function guX(guCode){
+			
+			let html = "";
+			let isIn = selectedGuCode.indexOf(guCode);
+			selectedGuCode.splice(isIn, 1);
+			selectedGuName.splice(isIn, 1);
+			selectedRegionCode.splice(isIn, 1);
+			
+			selectedGuCode.map(function(item, index){
+				html += `<div class="selected-div">` + selectedGuName[index] + `<button type="button" class="btn seleted-gu" onclick="guX(` + item + `)">X</button></div>`;
+			});
+			
+			$('.selected-region').empty();
+			$('.selected-region').append(html);
+		}
 	</script>
 	<div class="container main">
 		<div class="row">
@@ -108,7 +173,7 @@
 							<c:forEach items="${guList}" var="gu" varStatus="regionStatus">
 								<c:choose>
 									<c:when test="${gu.get('regionCode') eq 101000}">
-										<button type="button" class="btn gu" id="${gu.get('guCode')}" onclick="regionClick(${gu.get('guCode')})">${gu.get('guName')}</button></c:when>
+										<button type="button" class="btn gu" id="${gu.get('guCode')}" onclick="guClick(${gu.get('guCode')}, '${gu.get('guName')}', ${gu.get('regionCode')})">${gu.get('guName')}</button></c:when>
 								</c:choose>
 							</c:forEach>
 						</div>
