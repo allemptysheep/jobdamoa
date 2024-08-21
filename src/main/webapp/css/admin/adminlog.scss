@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.row {
+	margin-bottom: 20px;
+}
+
+form {
+	display: inline-flex;
+}
+
+.row.result {
+	display: contents;
+	width: 100%;
+    text-align: center;
+}
+
+button.btn.search {
+	padding: 25px;
+}

@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.row.region-list {
+	height: 18rem;
+	overflow: scroll;
+	-ms-overflow-style: block;
+	/* IE and Edge */
+	scrollbar-width: block;
+	/* Firefox */
+
+	.region-form {
+		.card {
+			width: 10rem;
+            margin: 5px;
+		}
+	}
+}
+
+.row.region-list::-webkit-scrollbar {
+	display: block;
+}
+
+
+.row.gu-list {
+	height: 36rem;
+	overflow: scroll;
+	-ms-overflow-style: block;
+	/* IE and Edge */
+	scrollbar-width: block;
+
+	/* Firefox */
+	.gu-form {
+		.card {
+			width: 10rem;
+            margin: 5px;
+		}
+	}
+}
+
+.row.gu-list::-webkit-scrollbar {
+	display: block;
+}
