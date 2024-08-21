@@ -69,7 +69,7 @@ public class MainSearchServ extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
 		} catch (ServletException e) {
-			System.out.println("keyword serv error : " + e);
+			System.out.println("search serv error : " + e);
 		}
 	}
 

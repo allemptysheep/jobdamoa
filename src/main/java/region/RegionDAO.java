@@ -27,64 +27,16 @@ public class RegionDAO extends DBConnect {
 		      super(application);
 		   }
 	   
-	   // 지역 정보 삽입
-	   public int insertRegion(int idx, String regionName, String regionCode) {
-		   int rs = 0;
-		   
-	      String sql = "INSERT INTO region(idx, region_name, region_code, job_site) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE region_name = (?)";
-	      
-	      try {
-	         psmt = con.prepareStatement(sql);
-	         psmt.setInt(1, idx);
-	         psmt.setString(2, regionName);
-	         psmt.setString(3, regionCode);
-	         psmt.setString(4, "jobdamoa");
-	         psmt.setString(5, regionName);
-	         
-	         rs = psmt.executeUpdate();
-	         
-	      } catch (Exception e) {
-	         // TODO: handle exception
-	         e.printStackTrace();
-	      }
-
-	      return rs;
-	   }
-	   
-	   // 구 정보 삽입
-	   public int insertGu(String guName, String guCode, String regionCode) {
-		   int rs = 0;
-		   
-	      String sql = "INSERT INTO gu(gu_name, gu_code, region_code, job_site) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE gu_name = (?)";
-	      
-	      try {
-	         psmt = con.prepareStatement(sql);
-	         psmt.setString(1, guName);
-	         psmt.setString(2, guCode);
-	         psmt.setString(3, regionCode);
-	         psmt.setString(4, "jobdamoa");
-	         psmt.setString(5, guName);
-	         
-	         rs = psmt.executeUpdate();
-	         
-	      } catch (Exception e) {
-	         // TODO: handle exception
-	         e.printStackTrace();
-	      }
-
-	      return rs;
-	   }
-	   
 	   // select region
 	   public RegionDTO getRegion() {
 		  RegionDTO regionDTO = new RegionDTO();
 		  List<Object> regionList = new ArrayList<Object>(); 
-	      String query = "SELECT * FROM region WHERE job_site=(?)";
-	      String jobSite = "jobdamoa";
+	      String query = "SELECT * FROM region WHERE country=(?)";
+	      String country = "korea";
 	      
 	      try {
 	         psmt = con.prepareStatement(query);
-	         psmt.setString(1, jobSite);
+	         psmt.setString(1, country);
 	         rs = psmt.executeQuery();
 	         
 	         while (rs.next()) {
@@ -92,11 +44,11 @@ public class RegionDAO extends DBConnect {
 				   jsonObject.put("idx", rs.getString("idx"));
 				   jsonObject.put("regionName", rs.getString("region_name"));
 				   jsonObject.put("regionCode", rs.getString("region_code"));
-				   jsonObject.put("jobSite", rs.getString("job_site"));
+				   jsonObject.put("country", rs.getString("country"));
 				   
 				   regionList.add(jsonObject);
 	         }
-	         System.out.println(regionList);
+	         // System.out.println(regionList);
 	         regionDTO.setRegionData(regionList);
 	      } catch (Exception e) {
 	         // TODO: handle exception
@@ -110,12 +62,12 @@ public class RegionDAO extends DBConnect {
 	   public RegionDTO getGu() {
 		  RegionDTO regionDTO = new RegionDTO();
 		  List<Object> guList = new ArrayList<Object>(); 
-	      String query = "SELECT * FROM gu WHERE job_site=(?)";
-	      String jobSite = "jobdamoa";
+	      String query = "SELECT * FROM gu WHERE country=(?)";
+	      String country = "korea";
 	      
 	      try {
 	         psmt = con.prepareStatement(query);
-	         psmt.setString(1, jobSite);
+	         psmt.setString(1, country);
 	         rs = psmt.executeQuery();
 	         
 	         while (rs.next()) {
@@ -123,7 +75,7 @@ public class RegionDAO extends DBConnect {
 				   jsonObject.put("guName", rs.getString("gu_name"));
 				   jsonObject.put("guCode", rs.getString("gu_code"));
 				   jsonObject.put("regionCode", rs.getString("region_code"));
-				   jsonObject.put("jobSite", rs.getString("job_site"));
+				   jsonObject.put("country", rs.getString("country"));
 				   
 				   guList.add(jsonObject);
 	         }
