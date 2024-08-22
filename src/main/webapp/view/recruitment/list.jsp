@@ -41,6 +41,7 @@
 								</div>
 								<div class = "list-bottom">
 									<c:out value = "${recruit.get('rec_apply_startdate')}"></c:out>
+									<a href = "/view/recruitment/recruitmentEdit.jsp?rec_idx=${recruit.get('rec_idx')}">수정</a>
 								</div>
 						  </li>
 						</ul>
