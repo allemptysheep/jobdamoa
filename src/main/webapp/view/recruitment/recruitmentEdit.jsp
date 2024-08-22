@@ -4,7 +4,15 @@
 <%@page import="region.RegionDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="region.RegionDAO"%>
+<%@page import="recruitment.RecruitmentDTO" %>
+<%@page import="recruitment.RecruitmentDAO" %>
 <%
+		int rec_idx = Integer.parseInt(request.getParameter("rec_idx"));
+		session.setAttribute("selected_rec_idx", rec_idx);
+		RecruitmentDAO recruitmentDAO = new RecruitmentDAO(application);
+		RecruitmentDTO recruitmentDTO = recruitmentDAO.getRecruitDTO(rec_idx);
+
+
 		RegionDAO regionDAO = new region.RegionDAO(application);
 		RegionDTO regionDTO = regionDAO.getRegion();
 		RegionDTO saraminGuDTO = regionDAO.getGu();
@@ -274,29 +282,37 @@
 					<div class="register-data-box">
 					
 						<div class="register-title-box">
-							<input class="form-control" type="text" name="recruitment_title" id="title" placeholder='<fmt:message key="Recruitment.Title" />' />
+							<input class="form-control" type="text" name="recruitment_title" id="title" value = "<%= recruitmentDTO.getRec_title() %>" placeholder='<fmt:message key="Recruitment.Title" />' />
 						</div>
 						<div class="register-contents-box">
-							<textarea class="form-control" name="recruitment_contents" id="contents"><fmt:message key="Recruitment.Contents" /></textarea>
+							<textarea class="form-control" name="recruitment_contents" id="contents"><%= recruitmentDTO.getRec_contents() %></textarea>
 						</div>
 						
 						<div class="register-cname-box">
-							<input class="form-control" type="text" name="recruitment_c_name" id="cname" placeholder='<fmt:message key="Recruitment.Cname" />' />
+							<input class="form-control" type="text" name="recruitment_c_name" id="cname" value = "<%= recruitmentDTO.getC_name() %>" placeholder='<fmt:message key="Recruitment.Cname" />' />
 						</div>
 						
 						<div class="register-hiretype-box">
 							<label class = "form-label"><fmt:message key="Recruitment.Hiretype" /></label>
-							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '정규직' /><fmt:message key="Recruitment.Hiretype_FullTime" />
-							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '계약직' /><fmt:message key="Recruitment.Hiretype_Contract" />
+							
+							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '정규직' <% if(recruitmentDTO.getRec_hire_type().equals("정규직")) { %> checked = "checked" <% } %>/>
+							<fmt:message key="Recruitment.Hiretype_FullTime" />
+							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '계약직' <% if(recruitmentDTO.getRec_hire_type().equals("계약직")) { %> checked = "checked" <% } %> />
+							<fmt:message key="Recruitment.Hiretype_Contract" />
 						</div>
 						
 						<div class="register-workhistory-box">
 							<label class = "form-label"><fmt:message key="Recruitment.Workhistory" /></label>
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='신입' /><fmt:message key="Recruitment.Workhistory_New" />
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='1~3년' /><fmt:message key="Recruitment.Workhistory_1to3" />
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='3~5년' /><fmt:message key="Recruitment.Workhistory_3to5" />
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='5~10년' /><fmt:message key="Recruitment.Workhistory_5to10" />
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='10년이상' /><fmt:message key="Recruitment.Workhistory_Over10" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='신입' <% if(recruitmentDTO.getRec_work_history().equals("신입")) { %> checked = "checked" <% } %> />
+							<fmt:message key="Recruitment.Workhistory_New" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='1~3년' <% if(recruitmentDTO.getRec_work_history().equals("1~3년")) { %> checked = "checked" <% } %> />
+							<fmt:message key="Recruitment.Workhistory_1to3" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='3~5년' <% if(recruitmentDTO.getRec_work_history().equals("3~5년")) { %> checked = "checked" <% } %> />
+							<fmt:message key="Recruitment.Workhistory_3to5" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='5~10년' <% if(recruitmentDTO.getRec_work_history().equals("5~10년")) { %> checked = "checked" <% } %> />
+							<fmt:message key="Recruitment.Workhistory_5to10" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='10년이상>' <% if(recruitmentDTO.getRec_work_history().equals("10년이상")) { %> checked = "checked" <% } %> />
+							<fmt:message key="Recruitment.Workhistory_Over10" />
 						</div>
 						<div class="register-region-box">
 						<div class="row">
@@ -330,39 +346,48 @@
 						</div>
 							<div class="row">
 								<div class="col-6">
-									<input class="form-control" type="text" name="recruitment_region_name" id="regionname" placeholder='<fmt:message key="Recruitment.Regionname" />'>
+									<input class="form-control" type="text" name="recruitment_region_name" id="regionname" value = "<%= recruitmentDTO.getRegion_name() %>" placeholder='<fmt:message key="Recruitment.Regionname" />'>
 								</div>
 								<div class="col-6">
-									<input class="form-control" type="text" name="recruitment_region_code" id="regioncode" placeholder='<fmt:message key="Recruitment.Regioncode" />'>
+									<input class="form-control" type="text" name="recruitment_region_code" id="regioncode" value = "<%= recruitmentDTO.getRegion_code() %>" placeholder='<fmt:message key="Recruitment.Regioncode" />'>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="text" name="recruitment_gu_name" id="guname"  placeholder='<fmt:message key="Recruitment.Guname" />'>
+									<input type="text" name="recruitment_gu_name" id="guname" value = "<%= recruitmentDTO.getGu_name() %>"  placeholder='<fmt:message key="Recruitment.Guname" />'>
 								</div>
 								<div class="col-6">
-									<input type="text" name="recruitment_gu_code" id="gucode" placeholder='<fmt:message key="Recruitment.Gucode" />'>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-12">
-									<input class="form-control" type="text"  name="recruitment_apply_startdate" id="apply_startdate" placeholder='<fmt:message key="Recruitment.Applystartdate" />'>
+									<input type="text" name="recruitment_gu_code" id="gucode" value = "<%= recruitmentDTO.getGu_code() %>" placeholder='<fmt:message key="Recruitment.Gucode" />'>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-12">
-									<input class="form-control" type="text" name="recruitment_apply_enddate" id="apply_enddate" placeholder='<fmt:message key="Recruitment.Applyenddate" />'>
+									<input class="form-control" type="text"  name="recruitment_apply_startdate" id="apply_startdate" value = <%= recruitmentDTO.getRec_apply_startdate() %> placeholder='<fmt:message key="Recruitment.Applystartdate" />'>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<input class="form-control" type="text" name="recruitment_apply_enddate" id="apply_enddate" value = <%= recruitmentDTO.getRec_apply_enddate() %> placeholder='<fmt:message key="Recruitment.Applyenddate" />'>
 								</div>
 							</div>
 						</div>
 						<div class="register-applymethod-box">
 									<label class = "form-label"><fmt:message key="Recruitment.Applymethod" /></label>
-									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='자사 홈페이지' /><fmt:message key="Recruitment.Applymethod_Homepage" />
-									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='잡다모아 지원' /><fmt:message key="Recruitment.Applymethod_Jobdamoa" />
+									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='자사 홈페이지' <% if(recruitmentDTO.getRec_apply_method().equals("자사 홈페이지")) { %> checked = "checked" <% } %> />
+									<fmt:message key="Recruitment.Applymethod_Homepage" />
+									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='잡다모아 지원' <% if(recruitmentDTO.getRec_apply_method().equals("잡다모아 지원")) { %> checked = "checked" <% } %> />
+									<fmt:message key="Recruitment.Applymethod_Jobdamoa" />
 						</div>
-						
+							
 						<div class="register-btn-box">
-							<button type="submit" class="btn btn-light" id="submit" name="operator" value="submit"><fmt:message key="Recruitment.Register" /></button>
+							<div class="row">
+								<div class="col-6 edit">
+									<button type="submit" class="btn btn-light" id="submit" name="operator" value="edit"><fmt:message key="Recruitment.Edit" /></button>
+								</div>
+								<div class="col-6 delete">
+									<button type="submit" class="btn btn-light" id="submit" name="operator" value="delete"><fmt:message key="Recruitment.Delete" /></button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</form>

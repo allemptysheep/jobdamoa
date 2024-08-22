@@ -1,3 +1,4 @@
+<%@page import="search.MainSearchListDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.json.simple.JSONValue"%>
 <%@page import="org.json.simple.JSONObject"%>
@@ -27,6 +28,10 @@
 		pageContext.setAttribute("regionList", regionList);
 		pageContext.setAttribute("guList", guList);
 		pageContext.setAttribute("gThisList", guList);
+		
+		MainSearchListDTO searchList = (MainSearchListDTO)request.getAttribute("mainSearchListDTO");
+		pageContext.setAttribute("searchList", searchList);
+		
 	%>
 	<script>
 	
@@ -191,6 +196,11 @@
 			console.log(selectedGuCode);
 			document.getElementById("guList").setAttribute('value', selectedGuCode);
 		}
+		
+		function recruitmentView(idx){
+			var link = '/view/recruitment/recruitmentView.jsp?recIdx=' + idx;
+			location.href=link;
+		}
 	</script>
 	<div class="container main">
 		<div class="row">
@@ -262,6 +272,27 @@
 					</div>
 				</div>
 			</form>
+		</div>
+		<div class="row">
+			<c:choose>
+				<c:when test="${searchList.getMainSearchData().size() eq 0}">
+					<div>0</div>
+				</c:when>
+				<c:when test="${searchList.getMainSearchData().size() ne 0}">
+					<c:forEach items="${searchList.getMainSearchData()}" var="searchData" varStatus="searchDataStatus">
+						<div class="row search">
+							<div class="row">
+								<div class="col">${searchData.get('rec_title')}</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<button onclick="recruitmentView(${searchData.get('rec_idx')})">자세히</button>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:when>
+			</c:choose>
 		</div>
 	</div>
 </fmt:bundle>
