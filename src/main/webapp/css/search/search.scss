@@ -115,4 +115,73 @@ form {
 	border: 1px solid #212121;
 	box-sizing: border-box;
 	background: #fff;
+
+	.row.job-search {
+		width: 100%;
+
+		.col.job-search {
+			padding: 12px 0 12px 30px;
+			height: 60px;
+			border-bottom: 1px solid #e7e7e7;
+		}
+	}
+
+	.row.viewport {
+		overflow: hidden;
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		height: 245px;
+
+		.col-4.job-class {
+			overflow: scroll;
+			height: 245px;
+			padding: 0;
+		}
+
+		.col-8.job {
+			overflow: scroll;
+			height: 245px;
+			border-left: 1px solid #f1f1f1;
+		}
+
+		button.job-class {
+			width: 45%;
+			text-align: left;
+			background-color: white;
+			border: 1px solid #f1f1f1;
+			margin: 8px 8px 4px 8px;
+		}
+
+		button.job {
+			width: 23%;
+			margin: 5px;
+			padding: 5px;
+			background-color: white;
+			border: 1px solid #f1f1f1;
+			margin: 5px;
+		}
+	}
+
+	.selected-job-class {
+		border-top: 1px solid #f1f1f1;
+
+		.selected-div {
+			background-color: antiquewhite;
+			margin: 7px;
+			padding: 0 0 0 10px;
+			justify-content: center;
+			align-items: center;
+			display: inline-flex;
+
+			button.btn.seleted-job {
+				background: none;
+			}
+
+		}
+	}
+}
+
+.row.search {
+	width: 100%;
 }
