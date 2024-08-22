@@ -6,16 +6,23 @@
 <link href="/css/admin/adminlog.scss" rel="stylesheet" type="text/css">
 <fmt:bundle basename="resource.language">
 	<%
-	// write_prop1 : '<fmt:message key="Write.prop1" />'
-	//<fmt:message key="Login" />
-	int first = 0;
-	int last = 10;
+		int first = 0;
+		int last = 10;
+	%>
+	<%
+		String pageName = request.getRequestURI().toString();
+		String[] pageNameList = pageName.split("/");
+		pageName = pageNameList[pageNameList.length -1].toString();
+	
+		pageContext.setAttribute("pageName", pageName);
 	%>
 	<div class="body-main">
 		<div class="container admin-main">
 			<div class="row admin-main">
 				<div class="col-2 admin-main">
-					<jsp:include page="/view/admin/adminMenu.jsp"></jsp:include>
+					<jsp:include page="/view/admin/adminMenu.jsp" flush="false">
+						<jsp:param value="${pageName}" name="pageName"/>
+					</jsp:include>
 				</div>
 				<div class="col-10 admin-main">
 					<div class="row admin-main-row">

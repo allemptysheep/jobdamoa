@@ -15,7 +15,6 @@
 		
 		pageContext.setAttribute("regionList", regionList);
 		pageContext.setAttribute("guList", guList);
-
 		pageContext.setAttribute("gThisList", guList);
 	%>
 	<script>
@@ -25,7 +24,16 @@
 		let selectedRegionCode = [];
 		
 		function selectRegion(){
-			let area = document.getElementById('area');
+			let area = document.getElementById('area-region');
+			if(area.style.display == "none" || area.style.display == ""){
+				area.style.display = "block";
+			} else if (area.style.display == 'block') {
+				area.style.display = "none";
+			}
+		}
+		
+		function selectJob(){
+			let area = document.getElementById('area-job');
 			if(area.style.display == "none" || area.style.display == ""){
 				area.style.display = "block";
 			} else if (area.style.display == 'block') {
@@ -41,7 +49,22 @@
 			const gThisList = gList.filter(item => item.regionCode == reCode);
 			// console.log(gThisList);
 			
+			var htmlRegion = "";
 			var html = "";
+			
+			RList.map(function(item){
+				let itemRegionName = item.regionName;
+				let itemRegionCode = item.regionCode;
+				
+				htmlRegion += ``;
+				
+				if(regionCode == itemRegionCode){
+					htmlRegion += `<button style="background-color:black;color: white;font-weight: bold;" type="button" class="btn region" id="` + itemRegionCode + `" onclick="regionClick(` + itemRegionCode + `)">` + itemRegionName + `</button>`;
+					
+				} else {
+					htmlRegion += `<button type="button" class="btn region" id="` + itemRegionCode + `" onclick="regionClick(` + itemRegionCode + `)">` + itemRegionName + `</button>`;
+				}
+			});
 			
 			gThisList.map(function(item){
 				// console.log(item.guName);
@@ -50,7 +73,9 @@
 				let name = item.guName;
 				html += `<button type="button" class="btn gu" id="` + code + `" onclick="guClick(` + code + `,'` + name + `',` + recode + `)">` + name + `</button>`;
 			});
-			
+
+			$('.col-4.region').empty();
+			$('.col-4.region').append(htmlRegion);
 			// console.log(html);
 			$('.col-8.gu').empty();
 			$('.col-8.gu').append(html);
@@ -146,18 +171,15 @@
 	<div class="container main">
 		<div class="row">
 			<form action="" method="post">
-				<div class="row">
-					<div class="col">
+				<div class="row select-search-option">
+					<div class="col-6 region-select-box">
 						<button type="button" class="btn" onclick="selectRegion()">지역선택</button>
-						<select>
-							<option value="">지역 선택</option>
-							<c:forEach items="${regionList}" var="region" varStatus="regionStatus">
-								<option value="${region.get('regionCode')}">${region.get('regionName')}</option>
-							</c:forEach>
-						</select>
+					</div>
+					<div class="col-6 job-select-box">
+						<button type="button" class="btn" onclick="selectJob()">직업선택</button>
 					</div>
 				</div>
-				<div class="row area" id="area">
+				<div class="row area-region" id="area-region">
 					<div class="row region-search">
 						<div class="col region-search">
 							<input>
@@ -181,13 +203,39 @@
 					<div class="selected-region">
 					</div>
 				</div>
+				
+				<div class="row area-job" id="area-job">
+					<div class="row region-search">
+						<div class="col region-search">
+							<input>
+						</div>
+					</div>
+					<div class="row viewport">
+						<div class="col-4 region">
+							<c:forEach items="${regionList}" var="region" varStatus="regionStatus">
+								<button type="button" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')})">${region.get('regionName')}</button>
+							</c:forEach>
+						</div>
+						<div class="col-8 gu">
+							<c:forEach items="${guList}" var="gu" varStatus="regionStatus">
+								<c:choose>
+									<c:when test="${gu.get('regionCode') eq 101000}">
+										<button type="button" class="btn gu" id="${gu.get('guCode')}" onclick="guClick(${gu.get('guCode')}, '${gu.get('guName')}', ${gu.get('regionCode')})">${gu.get('guName')}</button></c:when>
+								</c:choose>
+							</c:forEach>
+						</div>
+					</div>
+					<div class="selected-region">
+					</div>
+				</div>
+				
 				<div class="row">
 					<div class="col">
 						<input type="text">
+						<button>검색</button>
 					</div>
 				</div>
 			</form>
 		</div>
-		<%@ include file="/include/footer.jsp"%>
 	</div>
 </fmt:bundle>

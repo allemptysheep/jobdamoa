@@ -9,24 +9,39 @@
 	// write_prop1 : '<fmt:message key="Write.prop1" />'
 	//<fmt:message key="Login" />
 	%>
-	<%
-		String pageName = request.getRequestURI().toString();
-		String[] pageNameList = pageName.split("/");
-		pageName = pageNameList[pageNameList.length -1].toString();
-	
-		pageContext.setAttribute("pageName", pageName);
-	%>
 	<div class="body-main">
 		<div class="container admin-main">
 			<div class="row admin-main">
 				<div class="col-2 admin-main">
 					<jsp:include page="/view/admin/adminMenu.jsp" flush="false">
-						<jsp:param value="${pageName}" name="pageName"/>
+						<jsp:param value="regionSetting.jsp" name="pageName"/>
 					</jsp:include>
 				</div>
 				<div class="col-10 admin-main">
 					<div class="row admin-main-row">
-						관리자
+						<form action="/AdminRegionServ" method="post">
+							<div>
+								<label>지역명</label>
+							</div>
+							<div>
+								<input class="form-control" type="text" name="regionName">
+							</div>
+							<div>
+								<label>지역코드</label>
+							</div>
+							<div>
+								<input class="form-control" type="text" name="regionCode">
+							</div>
+							<div>
+								<label>나라</label>
+							</div>
+							<div>
+								<input class="form-control" type="text" name="country">
+							</div>
+							<div>
+								<button type="submit" class="btn" name="operator" value="regionAdd">확인</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
