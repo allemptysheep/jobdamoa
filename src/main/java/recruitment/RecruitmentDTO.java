@@ -1,5 +1,10 @@
 package recruitment;
 
-public class RecruitmentDTO {
+import java.util.List;
 
+import lombok.Data;
+
+@Data
+public class RecruitmentDTO {
+	List<Object> RecruitmentData;
 }
