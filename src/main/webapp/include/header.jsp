@@ -117,6 +117,18 @@
 				    <li class="nav-item">
 				      <a class="nav-link" href="/view/admin/adminPage.jsp"><fmt:message key="Admin" /></a>
 				    </li>
+				<% 
+					} else if(mLevel == 9) {	// 기업회원일 경우
+				%>
+					<li class="nav-item">
+				      <a class="nav-link" href="/view/member/signOut.jsp"><fmt:message key="SignOut" /></a> 
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="/view/member/myPage.jsp"><fmt:message key="Member.MyPage" /></a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="/view/member/myCompanyPage.jsp"><fmt:message key="Member.MyCompanyPage" /></a>
+				    </li>
 				<%
 					} else {	// 일반 유저일 경우
 				%> 

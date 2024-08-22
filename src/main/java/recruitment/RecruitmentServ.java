@@ -100,7 +100,7 @@ public class RecruitmentServ extends HttpServlet {
 					insertLog.insertLog(request, session, "Recruitment Register:" + m_email);
 				}
 				
-				viewPage = "/view/recruitment/register_process.jsp";
+				viewPage = "/view/recruitment/registerProcess.jsp";
 				
 			} else if (op.equals("edit")) {
 				int rs = dao.editRecruitment(title, contents, company_name, hire_type, work_history, region_name, region_code, gu_name, gu_code, apply_startdate, apply_enddate, apply_method, idx);
@@ -116,7 +116,7 @@ public class RecruitmentServ extends HttpServlet {
 					insertLog.insertLog(request, session, "Recruitment edit fail");
 				}
 				
-				viewPage = "./view/recruitment/recruitmentEdit_process.jsp";
+				viewPage = "./view/recruitment/recruitmentEditProcess.jsp";
 			       
 			} else if (op.equals("delete")) {
 				int rs = dao.deleteRecruitment(idx, m_email);
@@ -131,7 +131,7 @@ public class RecruitmentServ extends HttpServlet {
 					LogDAO insertLog = new LogDAO(application);
 					insertLog.insertLog(request, session, "Recruitment delte fail");
 				}
-				viewPage = "./view/recruitment/recruitmentDelete_process.jsp";
+				viewPage = "./view/recruitment/recruitmentDeleteProcess.jsp";
 			}
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
