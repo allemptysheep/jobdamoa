@@ -29,7 +29,7 @@
 	<div class="container main" id="fullpage">
 		<div class="section main-slider" data-anchor="firstPage">
 			<div class="row">
-				<div class="col">
+				<div class="col"> 
 					<form action="/mainSearchServ" method="post">
 						<input class="form-control" type="text" id="keysword" name="keyword">
 						<select class="form-control" id="region" name="region">

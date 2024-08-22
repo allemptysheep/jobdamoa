@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+.row {
+	width: 100%;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.row.title-box {
+	border-top: 2px solid black;
+	border-left: 1px solid #f1f1f1;
+	border-right: 1px solid #f1f1f1;
+	border-bottom: 1px solid #f1f1f1;
+}
+
+.row.title {
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	font-size: 2rem;
+	padding: 3rem;
+	border-bottom: 1px solid;
+
+}
+
+.row.info {
+	width: 100%;
+	padding: 1rem;
+}
+
+.row.recruitment-view-main {
+	margin: 40px 0px 40px 0px;
+}
+
+.row.data-box {
+	margin: 40px 0px 0px 0px;
+	border-top: 2px solid black;
+	border-left: 1px solid #f1f1f1;
+	border-right: 1px solid #f1f1f1;
+	border-bottom: 1px solid #f1f1f1;
+
+	.data-btn {
+		padding: 1rem;
+	}
+}
