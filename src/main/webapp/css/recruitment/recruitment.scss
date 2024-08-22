@@ -13,9 +13,13 @@
 	height: 130px;
 	
 	.full-li {
-		background: green;
+		background: #feccaa;
 		width : 100%;
 		display: table;
+		box-shadow: 0px 3px 10px #0000000F;
+		border-radius: 15px;
+		border : 1px solid #cece89;
+		padding : 15px 13px;
 		
 		.list-top,
 		.list-middle, 
@@ -28,6 +32,7 @@
 		}
 		
 		.list-middle {
+			text-align: center;
 			width : calc(100% - 400px);
 		}
 		
