@@ -1,6 +1,7 @@
 package search;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -10,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * Servlet implementation class mainSearchServ
@@ -49,20 +54,41 @@ public class MainSearchServ extends HttpServlet {
 
 		// 분기
 		String op = request.getParameter("operator");
-		String viewPage = "";
+		String viewPage = "/view/search/searchList.jsp";
+		
+		MainSearchDAO mainSearchDAO = new MainSearchDAO(application);
 
 		try {
 			if(op.equals("search")) {
 				System.out.println("search");
 				String keyword = request.getParameter("keyword");
-				String region = request.getParameter("region");
-				
+				String regionSList = request.getParameter("regionList");
+				String guSList = request.getParameter("guList");
+
 				System.out.println("keyword : " + keyword);
-				System.out.println("region : " + region);
+				System.out.println("regionList : " + regionSList.toString());
+				System.out.println("guList : " + guSList.toString());
 				
-				viewPage = "/view/result/mainSearchResult.jsp";
+				regionSList = regionSList.replace("[", "");
+				regionSList = regionSList.replace("]", "");
+				String[] region = regionSList.split(", ");
+				
+				regionSList = guSList.replace("[", "");
+				regionSList = guSList.replace("]", "");
+				String[] gu = guSList.split(",");
+
+				//System.out.println(region);
+				//System.out.println(gu);
+				request.setAttribute("keyword", keyword);
+				request.setAttribute("regionList", regionSList);
+				request.setAttribute("guList", guSList);
+				
+			 	MainSearchListDTO mainSearchListDTO =  mainSearchDAO.mainSearch(keyword, region, gu);
+
+				request.setAttribute("mainSearchListDTO", mainSearchListDTO);
+				
 			} else if (op.equals("select")) {
-				viewPage = "/view/result/mainSearchResult.jsp";
+				viewPage = "/view/search/searchList.jsp";
 
 			}
 
@@ -70,6 +96,9 @@ public class MainSearchServ extends HttpServlet {
 			dispatcher.forward(request, response);
 		} catch (ServletException e) {
 			System.out.println("search serv error : " + e);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
