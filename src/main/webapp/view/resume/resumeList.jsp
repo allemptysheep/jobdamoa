@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="resume.ResumeListDTO"%>
+<%@page import="resume.ResumeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp"%>
 <link href="/css/baseform.scss" rel="stylesheet" type="text/css">
@@ -53,8 +56,71 @@
 	// container main 클레스는 헤더에 지정. 건들지 않는다.
 	
 	%>
-	<div class="container main">
+	<%
+		ResumeDAO resumeDAO = new ResumeDAO(application);
+		List<Object> resumeList = resumeDAO.selectResumeList();
 		
-		<%@ include file="/include/footer.jsp"%>
+		//System.out.println(resumeList);
+		pageContext.setAttribute("resumeList", resumeList);			// [{},{},{},{}]
+		// resume {}
+	%>
+	<script>
+		function test(idx) {
+			var link = '/view/resume/resumeEdit.jsp?resumeInfoIdx='+idx;			 
+			location.href=link;
+		}
+		
+		function deleteP(idx){
+			if(confirm("삭제하시겠습니까?]")){
+				alert("삭제되었습니다.");
+				location.href="/view/resume/resumeDel.jsp?resumeInfoIdx="+idx;
+			}else{
+				history.back();
+			}
+		}	
+	</script>
+	<div class="container main">
+			<table border="0" width="100%">
+				<tr>
+					<td align="right">
+						<button class="btn" >Add</button>
+					</td>
+				</tr>
+			</table>
+		<div class="row">
+			<div class="col">
+			<table border="0" width="100%" align="center" class="table table-borderless">
+				<tr align="center">
+						<td width="25%">이력서 번호</td>
+						<td width="37.8%">이력서 이름</td>
+						<td width="22.1%">이메일</td>
+						<td>수정</td>
+						<td>삭제</td>
+						
+					</tr>
+			</table>
+				<c:forEach items="${resumeList}" var="resume" varStatus="resumeStatus">
+				<table border="1" width="85%" align="center" class="table table-bordered">					
+					<tr>
+						<td width="25%">
+							<div class="text-center">${resume.resumeInfoIdx}</div>
+						</td>
+						<td width="37.8%">
+							<div class="text-center">${resume.resumeName}</div>
+						</td>
+						<td width="22.1%">
+							<div class="text-center">${resume.mEmail}</div>
+						</td>
+						<td align="center">
+							<button class="btn" onclick="test(${resume.resumeInfoIdx})">Edit</button>
+						</td>
+						<td align="center">
+							<button class="btn" onclick="deleteP(${resume.resumeInfoIdx})" name="operator" value="delete">Delete</button>
+						</td>
+					</tr>
+				</table>
+				</c:forEach>
+			</div>
+		</div>
 	</div>
 </fmt:bundle>

@@ -124,7 +124,7 @@
 				      <a class="nav-link" href="/view/member/signOut.jsp"><fmt:message key="SignOut" /></a> 
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" href="/view/member/memberEdit.jsp"><fmt:message key="MemberInfo" /></a>
+				      <a class="nav-link" href="/view/member/myPage.jsp"><fmt:message key="Member.MyPage" /></a>
 				    </li>
 				<%
 					}

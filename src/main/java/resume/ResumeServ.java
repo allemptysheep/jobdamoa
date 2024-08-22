@@ -126,12 +126,8 @@ public class ResumeServ extends HttpServlet {
 		    
 	    } else if (op.equals("edit")) {
 	    	System.out.println("op : " + op);
-			   
-	    	ResumeDAO resumeDAO = new ResumeDAO(application);
-	    	
-		    String mEmail = (String)session.getAttribute("mEmail");
-		    
 	    	String name = request.getParameter("name");
+	    	
 		    String mname = request.getParameter("mname");
 		    String ename = request.getParameter("ename");
 		    String birth = request.getParameter("birth");
@@ -170,18 +166,59 @@ public class ResumeServ extends HttpServlet {
 		    String nact = request.getParameter("nact");
 		    String hact = request.getParameter("hact");
 		    
-		    int key = resumeDAO.insertResumeInfo(mEmail, name);
-		    
-		    		    
+	    	ResumeDTO resumeDTO = new ResumeDTO();
+	    	ResumeDAO resumeDAO = new ResumeDAO(application);
+	    	String resumeInfoIdx = request.getParameter("resumeInfoIdx");
+		    String mEmail = (String)session.getAttribute("mEmail");
+	    	
+	    	int key = Integer.parseInt(resumeInfoIdx);
+	    		    	
+	    	
 		    int info = resumeDAO.updateResumeInfo(name,key,mEmail);
 		    
-
-		    System.out.println("info : "+info);
-		    System.out.println("key : "+key);
+		    int basic = resumeDAO.updateResumeBasic(mname, ename, birth, phone, mEmail, z1, z2, z3, z4, z5, key);
 		    
+		    int exp = resumeDAO.updateResumeExp(wloc, wrank, mwork, swork, ework, key);
+		    
+		    int qua = resumeDAO.updateResumeQua(dqua, nqua, rqua, pqua, key);
+		    
+		    int hope = resumeDAO.updateResumeHope(jhope, phope, lhope, presv, key);
+		    
+		    int ext = resumeDAO.updateResumeExt(dact, cact, nact, hact, key);
+		    
+		    System.out.println("key : "+key);
+		    System.out.println(h1+" "+h2+" "+h3+" "+h4+" "+h5);
+
+		    System.out.println("성공 : 1 실패 : 0");
+		    System.out.println("info : "+info);
+		    System.out.println("basic : "+basic);
+		    System.out.println("exp : "+exp);
+		    System.out.println("qua : "+qua);
+		    System.out.println("hope : "+hope);
+		    System.out.println("ext : "+ext);
+		    
+
 		    
 	    } else if(op.equals("delete")) {
-	    	
+	    	viewPage = "/view/resume/resumeDel.jsp";
+	    	ResumeDAO resumeDAO = new ResumeDAO(application);
+	    	String resumeInfoIdx = request.getParameter("resumeInfoIdx");
+	    	int key = Integer.parseInt(resumeInfoIdx);
+
+		    System.out.println("key : "+key);
+
+	    	 int info = resumeDAO.deleteResumeInfo(key);
+			    
+			    int basic = resumeDAO.deleteResumeBasic(key);
+			    
+			    int exp = resumeDAO.deleteResumeExp(key);
+			    
+			    int qua = resumeDAO.deleteResumeQua(key);
+			    
+			    int hope = resumeDAO.deleteResumeHope(key);
+			    
+			    int ext = resumeDAO.deleteResumeExt(key);
+	    
 	    }
 	    
 	    RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
