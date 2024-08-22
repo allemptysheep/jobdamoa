@@ -286,17 +286,17 @@
 						
 						<div class="register-hiretype-box">
 							<label class = "form-label"><fmt:message key="Recruitment.Hiretype" /></label>
-							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '<fmt:message key="Recruitment.Hiretype_FullTime" />' /><fmt:message key="Recruitment.Hiretype_FullTime" />
-							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '<fmt:message key="Recruitment.Hiretype_Contract" />' /><fmt:message key="Recruitment.Hiretype_Contract" />
+							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '정규직' /><fmt:message key="Recruitment.Hiretype_FullTime" />
+							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '계약직' /><fmt:message key="Recruitment.Hiretype_Contract" />
 						</div>
 						
 						<div class="register-workhistory-box">
 							<label class = "form-label"><fmt:message key="Recruitment.Workhistory" /></label>
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='<fmt:message key="Recruitment.Workhistory_New" />' /><fmt:message key="Recruitment.Workhistory_New" />
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='<fmt:message key="Recruitment.Workhistory_1to3" />' /><fmt:message key="Recruitment.Workhistory_1to3" />
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='<fmt:message key="Recruitment.Workhistory_3to5" />' /><fmt:message key="Recruitment.Workhistory_3to5" />
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='<fmt:message key="Recruitment.Workhistory_5to10" />' /><fmt:message key="Recruitment.Workhistory_5to10" />
-							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='<fmt:message key="Recruitment.Workhistory_Over10" />' /><fmt:message key="Recruitment.Workhistory_Over10" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='신입' /><fmt:message key="Recruitment.Workhistory_New" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='1~3년' /><fmt:message key="Recruitment.Workhistory_1to3" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='3~5년' /><fmt:message key="Recruitment.Workhistory_3to5" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='5~10년' /><fmt:message key="Recruitment.Workhistory_5to10" />
+							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='10년이상' /><fmt:message key="Recruitment.Workhistory_Over10" />
 						</div>
 						<div class="register-region-box">
 						<div class="row">
@@ -357,8 +357,8 @@
 						</div>
 						<div class="register-applymethod-box">
 									<label class = "form-label"><fmt:message key="Recruitment.Applymethod" /></label>
-									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='<fmt:message key="Recruitment.Applymethod_Homepage" />' /><fmt:message key="Recruitment.Applymethod_Homepage" />
-									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='<fmt:message key="Recruitment.Applymethod_Jobdamoa" />' /><fmt:message key="Recruitment.Applymethod_Jobdamoa" />
+									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='자사 홈페이지' /><fmt:message key="Recruitment.Applymethod_Homepage" />
+									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='잡다모아 지원' /><fmt:message key="Recruitment.Applymethod_Jobdamoa" />
 						</div>
 						
 						<div class="register-btn-box">
