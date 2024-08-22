@@ -53,13 +53,13 @@ public class LogServ extends HttpServlet {
 
 		try {
 
-			String viewPage = "/admin/log.jsp";
+			String viewPage = "/view/admin/log.jsp";
 
 			String op = (String) request.getParameter("operator");
 			System.out.println("operation : " + op);
 
 			if (op.equals("getLog")) {
-				viewPage = "/admin/logResult.jsp";
+				viewPage = "/view/admin/logResult.jsp";
 
 				String searchWord = (String) request.getParameter("searchWord");
 				
@@ -68,24 +68,24 @@ public class LogServ extends HttpServlet {
 					memberEmail = (String) request.getParameter("memberEmail");
 				}
 
-				System.out.println("searchWord : " + searchWord);
-				System.out.println("memberEmail : " + memberEmail);
+				// System.out.println("searchWord : " + searchWord);
+				// System.out.println("memberEmail : " + memberEmail);
 
 
-				System.out.println("page_now 1 : " + request.getParameter("page_now"));
+				// System.out.println("page_now 1 : " + request.getParameter("page_now"));
 				// paging
 				int page_now = 1;
 				if (request.getParameter("page_now") != null) {
 					page_now = Integer.parseInt(request.getParameter("page_now"));
 				}
 
-				System.out.println("page_now : " + page_now);
+				// System.out.println("page_now : " + page_now);
 
 				int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
 				int blockSize = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
 
-				System.out.println("pageSize : " + pageSize);
-				System.out.println("blockSize : " + blockSize);
+				// System.out.println("pageSize : " + pageSize);
+				// System.out.println("blockSize : " + blockSize);
 
 				int first = 0;
 				int last = 0;
@@ -112,12 +112,12 @@ public class LogServ extends HttpServlet {
 				
 				int totalCount = logDAO.selectLogCount(searchWord, memberEmail);
 				
-				System.out.println("totalCount : " + totalCount);
+				// System.out.println("totalCount : " + totalCount);
 
 				int totalPage = (int) Math.ceil((double) totalCount / (double) pageSize);
-				System.out.println("totalPage : " + totalPage);
-				System.out.println("first : " + first);
-				System.out.println("last : " + last);
+				// System.out.println("totalPage : " + totalPage);
+				// System.out.println("first : " + first);
+				// System.out.println("last : " + last);
 
 				request.setAttribute("page_now", Integer.toString(page_now));
 				request.setAttribute("pageSize", Integer.toString(pageSize));
