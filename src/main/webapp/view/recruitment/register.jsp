@@ -240,53 +240,25 @@
 	}
 	
 	function submitAgo() {
-		var email = $('#email').val();
-		var passWd = $('#passWd').val();
-		var passWdChk = $('#passWdChk').val();
-		var lastName = $('#lastName').val();
-		var firstName = $('#firstName').val();
-		var nickName = $('#nickName').val();
-		var phoneNum = $('#phoneNum').val();
-		var regexPhoneNum = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+		var title = $('#title').val();
+		var contents = $('#contents').val();
+		var cname = $('#cname').val();
+		var hiretype = $('#hiretype').val();
+		var workhistory = $('#workhistory').val();
+		var regionname = $('#regionname').val();
+		var regioncode = $('#regioncode').val();
+		var guname = $('#guname').val();
+		var gucode = $('#gucode').val();
+		var apply_startdate = $('#apply_startdate').val();
+		var apply_enddate = $('#apply_enddate').val();
+		var apply_method = $('#apply_method').val();
+	
 
 		var editErrorTitle = '';
 		var editErrorMsg = '';
 		// empty 는 비우고 해당 요소는 놔둠. remove는 해당 요소까지 제거.
 		// $("#modal-title").empty();
-		$("#modal-body").empty();
-		if(email == ""){
-			editErrorMsg = '<fmt:message key="SignUp.Modal.Content.Email"/>';
-			$("#modal-body").prepend(editErrorMsg);
-			$("#modal").modal("show");
-			return false;
-		} else if(passWd == "") {
-			editErrorMsg = '<fmt:message key="SignUp.Modal.Content.Password"/>';
-			$("#modal-body").prepend(editErrorMsg);
-			$("#modal").modal("show");
-			return false;
-		} else if(lastName == "" || firstName == "") {
-			editErrorMsg = '<fmt:message key="SignUp.Modal.Content.Name"/>';
-			$("#modal-body").prepend(editErrorMsg);
-			$("#modal").modal("show");
-			return false;
-		} else if(nickName == "") {
-			editErrorMsg = '<fmt:message key="SignUp.Modal.Content.NickName"/>';
-			$("#modal-body").prepend(editErrorMsg);
-			$("#modal").modal("show");
-			return false;
-		} else if(phoneNum == "" || phoneNum == null) {
-			editErrorMsg = '<fmt:message key="SignUp.Modal.Content.PhoneNum"/>';
-			$("#modal-body").prepend(editErrorMsg);
-			$("#modal").modal("show");
-			return false;
-		} else if(!regexPhoneNum.test(phoneNum)) {
-			editErrorMsg = '<fmt:message key="SignUp.Modal.Content.PhoneNumCheck"/>';
-			$("#modal-body").prepend(editErrorMsg);
-			$("#modal").modal("show");
-			return false;
-		} else {
-			
-		}
+		
 	}
 </script>
 	<div class="body-main">
@@ -313,13 +285,13 @@
 						</div>
 						
 						<div class="register-hiretype-box">
-							<label class = "form-control"><fmt:message key="Recruitment.Hiretype" /></label>
-							<input class="form-control" type="radio" name="recruitment_hire_type" id="hiretype" value = '<fmt:message key="Recruitment.Hiretype_FullTime" />' /><fmt:message key="Recruitment.Hiretype_FullTime" />
-							<input class="form-control" type="radio" name="recruitment_hire_type" id="hiretype" value = '<fmt:message key="Recruitment.Hiretype_Contract" />' /><fmt:message key="Recruitment.Hiretype_Contract" />
+							<label class = "form-label"><fmt:message key="Recruitment.Hiretype" /></label>
+							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '<fmt:message key="Recruitment.Hiretype_FullTime" />' /><fmt:message key="Recruitment.Hiretype_FullTime" />
+							<input class="" type="radio" name="recruitment_hire_type" id="hiretype" value = '<fmt:message key="Recruitment.Hiretype_Contract" />' /><fmt:message key="Recruitment.Hiretype_Contract" />
 						</div>
 						
 						<div class="register-workhistory-box">
-							<label class = "form-control"><fmt:message key="Recruitment.Workhistory" /></label>
+							<label class = "form-label"><fmt:message key="Recruitment.Workhistory" /></label>
 							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='<fmt:message key="Recruitment.Workhistory_New" />' /><fmt:message key="Recruitment.Workhistory_New" />
 							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='<fmt:message key="Recruitment.Workhistory_1to3" />' /><fmt:message key="Recruitment.Workhistory_1to3" />
 							<input class="form-control" type="radio" name="recruitment_work_history" id="workhistory" value='<fmt:message key="Recruitment.Workhistory_3to5" />' /><fmt:message key="Recruitment.Workhistory_3to5" />
@@ -382,17 +354,15 @@
 									<input class="form-control" type="text" name="recruitment_apply_enddate" id="apply_enddate" placeholder='<fmt:message key="Recruitment.Applyenddate" />'>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-12">
-									<label class = "form-control"><fmt:message key="Recruitment.Applymethod" /></label>
+						</div>
+						<div class="register-applymethod-box">
+									<label class = "form-label"><fmt:message key="Recruitment.Applymethod" /></label>
 									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='<fmt:message key="Recruitment.Applymethod_Homepage" />' /><fmt:message key="Recruitment.Applymethod_Homepage" />
 									<input class="form-control" type="radio" name="recruitment_apply_method" id="apply_method" value='<fmt:message key="Recruitment.Applymethod_Jobdamoa" />' /><fmt:message key="Recruitment.Applymethod_Jobdamoa" />
-								</div>
-							</div>
 						</div>
 						
 						<div class="register-btn-box">
-							<button type="submit" class="btn btn-light" id="submit" name="operator" value="submit" disabled ><fmt:message key="Recruitment.Register" /></button>
+							<button type="submit" class="btn btn-light" id="submit" name="operator" value="submit"><fmt:message key="Recruitment.Register" /></button>
 						</div>
 					</div>
 				</form>

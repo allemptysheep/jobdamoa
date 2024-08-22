@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.recruit-list {
+	flex-direction: column;
+}
+
+.nopadding {
+	padding: 0;
+}
+
+.full-ul {
+	width : 100%;
+	height: 130px;
+	
+	.full-li {
+		background: green;
+		width : 100%;
+		display: table;
+		
+		.list-top,
+		.list-middle, 
+		.list-bottom {
+			display: table-cell;
+		}
+		
+		.list-top {
+			width: 200px;
+		}
+		
+		.list-middle {
+			width : calc(100% - 400px);
+		}
+		
+		.list-bottom {
+			width : 150px;
+		}
+	}
+}
