@@ -24,7 +24,7 @@ public class RegionDAO extends DBConnect {
 	      String query = "SELECT * FROM region WHERE country=(?)";
 	      String country = "korea";
 	      
-	      try {
+	      try { 
 	         psmt = con.prepareStatement(query);
 	         psmt.setString(1, country);
 	         rs = psmt.executeQuery();
