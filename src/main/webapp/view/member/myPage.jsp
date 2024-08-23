@@ -1,5 +1,8 @@
+<%@page import="java.util.List"%>
+<%@page import="resume.ResumeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp"%>
+<%@include file="/view/member/is_signIn.jsp"%>
 <link href="/css/baseform.scss" rel="stylesheet" type="text/css">
 <fmt:bundle basename="resource.language">
 	<%
@@ -53,8 +56,73 @@
 	// container main 클레스는 헤더에 지정. 건들지 않는다.
 	
 	%>
+	<%
+		String mEmail = (String)session.getAttribute("mEmail");
+		ResumeDAO resumeDAO = new ResumeDAO(application);
+		List<Object> resumeList = resumeDAO.selectResumeList(mEmail);
+		
+		pageContext.setAttribute("resumeList", resumeList);			// [{},{},{},{}]
+	%>
 	<div class="container main">
-		mypage
-		<%@ include file="/include/footer.jsp"%>
+		<table border="1" width="100%">
+			<tr align="center">
+				<th>개인회원 홈</th>
+				<th>내가 쓴 이력서</th>
+				<th>내가 쓴 자소서</th>
+			</tr>
+			<tr>
+				<th width="20%" rowspan="4">
+					<ul>
+						<li>이력서 관리
+							<ul><a href="/view/resume/resumeWrite.jsp">이력서 등록</a></ul>
+							<ul><a href="/view/resume/resumeList.jsp">이력서 현황</a></ul>
+							<ul><a href="/view/selfIntro/selfIntroWrite.jsp">자소서 등록</a></ul>
+							<ul><a href="/view/selfIntro/selfIntroList.jsp">자소서 현황</a></ul>
+						</li>
+					</ul>
+					<ul>
+						<li>입사지원ㆍ제안관리
+							<ul><a href="#">입사지원 현황</a></ul>
+							<ul><a href="#">취업활동 증명서</a></ul>
+							<ul><a href="#">받은 포지션 제안</a></ul>
+						</li>
+					</ul>
+					<ul>
+						<li>AI 추천
+							<ul><a href="#">새로운 추천공고</a></ul>
+							<ul><a href="#">확인한 추천공고</a></ul>
+						</li>
+					</ul>
+					<ul>
+						<li><a href="#">역량 테스트(MICT)</a>
+						</li>
+					</ul>
+					<ul>
+						<li>스크랩/관심기업
+							<ul><a href="#">스크랩 공고</a></ul>
+							<ul><a href="#">관심기업/헤드헌터</a></ul>
+							<ul><a href="#">MY 알림</a></ul>
+						</li>
+					</ul>
+					
+				</th>
+				<c:forEach items="${resumeList}" var="resume" varStatus="resumeStatus">		
+		
+				<td rowspan="4">${resume.resumeName}</td>
+				</c:forEach>
+				<td rowspan="4"></td>
+				<th rowspan="4"></th>
+				
+			</tr>		
+			<tr>
+				<td></td>				
+			</tr>
+			<tr>
+				<td></td>		
+			</tr>		
+			<tr>
+				<td></td>
+			</tr>			
+		</table>
 	</div>
 </fmt:bundle>
