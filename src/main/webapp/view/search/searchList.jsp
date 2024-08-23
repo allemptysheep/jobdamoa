@@ -305,6 +305,8 @@
 						<input type="text" id="keyword" name="keyword">
 						<input type="hidden" id="regionList" name="regionList" value='${regionCodeList}'>
 						<input type="hidden" id="guList" name="guList">
+						<input hidden="true" name="first" value="0">
+						<input hidden="true" name="last" value="10">
 						<button class="btn" type="submit" name="operator" value="search" onclick="return search()">검색</button>
 					</div>
 				</div>
