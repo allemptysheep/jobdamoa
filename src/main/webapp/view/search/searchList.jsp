@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp"%>
 <link href="/css/search/search.scss" rel="stylesheet" type="text/css">
+<link href="/css/recruitment/recruitment.scss" rel="stylesheet" type="text/css">
 <fmt:bundle basename="resource.language">
 	<%
 		RegionDAO regionDAO = new region.RegionDAO(application);
@@ -332,15 +333,35 @@
 				</c:when>
 				<c:when test="${searchList.getMainSearchData().size() ne 0}">
 					<c:forEach items="${searchList.getMainSearchData()}" var="searchData" varStatus="searchDataStatus">
-						<div class="row search">
-							<div class="row">
-								<div class="col">${searchData.get('rec_title')}</div>
-							</div>
-							<div class="row">
-								<div class="col">
-									<button onclick="recruitmentView(${searchData.get('rec_idx')})">자세히</button>
+						<div class="row search-result">
+								<div class = "col">
+									<div class = "row">
+										<ul class = "full-ul">
+											<li class = "full-li">
+												<div class = "list-top">
+													<c:out value = "${searchData.get('m_email')}"></c:out>
+												</div>
+												<div class = "list-middle">
+													<div class = "in-list-top">
+														<c:out value = "${searchData.get('rec_title')}"></c:out>
+													</div>
+													<div class = "in-list-middle">
+														<c:out value = "${searchData.get('rec_title')}"></c:out>
+													</div>
+													<div class = "in-list-bottom">
+														<c:out value = "${searchData.get('rec_title')}"></c:out>
+													</div>
+													
+												</div>
+												<div class = "list-bottom">
+													<c:out value = "${recruit.get('rec_apply_startdate')}"></c:out>
+													<button onclick="recruitmentView(${searchData.get('rec_idx')})">자세히</button>
+													<a href = "/view/recruitment/recruitmentEdit.jsp?rec_idx=${searchData.get('rec_idx')}">수정</a>
+												</div>
+										  </li>
+										</ul>
+									</div>		
 								</div>
-							</div>
 						</div>
 					</c:forEach>
 					<div class="list-write-box">
