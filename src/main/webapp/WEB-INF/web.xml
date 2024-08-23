@@ -21,7 +21,11 @@
 	</context-param>
 	<context-param>
 		<param-name>mysqlUrl</param-name>
+<<<<<<< HEAD
 		<param-value>jdbc:mysql://localhost:3336/jobdamoa</param-value>
+=======
+		<param-value>jdbc:mysql://localhost:3306/jobdamoa</param-value>
+>>>>>>> fa477ced1e281919d2bde46d0aa33ad4ce556820
 	</context-param>
 	<context-param>
 		<param-name>mysqlId</param-name>
@@ -65,7 +69,11 @@
 	
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 </web-app>
 =======
 </web-app>
 >>>>>>> 8b3b1a0f4c00ddf8c9be8f4bccdebc38e01d76c7
+=======
+</web-app>
+>>>>>>> fa477ced1e281919d2bde46d0aa33ad4ce556820
