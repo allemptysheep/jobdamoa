@@ -56,7 +56,7 @@ public class MainSearchServ extends HttpServlet {
 		String op = request.getParameter("operator");
 		String viewPage = "/view/search/searchList.jsp";
 		
-		MainSearchDAO mainSearchDAO = new MainSearchDAO(application);
+		
 
 		try {
 			if(op.equals("search")) {
@@ -79,11 +79,66 @@ public class MainSearchServ extends HttpServlet {
 
 				//System.out.println(region);
 				//System.out.println(gu);
+				
+				
+				
+				// paging
+				int page_now = 1;
+				if (request.getParameter("page_now") != null) {
+					page_now = Integer.parseInt(request.getParameter("page_now"));
+				}
+
+				// System.out.println("page_now : " + page_now);
+
+				int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
+				int blockSize = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
+
+				// System.out.println("pageSize : " + pageSize);
+				// System.out.println("blockSize : " + blockSize);
+
+				int first = 0;
+				int last = 0;
+				try {
+					if (request.getParameter("first").equals("0")) {
+						first = 0;
+					} else {
+						first = pageSize * (page_now - 1);
+					}
+					if (request.getParameter("last").equals("10")) {
+						last = 10;
+					} else {
+						last = first + pageSize;
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+					first = pageSize * (page_now - 1);
+					last = first + pageSize;
+				}
+				
+				
+				MainSearchDAO mainSearchDAO = new MainSearchDAO(application);
+			 	MainSearchListDTO mainSearchListDTO =  mainSearchDAO.mainSearch(keyword, region, gu, Integer.toString(first), Integer.toString(last));
+			 	
+			 	int totalCount = mainSearchDAO.selectCount(keyword, region, gu);
+				
+				// System.out.println("totalCount : " + totalCount);
+
+				int totalPage = (int) Math.ceil((double) totalCount / (double) pageSize);
+				// System.out.println("totalPage : " + totalPage);
+				// System.out.println("first : " + first);
+				// System.out.println("last : " + last);
+
+				request.setAttribute("page_now", Integer.toString(page_now));
+				request.setAttribute("pageSize", Integer.toString(pageSize));
+				request.setAttribute("blockSize", Integer.toString(blockSize));
+				request.setAttribute("totalCount", Integer.toString(totalCount));
+				request.setAttribute("totalPage", Integer.toString(totalPage));
+				request.setAttribute("first", Integer.toString(first));
+				request.setAttribute("last", Integer.toString(last));
+				
 				request.setAttribute("keyword", keyword);
 				request.setAttribute("regionList", regionSList);
 				request.setAttribute("guList", guSList);
-				
-			 	MainSearchListDTO mainSearchListDTO =  mainSearchDAO.mainSearch(keyword, region, gu);
 
 				request.setAttribute("mainSearchListDTO", mainSearchListDTO);
 				
