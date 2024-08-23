@@ -37,49 +37,22 @@
 		function selectRegion(){
 			let area = document.getElementById('area-region');
 			let areaClose = document.getElementById('area-job');
-
-			let regionBtn = document.getElementById('btn-region');
-			let jobBtn = document.getElementById('btn-job');
-			
 			if(area.style.display == "none" || area.style.display == ""){
 				area.style.display = "block";
 				areaClose.style.display = "none";
-				
-				regionBtn.style.color = "white";
-				regionBtn.style.backgroundColor = "black";
-
-				jobBtn.style.color = "black";
-				jobBtn.style.backgroundColor = "#f1f1f1";
-				
 			} else if (area.style.display == 'block') {
 				area.style.display = "none";
-				
-				regionBtn.style.color = "black";
-				regionBtn.style.backgroundColor = "#f1f1f1";
 			}
 		}
 		
 		function selectJob(){
 			let area = document.getElementById('area-job');
 			let areaClose = document.getElementById('area-region');
-			
-			let regionBtn = document.getElementById('btn-region');
-			let jobBtn = document.getElementById('btn-job');
-			
 			if(area.style.display == "none" || area.style.display == ""){
 				area.style.display = "block";
 				areaClose.style.display = "none";
-
-				jobBtn.style.color = "white";
-				jobBtn.style.backgroundColor = "black";
-
-				regionBtn.style.color = "black";
-				regionBtn.style.backgroundColor = "#f1f1f1";
 			} else if (area.style.display == 'block') {
 				area.style.display = "none";
-				
-				jobBtn.style.color = "black";
-				jobBtn.style.backgroundColor = "#f1f1f1";
 			}
 		}
 		
@@ -220,38 +193,34 @@
 		}
 	</script>
 	<div class="container main">
-		<div class="row search">
+		<div class="row">
 			<form action="/MainSearchServ" method="post">
 				<div class="row select-search-option">
 					<div class="col-6 region-select-box">
-						<button type="button" class="btn" id="btn-region" onclick="selectRegion()">지역선택</button>
+						<button type="button" class="btn" onclick="selectRegion()">지역선택</button>
 					</div>
 					<div class="col-6 job-select-box">
-						<button type="button" class="btn" id="btn-job" onclick="selectJob()">직업선택</button>
+						<button type="button" class="btn" onclick="selectJob()">직업선택</button>
 					</div>
 				</div>
 				<div class="row area-region" id="area-region">
 					<div class="row region-search">
 						<div class="col region-search">
-							<input class="form-control">
+							<input>
 						</div>
 					</div>
 					<div class="row viewport">
 						<div class="col-4 region">
 							<c:forEach items="${regionList}" var="region" varStatus="regionStatus">
-								<c:choose>
-									<c:when test="${region.get('regionCode') eq 101000}">
-										<button type="button" style="background-color: black;color:white;" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')})">${region.get('regionName')}</button>
-									</c:when>
-									<c:when test="${region.get('regionCode') ne 101000}">
-										<button type="button" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')})">${region.get('regionName')}</button>
-									</c:when>
-								</c:choose>
+								<button type="button" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')})">${region.get('regionName')}</button>
 							</c:forEach>
 						</div>
 						<div class="col-8 gu">
 							<c:forEach items="${guList}" var="gu" varStatus="regionStatus">
-								<button type="button" class="btn gu" id="${gu.get('guCode')}" onclick="guClick(${gu.get('guCode')}, '${gu.get('guName')}', ${gu.get('regionCode')})">${gu.get('guName')}</button>
+								<c:choose>
+									<c:when test="${gu.get('regionCode') eq 101000}">
+										<button type="button" class="btn gu" id="${gu.get('guCode')}" onclick="guClick(${gu.get('guCode')}, '${gu.get('guName')}', ${gu.get('regionCode')})">${gu.get('guName')}</button></c:when>
+								</c:choose>
 							</c:forEach>
 						</div>
 					</div>
@@ -262,7 +231,7 @@
 				<div class="row area-job" id="area-job">
 					<div class="row job-search">
 						<div class="col job-search">
-							<input class="form-control">
+							<input>
 						</div>
 					</div>
 					<div class="row viewport">
@@ -275,8 +244,7 @@
 							<c:forEach items="${guList}" var="gu" varStatus="regionStatus">
 								<c:choose>
 									<c:when test="${gu.get('regionCode') eq 101000}">
-										<button type="button" class="btn job" id="${gu.get('guCode')}" onclick="guClick(${gu.get('guCode')}, '${gu.get('guName')}', ${gu.get('regionCode')})">${gu.get('guName')}</button>
-									</c:when>
+										<button type="button" class="btn job" id="${gu.get('guCode')}" onclick="guClick(${gu.get('guCode')}, '${gu.get('guName')}', ${gu.get('regionCode')})">${gu.get('guName')}</button></c:when>
 								</c:choose>
 							</c:forEach>
 						</div>
@@ -285,9 +253,9 @@
 					</div>
 				</div>
 				
-				<div class="row submit">
-					<div class="col submit">
-						<input class="form-control" type="text" id="keyword" name="keyword">
+				<div class="row">
+					<div class="col">
+						<input type="text" id="keyword" name="keyword">
 						<input type="hidden" id="regionList" name="regionList" value='${regionCodeList}'>
 						<input type="hidden" id="guList" name="guList">
 						<input hidden="true" name="first" value="0">
