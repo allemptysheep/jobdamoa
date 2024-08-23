@@ -198,13 +198,14 @@ public class ResumeDAO extends DBConnect{
 		   }
 	  	   
 	   // resume list select
-	   public List<Object>  selectResumeList() {
+	   public List<Object>  selectResumeList(String mEmail) {
 		  ResumeListDTO resumeListDTO = new ResumeListDTO();
 		  List<Object> rList = new ArrayList<Object>(); 
-	      String query = "SELECT * FROM resume_info";
+	      String query = "SELECT * FROM resume_info WHERE m_email = (?)";
 	      
 	      try {
 	         psmt = con.prepareStatement(query);
+			 psmt.setString(1, mEmail);
 	         rs = psmt.executeQuery();
 	         
 	         // while row 당 처리

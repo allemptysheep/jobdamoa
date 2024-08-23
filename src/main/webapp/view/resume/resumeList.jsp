@@ -57,11 +57,12 @@
 	
 	%>
 	<%
+		String mEmail = (String)session.getAttribute("mEmail");
 		ResumeDAO resumeDAO = new ResumeDAO(application);
-		List<Object> resumeList = resumeDAO.selectResumeList();
-		
+		List<Object> resumeList = resumeDAO.selectResumeList(mEmail);
 		//System.out.println(resumeList);
 		pageContext.setAttribute("resumeList", resumeList);			// [{},{},{},{}]
+		
 		// resume {}
 	%>
 	<script>
