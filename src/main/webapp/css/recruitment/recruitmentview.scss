@@ -44,3 +44,13 @@
 		padding: 1rem;
 	}
 }
+
+form.modal-form {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #f1f1f1;
+    padding: 10px;
+    margin-bottom: 10px;
+}
