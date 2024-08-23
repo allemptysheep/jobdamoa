@@ -10,7 +10,7 @@ public class CompanyDAO extends DBConnect {
 	      super(application);
 	   }
 		
-	   public int insertOrUpdateCompanyInfo(String c_name, String c_ceo_name, String c_establishment_date, String c_income, String employee_number, String average_salary, String capital_stock, String occupation, String c_zipcode, String c_road_address, String c_jibun_address, String c_detail_address, String c_ref_address, String m_email) {		   
+	   public int insertOrUpdateCompanyInfo(String c_name, String c_ceo_name, String c_establishment_date, int c_income, int employee_number, int average_salary, String capital_stock, String occupation, String c_zipcode, String c_road_address, String c_jibun_address, String c_detail_address, String c_ref_address, String m_email) {		   
 		   int rs = 0;
 		   
 		   String sql = "INSERT INTO company (c_name, c_ceo_name, c_establishment_date, c_income, employee_number, average_salary, capital_stock, occupation, c_zipcode, c_road_address, c_jibun_address, c_detail_address, c_ref_address, m_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE m_email = (?)";
@@ -20,9 +20,9 @@ public class CompanyDAO extends DBConnect {
 		         psmt.setString(1, c_name);
 		         psmt.setString(2, c_ceo_name);
 		         psmt.setString(3, c_establishment_date);
-		         psmt.setString(4, c_income);
-		         psmt.setString(5, employee_number);
-		         psmt.setString(6, average_salary);
+		         psmt.setInt(4, c_income);
+		         psmt.setInt(5, employee_number);
+		         psmt.setInt(6, average_salary);
 		         psmt.setString(7, capital_stock);
 		         psmt.setString(8, occupation);
 		         psmt.setString(9, c_zipcode);
