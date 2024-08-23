@@ -80,7 +80,7 @@ public class CompanyInfoServ extends HttpServlet {
 			String viewPage = "/";
 			 if (op.equals("edit")) {
 				 
-				int uirs = dao.insertOrUpdateCompanyInfo(c_name, c_ceo_name, c_establishment_date, c_income, employee_number, average_salary, capital_stock, occupation, c_zipcode, c_road_address, c_jibnun_address, c_detail_address, ref_address, m_email);
+				int uirs = dao.insertCompanyInfo(c_name, c_ceo_name, c_establishment_date, c_income, employee_number, average_salary, capital_stock, occupation, c_zipcode, c_road_address, c_jibnun_address, c_detail_address, ref_address, m_email);
 	
 				System.out.println("uirs : "+uirs);
 				
