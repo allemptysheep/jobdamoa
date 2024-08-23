@@ -66,10 +66,12 @@ public class MemberSigninServ extends HttpServlet {
 		System.out.println("serv pass : "+ com);
 		
 		String viewPage = "/";
+
+		LogDAO insertLog = new LogDAO(application);
 		
 		if (com == "") {
 			response.setContentType("text/html; charset=UTF-8");
-			response.sendRedirect("/view/member/signIn_error.jsp"); 
+			viewPage = "/view/member/signIn_error.jsp";
 		} else {
 			// 비밀번호가 있음.
 			MemberDAO memberDAO = new MemberDAO(application);
@@ -91,7 +93,6 @@ public class MemberSigninServ extends HttpServlet {
 				session.setAttribute("mLevel", memberDTO.getLevel());
 				session.setAttribute("mUUID", memberDTO.getMUUID());
 				// session.setAttribute("pLevel", pLevel);
-				LogDAO insertLog = new LogDAO(application);
 				insertLog.insertLog(request, session, "signIn success");
 			} else {
 				session.setAttribute("mEmail", null);
@@ -101,7 +102,6 @@ public class MemberSigninServ extends HttpServlet {
 				session.setAttribute("mLevel", null);
 				session.setAttribute("mUUID", null);
 				// session.setAttribute("pLevel", null);
-				LogDAO insertLog = new LogDAO(application);
 				insertLog.insertLog(request, session, "signIn fail:" + mEmail);
 			}
 
