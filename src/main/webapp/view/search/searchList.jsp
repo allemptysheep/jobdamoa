@@ -333,7 +333,7 @@
 				</c:when>
 				<c:when test="${searchList.getMainSearchData().size() ne 0}">
 					<c:forEach items="${searchList.getMainSearchData()}" var="searchData" varStatus="searchDataStatus">
-						<div class="row search">
+						<div class="row search-result">
 								<div class = "col">
 									<div class = "row">
 										<ul class = "full-ul">
