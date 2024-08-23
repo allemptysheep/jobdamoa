@@ -14,6 +14,10 @@ local.properties
 .loadpath
 .recommenders
 .classpath
+<<<<<<< HEAD
+=======
+
+>>>>>>> ab893faa3d6ba0c26a222bc8e8c225efad94eccd
 
 # External tool builders
 .externalToolBuilders/

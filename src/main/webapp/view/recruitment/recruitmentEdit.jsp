@@ -119,7 +119,7 @@
 	let selectedRegionCode = [];
 	
 	function selectRegion(){
-		let area = document.getElementById('area');
+		let area = document.getElementById('area-region');
 		if(area.style.display == "none" || area.style.display == ""){
 			area.style.display = "block";
 		} else if (area.style.display == 'block') {
@@ -269,7 +269,7 @@
 		
 	}
 </script>
-	<div class="body-main">
+	<div class="container main">
 		<div class="register-main">
 			<div class="register-title-box">
 				<div class="register-title">
@@ -327,20 +327,20 @@
 								</div>
 							</div>
 							<div class="row viewport">
-								<div class="col-4 region">
-									<c:forEach items="${regionList}" var="region" varStatus="regionStatus">
-										<button type="button" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')}, '${region.get('regionName')}')">${region.get('regionName')}</button>
-									</c:forEach>
+									<div class="col-4 region">
+										<c:forEach items="${regionList}" var="region" varStatus="regionStatus">
+											<button type="button" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')}, '${region.get('regionName')}')">${region.get('regionName')}</button>
+										</c:forEach>
+									</div>
+									<div class="col-8 gu">
+										<c:forEach items="${guList}" var="gu" varStatus="regionStatus">
+											<c:choose>
+												<c:when test="${gu.get('regionCode') eq 101000}">
+													<button type="button" class="btn gu" id="${gu.get('guCode')}" onclick="guClick(${gu.get('guCode')}, '${gu.get('guName')}', ${gu.get('regionCode')})">${gu.get('guName')}</button></c:when>
+											</c:choose>
+										</c:forEach>
+									</div>
 								</div>
-								<div class="col-8 gu">
-									<c:forEach items="${guList}" var="gu" varStatus="regionStatus">
-										<c:choose>
-											<c:when test="${gu.get('regionCode') eq 101000}">
-												<button type="button" class="btn gu" id="${gu.get('guCode')}" onclick="guClick(${gu.get('guCode')}, '${gu.get('guName')}', ${gu.get('regionCode')})">${gu.get('guName')}</button></c:when>
-										</c:choose>
-									</c:forEach>
-								</div>
-							</div>
 							<div class="selected-region">
 							</div>
 						</div>
