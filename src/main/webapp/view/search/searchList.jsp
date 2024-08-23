@@ -57,43 +57,56 @@
 		let selectedGuCode = [];
 		let selectedGuName = [];
 		let selectedRegionCode = [];
-		
+	      
 	      function selectRegion(){
-	          let area = document.getElementById('area-region');
-	          let areaClose = document.getElementById('area-job');
+	         let area = document.getElementById('area-region');
+	         let areaClose = document.getElementById('area-job');
 
-	          let regionBtn = document.getElementById('btn-region');
-	          let jobBtn = document.getElementById('btn-job');
-	          
-	          if(area.style.display == "none" || area.style.display == ""){
-	             area.style.display = "block";
-	             areaClose.style.display = "none";
-	             
-	             regionBtn.style.color = "white";
-	             regionBtn.style.backgroundColor = "black";
+	         let regionBtn = document.getElementById('btn-region');
+	         let jobBtn = document.getElementById('btn-job');
+	         
+	         if(area.style.display == "none" || area.style.display == ""){
+	            area.style.display = "block";
+	            areaClose.style.display = "none";
+	            
+	            regionBtn.style.color = "white";
+	            regionBtn.style.backgroundColor = "black";
 
-	             jobBtn.style.color = "black";
-	             jobBtn.style.backgroundColor = "#f1f1f1";
-	             
-	          } else if (area.style.display == 'block') {
-	             area.style.display = "none";
-	             
-	             regionBtn.style.color = "black";
-	             regionBtn.style.backgroundColor = "#f1f1f1";
-	          }
-	       }
-		
-		function selectJob(){
-			let area = document.getElementById('area-job');
-			let areaClose = document.getElementById('area-region');
-			if(area.style.display == "none" || area.style.display == ""){
-				area.style.display = "block";
-				areaClose.style.display = "none";
-			} else if (area.style.display == 'block') {
-				area.style.display = "none";
-			}
-		}
-		
+	            jobBtn.style.color = "black";
+	            jobBtn.style.backgroundColor = "#f1f1f1";
+	            
+	         } else if (area.style.display == 'block') {
+	            area.style.display = "none";
+	            
+	            regionBtn.style.color = "black";
+	            regionBtn.style.backgroundColor = "#f1f1f1";
+	         }
+	      }
+	      
+	      function selectJob(){
+	         let area = document.getElementById('area-job');
+	         let areaClose = document.getElementById('area-region');
+	         
+	         let regionBtn = document.getElementById('btn-region');
+	         let jobBtn = document.getElementById('btn-job');
+	         
+	         if(area.style.display == "none" || area.style.display == ""){
+	            area.style.display = "block";
+	            areaClose.style.display = "none";
+
+	            jobBtn.style.color = "white";
+	            jobBtn.style.backgroundColor = "black";
+
+	            regionBtn.style.color = "black";
+	            regionBtn.style.backgroundColor = "#f1f1f1";
+	         } else if (area.style.display == 'block') {
+	            area.style.display = "none";
+	            
+	            jobBtn.style.color = "black";
+	            jobBtn.style.backgroundColor = "#f1f1f1";
+	         }
+	      }
+	      
 		function regionClick(regionCode){
 			let reCode = regionCode;
 			// console.log(reCode);
@@ -243,7 +256,7 @@
 						<button type="button" class="btn" id="btn-region" onclick="selectRegion()">지역선택</button>
 					</div>
 					<div class="col-6 job-select-box">
-						<button type="button" class="btn" id="btn-job"onclick="selectJob()">직업선택</button>
+						<button type="button" class="btn" id="btn-job" onclick="selectJob()">직업선택</button>
 					</div>
 				</div>
 				<div class="row area-region" id="area-region">
