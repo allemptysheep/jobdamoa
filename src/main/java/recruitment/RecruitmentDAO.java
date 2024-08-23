@@ -60,6 +60,48 @@ public class RecruitmentDAO extends DBConnect {
 		      return rs;
 		}
 		
+		public RecruitmentDTO getRecruitList(int start, int end) {
+			RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
+			List<Object> recruitmentList = new ArrayList<Object>(); 
+		    String query = "SELECT * FROM recruitment LIMIT ?, ?;";
+		    
+			try {
+		         psmt = con.prepareStatement(query);
+		         psmt.setInt(1, start);
+				 psmt.setInt(2, end);
+		         rs = psmt.executeQuery();
+		         
+		         while (rs.next()) {
+					   JSONObject jsonObject = new JSONObject();
+					   jsonObject.put("rec_idx", rs.getInt("rec_idx"));
+					   jsonObject.put("rec_title", rs.getString("rec_title"));
+					   jsonObject.put("rec_contents", rs.getString("rec_contents"));
+					   jsonObject.put("c_name", rs.getString("c_name"));
+					   jsonObject.put("rec_hire_type", rs.getString("rec_hire_type"));
+					   jsonObject.put("rec_work_history", rs.getString("rec_work_history"));
+					   jsonObject.put("region_name", rs.getString("region_name"));
+					   jsonObject.put("region_code", rs.getString("region_code"));
+					   jsonObject.put("gu_name", rs.getString("gu_name"));
+					   jsonObject.put("gu_code", rs.getString("gu_code"));
+					   jsonObject.put("rec_apply_startdate", rs.getDate("rec_apply_startdate"));
+					   jsonObject.put("rec_apply_enddate", rs.getDate("rec_apply_enddate"));
+					   jsonObject.put("rec_apply_method", rs.getString("rec_apply_method"));
+					   jsonObject.put("m_email", rs.getString("m_email"));
+					   
+					   recruitmentList.add(jsonObject);
+		         }
+		         System.out.println(recruitmentList);
+		         recruitmentDTO.setRecruitmentData(recruitmentList);
+		      } catch (Exception e) {
+		         // TODO: handle exception
+		         e.printStackTrace();
+		      }
+			
+			return recruitmentDTO;
+		}
+		
+		
+		// 전체 호출
 		public RecruitmentDTO getRecruitList() {
 			RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
 			List<Object> recruitmentList = new ArrayList<Object>(); 
@@ -192,5 +234,33 @@ public class RecruitmentDAO extends DBConnect {
 			}
 			
 			return rs;
+		}
+		
+		public int selectCount() {
+
+			int totalCount=0;
+			
+			String sql="select count(*) as cnt from recruitment";
+			
+			
+			try {
+				psmt=con.prepareStatement(sql);
+				
+				rs=psmt.executeQuery();
+				
+				//검색 건수가 1건이므로 
+				rs.next();
+				
+				//검색 총건수
+				totalCount=rs.getInt("cnt");
+				
+				System.out.println("totalCount:"+totalCount);
+				
+			} catch (Exception e) {
+				System.out.println("오류");
+				e.printStackTrace();
+			}
+			
+			return totalCount;
 		}
 }

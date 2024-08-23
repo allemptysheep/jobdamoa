@@ -29,8 +29,27 @@
 		pageContext.setAttribute("guList", guList);
 		pageContext.setAttribute("gThisList", guList);
 		
+
+		
+	
 		MainSearchListDTO searchList = (MainSearchListDTO)request.getAttribute("mainSearchListDTO");
 		pageContext.setAttribute("searchList", searchList);
+		
+		String keyword_old = request.getParameter("keyword");
+		String regionList_old = request.getParameter("regionList");
+		String guList_old = request.getParameter("guList");
+		
+		System.out.print("oldkey : " + regionList_old);
+		
+// paging
+		int page_now = Integer.parseInt(request.getAttribute("page_now").toString());
+		int pageSize = Integer.parseInt(request.getAttribute("pageSize").toString());
+		int blockSize = Integer.parseInt(request.getAttribute("blockSize").toString());
+		int totalCount = Integer.parseInt(request.getAttribute("totalCount").toString());
+		int totalPage = Integer.parseInt(request.getAttribute("totalPage").toString());
+		int first = Integer.parseInt(request.getAttribute("first").toString());
+		int last = Integer.parseInt(request.getAttribute("last").toString());
+		
 		
 	%>
 	<script>
@@ -291,6 +310,136 @@
 							</div>
 						</div>
 					</c:forEach>
+					<div class="list-write-box">
+							<div class="list-page-box">
+								<%
+							
+									// 페이징 처리 시작 /////////////////////////////
+									
+									int total_block = 0;
+									
+									int block = 0;
+									
+									int first_page = 0;
+									
+									int last_page = 0;
+									
+									int direct_page = 0;
+									
+									int my_page = 0;
+									
+									
+									total_block = (int)Math.ceil(totalPage / (double)blockSize); //총 블럭 수
+									
+									block = (int)Math.ceil(page_now / (double)blockSize); //현재 블럭
+									
+									first_page = (block - 1) * blockSize; //블럭내 시작하는 수
+									
+									last_page = block * blockSize; //블럭내 끝나는 수
+									
+									
+									
+									if(total_block <= block) { //마지막 블럭일 때
+									
+										last_page = totalPage; //반복문 변수 처리
+									
+									}
+									
+									
+									
+									
+									
+									// 이전 블럭 처리			
+									
+									if(block != 1){ //첫 블럭이 아니라면
+									
+									%>
+									<form action="/MainSearchServ" method="post" onsubmit="return agoSearch()">
+									<input class="form-control" id="keyword" name="keyword" value = "<%= keyword_old %>" hidden="true">
+									<input class="form-control" id="regionList" name="regionList" value='<%= regionList_old %>' hidden="true">
+									<input class="form-control" id="guList" name="guList" value = "<%= guList_old %>" hidden="true">
+										<input
+											class="form-control" name="page_now" id="page_now"
+											value="<%=first_page%>" placeholder="페이지" hidden="true">
+										<button class="btn search" type="submit" name="operator"
+											value="search">
+											<a class="indicator-btn"><img src="/img/btn_left.gif"></a>
+										</button>
+									</form>
+								<%
+									
+									}
+									
+									
+									
+									// 블럭내 페이지 수 출력 
+									
+									for(direct_page = first_page + 1; direct_page <= last_page; direct_page++){
+									
+										if(page_now == direct_page){
+									
+									%>
+
+								<span class="page_on"><%=direct_page%></span>&nbsp;
+
+								<%
+									
+										}else{
+									
+									%>
+
+								<span class="page_off">
+									<form action="/MainSearchServ" method="post" onsubmit="return agoSearch()">
+									<input class="form-control" id="keyword" name="keyword" value = "<%= keyword_old %>" hidden="true">
+									<input class="form-control" id="regionList" name="regionList" value='<%= regionList_old %>' hidden="true">
+									<input class="form-control" id="guList" name="guList" value = "<%= guList_old %>" hidden="true">
+										<input
+											class="form-control" name="page_now" id="page_now"
+											value="<%=direct_page%>" placeholder="페이지" hidden="true">
+										<button class="btn search" type="submit" name="operator"
+											value="search">
+											<%=direct_page%>
+										</button>
+									</form>
+								</span>&nbsp;
+
+								<%
+									
+										}
+									
+									}
+									
+										
+									
+									// 다음 블럭 처리
+									
+									if(block < total_block) { //다음 블럭 존재
+									
+								%>
+
+								&nbsp;
+									<form action="/MainSearchServ" method="post" onsubmit="return agoSearch()">
+									<input class="form-control" id="keyword" name="keyword" value = "<%= keyword_old %>" hidden="true">
+									<input class="form-control" id="regionList" name="regionList" value='<%= regionList_old %>' hidden="true">
+									<input class="form-control" id="guList" name="guList" value = "<%= guList_old %>" hidden="true">
+										<input
+											class="form-control" name="page_now" id="page_now"
+											value="<%=last_page + 1%>" placeholder="페이지" hidden="true">
+										<button class="btn search" type="submit" name="operator"
+											value="getLog">
+											<a class="indicator-btn"><img src="/img/btn_right.gif"></a>
+										</button>
+									</form>
+								<%
+									
+									}
+									
+									//페이징 처리 끝 /////////////////////////////			
+									
+									%>
+							</div>
+							<div></div>
+						</div>
 				</c:when>
 			</c:choose>
 		</div>

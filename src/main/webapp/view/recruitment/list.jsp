@@ -9,11 +9,38 @@
 <fmt:bundle basename="resource.language">
 	<%
 		RecruitmentDAO recruitmentDAO = new RecruitmentDAO(application);
-		RecruitmentDTO recruitmentDTO = recruitmentDAO.getRecruitList();
+		int totalCount=recruitmentDAO.selectCount();
+					
+		//전체 페이지 계산
+		//한페이지당 보여주는 row 수
+		int pageSize=10;
+		//화면하단 페이지 수
+		int blockPage=10;
+		//전체 페이지수
+		int totalPage=(int)Math.ceil((double)totalCount/pageSize);
+		
+		//현재 페이지 확인
+		int pageNum=1;
+		String pageTemp=request.getParameter("pageNum");
+		
+		if(pageTemp!=null && !pageTemp.equals("")){
+			pageNum=Integer.parseInt(pageTemp);
+		}
+				
+		//목록에 출력한 게시물 범위 계산
+		int start=(pageNum-1)*pageSize;
+		int end=pageSize;
+	
+		
+		RecruitmentDTO recruitmentDTO = recruitmentDAO.getRecruitList(start, end);
 		
 		List<Object> recruitmentList = recruitmentDTO.getRecruitmentData();
 		
 		pageContext.setAttribute("recruitList", recruitmentList);
+		
+		
+		
+		
 	%>
 	<div class="container main">
 		<div class = "row d-flex recruit-list">
@@ -52,7 +79,48 @@
 				</div>	
 			</c:forEach>
 		</div>
-		
+		<div class = "row pagination-block">
+		<nav aria-label="Page navigation">
+		  <ul class="pagination justify-content-center">
+		  		<%
+					int pageCount=(((pageNum-1)/blockPage)*blockPage)+1;
+				
+					if(pageCount != 1){
+				%>
+		    <li class="page-item disabled">
+		      <a class="page-link" href='list.jsp?pageNum=1'>[첫 페이지]</a>
+		      <a class="page-link" href='list.jsp?pageNum=<%=pageCount-1%>'>[이전 블록]</a>
+		    </li>
+		    <%
+				}
+				
+				int blockCount=1;
+				while(blockCount<=blockPage && pageCount<=totalPage){
+					//현재 페이지인 경우 처리
+					if(pageCount==pageNum){
+			%>
+					<li class="page-item"><a class="page-link active-page" href = "#"><%=pageCount %></a></li>
+				<%
+					}else{
+				%>		
+						<li class="page-item"><a class="page-link" href='list.jsp?pageNum=<%=pageCount%>'><%=pageCount%></a></li>
+				<%
+					}
+				
+					pageCount++;
+					blockCount++;
+				}
+				
+				if(pageCount<=totalPage){
+				%>
+				<li class="page-item">
+				<a href='list.jsp?pageNum=<%=pageCount+1%>'>[다음 블록]</a>
+				<a href='list.jsp?pageNum=<%=totalPage%>'>[마지막 페이지]</a>
+				</li>
+				<% } %>
+		  </ul>
+		</nav>
+		</div>
 		
 		<%@ include file="/include/footer.jsp"%>
 	</div>

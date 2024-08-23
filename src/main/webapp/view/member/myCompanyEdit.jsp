@@ -12,6 +12,16 @@
 	CompanyDTO companyDTO = companyDAO.getCompanyDTO(mEmail);
 %>
 <script>
+	$(document).ready(function() {
+		$('#establishment_date')
+		.datepicker({
+		    dateFormat: 'yymmdd'//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+		})
+		.on('changeDate', function (e) {
+		    console.log(e);
+		});
+	});
+
 	function submitAgo() {
 		var email = $('#email').val();
 		var passWd = $('#passWd').val();
@@ -61,7 +71,7 @@
 						</div>
 						
 						<div class="my-company-salary-box">
-							<input class="form-control" type="text" name="averageSalary" id="average-salary" value="<%=companyDTO.getAverage_salary() %>" placeholder='<fmt:message key="CompanyInfo.AverageSalery" />' />
+							<input class="form-control" type="text" name="averageSalary" id="average-salary" value="<%=companyDTO.getAverage_salary() %>" placeholder='<fmt:message key="CompanyInfo.AverageSalary" />' />
 						</div>
 						
 						<div class="my-company-capital-stock-box">
@@ -106,9 +116,6 @@
 							<div class="row">
 								<div class="col-6 edit">
 									<button type="submit" class="btn btn-light" id="submit_edit" name="operator" value="edit" ><fmt:message key="CompanyInfo.Edit" /></button>
-								</div>
-								<div class="col-6 delete">
-									<button type="submit" class="btn btn-light" id="submit_delete" name="operator" value="delete" ><fmt:message key="CompanyInfo.Delete" /></button>
 								</div>
 							</div>
 						</div>
