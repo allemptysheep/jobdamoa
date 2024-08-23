@@ -4,7 +4,7 @@
 <%@include file="/view/member/is_signIn.jsp"%>
 <%@ page import="company.CompanyDAO" %>
 <%@page import="company.CompanyDTO"%>
-<link href="/css/member/mycompanyedit.scss" rel="stylesheet" type="text/css">
+<link href="/css/member/memberedit.scss" rel="stylesheet" type="text/css">
 <fmt:bundle basename="resource.language">
 <% 
 	String mEmail = (String)session.getAttribute("mEmail");
@@ -29,86 +29,75 @@
 	}
 </script>
 	<div class="container main">
-		<div class="my-company-main">
-			<div class="my-company-title-box">
-				<div class="my-company-title">
-					<fmt:message key="CompanyInfo" />
+		<div class="signup-main">
+			<div class="signup-title-box">
+				<div class="signup-title">
+					<fmt:message key="MemberInfo" />
 				</div>
 			</div>
 			
-			<div class="my-company-box">
+			<div class="signup-box">
 				<form action="/CompanyInfoServ" method="post" onsubmit="return submitAgo()">
-					<div class="my-company-data-box">
+					<div class="signup-data-box">
 					
-						<div class="my-company-name-box">
-							<input class="form-control" type="text" name="companyName" id="name" value="<%= companyDTO.getC_name() %>" placeholder='<fmt:message key="CompanyInfo.Name"/>'/>
+						<div class="signup-email-box">
+							<input class="form-control" type="text" name="company_name" id="name" value="<%=companyDTO.getC_Name()%>" placeholder='<fmt:message key="MemberInfo.Email"/>'/>
 						</div>
 						
-						<div class="my-company-ceo-name-box">
-							<input class="form-control" type="text" name="companyCeoName" id="ceo_name" value="<%= companyDTO.getC_ceo_name() %>" placeholder='<fmt:message key="CompanyInfo.CeoName" />'/>
+						<div class="signup-password-box">
+							<input class="form-control" type="password" name="member_password" id="passWd" value="" placeholder='<fmt:message key="MemberInfo.Password" />'/>
 						</div>
 						
-						<div class="my-company-establishment-box">
-							<input class="form-control" type="text" name="establishmentDate" id="establishment_date" value="<%= companyDTO.getC_establishment_date() %>" placeholder='<fmt:message key="CompanyInfo.EstablishmentDate" />'/>
+						<div class="signup-name-box">
+							<input class="form-control" type="text" name="member_last_name" id="lastName" value="<%=memberDTO.getName().split(" ")[0]%>" placeholder='<fmt:message key="MemberInfo.LastName" />' readonly="readonly"/>
+							<input class="form-control" type="text" name="member_first_name" id="firstName" value="<%=memberDTO.getName().split(" ")[1]%>" placeholder='<fmt:message key="MemberInfo.FirstName" />' readonly="readonly"/>
 						</div>
 							
-						<div class="my-company-income-box">
-							<input class="form-control" type="text" name="companyIncome" id="income" value="<%=companyDTO.getC_income() %>" placeholder='<fmt:message key="CompanyInfo.Income" />' />
+						<div class="signup-phone-num-box">
+							<input class="form-control" type="text" name="member_Phonenum" id="phoneNum" value="<%=memberDTO.getPhoneNum()%>" placeholder='<fmt:message key="MemberInfo.PhoneNumber" />' />
 						</div>
 						
-						<div class="my-company-employee-box">
-							<input class="form-control" type="text" name="employeeNumber" id="employee_number" value="<%=companyDTO.getEmployee_number() %>" placeholder='<fmt:message key="CompanyInfo.EmployeeNumber" />' />
+						<div class="signup-nick-name-box">
+							<input class="form-control" type="text" name="member_Nickname" id="nickName" value="<%=memberDTO.getNickName()%>" placeholder='<fmt:message key="MemberInfo.NickName" />' />
 						</div>
 						
-						<div class="my-company-salary-box">
-							<input class="form-control" type="text" name="averageSalary" id="average-salary" value="<%=companyDTO.getAverage_salary() %>" placeholder='<fmt:message key="CompanyInfo.AverageSalery" />' />
-						</div>
-						
-						<div class="my-company-capital-stock-box">
-							<input class="form-control" type="text" name="capitalStock" id="capital-stock" value="<%=companyDTO.getCapital_stock() %>" placeholder='<fmt:message key="CompanyInfo.CapitalStock" />' />
-						</div>
-						
-						<div class="my-company-occupation-box">
-							<input class="form-control" type="text" name="opccupation" id="occupation" value="<%=companyDTO.getOccupation() %>" placeholder='<fmt:message key="CompanyInfo.Occupation" />' />
-						</div>
-						
-						<div class="my-company-address-box">
+						<div class="signup-address-box">
 							<div class="row">
 								<div class="col-6">
-									<input class="btn" type="button" id="add_search_btn" onclick="sample4_execDaumPostcode()" value='<fmt:message key="CompanyInfo.AddressSearch" />'>
+									<input class="btn" type="button" id="add_search_btn" onclick="sample4_execDaumPostcode()" value='<fmt:message key="MemberInfo.AddressSearch" />'>
 								</div>
 								<div class="col-6">
-									<input class="form-control" type="text" id="sample4_postcode" name="zipCode" value="<%= companyDTO.getC_zipcode() %>" placeholder='<fmt:message key="CompanyInfo.PostNumber" />'>
+									<input class="form-control" type="text" id="sample4_postcode" name="zipCode" value="<%=memberDTO.getZipcode()%>" placeholder='<fmt:message key="MemberInfo.PostNumber" />'>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<input type="text" id="sample4_roadAddress" name="roadAddredd" value="<%= companyDTO.getC_road_address() %>" placeholder='<fmt:message key="CompanyInfo.RoadNameAddress" />'>
+									<input type="text" id="sample4_roadAddress" name="roadAddredd" value="<%=memberDTO.getRoadAddress()%>" placeholder='<fmt:message key="MemberInfo.RoadNameAddress" />'>
 								</div>
 								<div class="col-6">
-									<input type="text" id="sample4_jibunAddress" name="jibunAddress" value="<%=companyDTO.getC_jibun_address() %>" placeholder='<fmt:message key="CompanyInfo.StreetNumberAddress" />'>
+									<input type="text" id="sample4_jibunAddress" name="jibunAddress" value="<%=memberDTO.getJibunAddress()%>" placeholder='<fmt:message key="MemberInfo.StreetNumberAddress" />'>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-12">
-									<input class="form-control" type="text" id="sample4_detailAddress" name="detailAddress" value="<%= companyDTO.getC_detail_address() %>" placeholder='<fmt:message key="CompanyInfo.DetailAddress" />'>
+									<input class="form-control" type="text" id="sample4_detailAddress" name="detailAddress" value="<%=memberDTO.getDetailAddress()%>" placeholder='<fmt:message key="MemberInfo.DetailAddress" />'>
 								</div>
 							</div>
 							<span id="guide" style="color:#999;display:none"></span>
 							<div class="row">
 								<div class="col-12">
-									<input class="form-control" type="text" id="sample4_extraAddress" name="refAddress" value="<%= companyDTO.getC_ref_address() %>" placeholder='<fmt:message key="CompanyInfo.AdditionalAddress" />'>
+									<input class="form-control" type="text" id="sample4_extraAddress" name="refAddress" value="<%=memberDTO.getRefAddress()%>" placeholder='<fmt:message key="MemberInfo.AdditionalAddress" />'>
 								</div>
 							</div>
 						</div>
 						
-						<div class="my-company-btn-box">
+						<div class="signup-btn-box">
 							<div class="row">
 								<div class="col-6 edit">
-									<button type="submit" class="btn btn-light" id="submit_edit" name="operator" value="edit" ><fmt:message key="CompanyInfo.Edit" /></button>
+									<button type="submit" class="btn btn-light" id="submit_edit" name="operator" value="edit" ><fmt:message key="MemberInfo.Edit" /></button>
 								</div>
 								<div class="col-6 delete">
-									<button type="submit" class="btn btn-light" id="submit_delete" name="operator" value="delete" ><fmt:message key="CompanyInfo.Delete" /></button>
+									<button type="submit" class="btn btn-light" id="submit_delete" name="operator" value="delete" ><fmt:message key="MemberInfo.Delete" /></button>
 								</div>
 							</div>
 						</div>

@@ -9,7 +9,7 @@ if (mEmail == null) {
 <script>
 	var needLoginMsg = '<fmt:message key="NeedSignIn"></fmt:message>';
 	alert(needLoginMsg);
-	location.href = "/view/member/signIn.jsp";
+	location.href = "/member/signIn.jsp";
 </script>
 <%
 }
