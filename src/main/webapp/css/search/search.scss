@@ -44,7 +44,7 @@ form {
 		width: 100%;
 
 		.col.region-search {
-			padding: 12px 0 12px 30px;
+			padding: 12px 12px 12px 30px;
 			height: 60px;
 			border-bottom: 1px solid #e7e7e7;
 		}
@@ -67,14 +67,14 @@ form {
 			overflow: scroll;
 			height: 245px;
 			border-left: 1px solid #f1f1f1;
+			padding: 5px;
 		}
 
 		button.region {
 			width: 45%;
-			text-align: left;
 			background-color: white;
 			border: 1px solid #f1f1f1;
-			margin: 8px 8px 4px 8px;
+			margin: 7px 8px 4px 7px;
 		}
 
 		button.gu {
@@ -120,7 +120,7 @@ form {
 		width: 100%;
 
 		.col.job-search {
-			padding: 12px 0 12px 30px;
+			padding: 12px 12px 12px 30px;
 			height: 60px;
 			border-bottom: 1px solid #e7e7e7;
 		}
@@ -143,6 +143,7 @@ form {
 			overflow: scroll;
 			height: 245px;
 			border-left: 1px solid #f1f1f1;
+			padding: 5px;
 		}
 
 		button.job-class {
@@ -150,7 +151,7 @@ form {
 			text-align: left;
 			background-color: white;
 			border: 1px solid #f1f1f1;
-			margin: 8px 8px 4px 8px;
+			margin: 7px 8px 4px 7px;
 		}
 
 		button.job {
@@ -183,5 +184,12 @@ form {
 }
 
 .row.search {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	padding: 2rem;
 	width: 100%;
+}
+
+.col.submit {
+    display: inline-flex;
 }
