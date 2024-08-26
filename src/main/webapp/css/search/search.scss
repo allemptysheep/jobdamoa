@@ -12,6 +12,10 @@ form {
 	padding: 0;
 }
 
+.col-6.region-select-box {
+	border-right: 1px solid #f9f9f9;
+}
+
 .region-select-box {
 	background-color: white;
 	padding: 0;
@@ -44,7 +48,7 @@ form {
 		width: 100%;
 
 		.col.region-search {
-			padding: 12px 12px 12px 30px;
+			padding: 12px 30px 12px 30px;
 			height: 60px;
 			border-bottom: 1px solid #e7e7e7;
 		}
@@ -120,7 +124,7 @@ form {
 		width: 100%;
 
 		.col.job-search {
-			padding: 12px 12px 12px 30px;
+			padding: 12px 30px 12px 30px;
 			height: 60px;
 			border-bottom: 1px solid #e7e7e7;
 		}
@@ -191,5 +195,23 @@ form {
 }
 
 .col.submit {
-    display: inline-flex;
+	display: inline-flex;
+	margin-top: 10px;
+}
+
+input#keyword {
+	margin-right: 10px;
+	border-radius: 0px;
+	width: 100%;
+}
+
+button.btn.keyword-search {
+	border-radius: 0px;
+	width: 200px;
+}
+
+.row.contents {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }

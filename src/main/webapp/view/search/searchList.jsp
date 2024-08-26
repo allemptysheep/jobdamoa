@@ -11,6 +11,7 @@
 <link href="/css/recruitment/recruitment.scss" rel="stylesheet" type="text/css">
 <fmt:bundle basename="resource.language">
 	<%
+		String mEmail = (String)session.getAttribute("mEmail");
 		RegionDAO regionDAO = new region.RegionDAO(application);
 		RegionDTO regionDTO = regionDAO.getRegion();
 		RegionDTO saraminGuDTO = regionDAO.getGu();
@@ -40,7 +41,8 @@
 		String regionList_old = request.getParameter("regionList");
 		String guList_old = request.getParameter("guList");
 		
-		System.out.print("oldkey : " + regionList_old);
+		System.out.println("oldkey : " + regionList_old);
+		System.out.println("mEmail : " + mEmail);
 		
 // paging
 		int page_now = Integer.parseInt(request.getAttribute("page_now").toString());
@@ -248,6 +250,11 @@
 			var link = '/view/recruitment/recruitmentView.jsp?recIdx=' + idx;
 			location.href=link;
 		}
+		
+		function recruitmentEdit(idx){
+			var link = '/view/recruitment/recruitmentEdit.jsp?rec_idx=' + idx;
+			location.href=link;
+		}
 	</script>
 	<div class="container main">
 		<div class="row search">
@@ -316,7 +323,7 @@
 				
 				<div class="row submit">
 					<div class="col submit">
-						<input type="text" id="keyword" name="keyword">
+						<input class="form-control" type="text" id="keyword" name="keyword">
 						<input type="hidden" id="regionList" name="regionList" value='${regionCodeList}'>
 						<input type="hidden" id="guList" name="guList">
 						<input hidden="true" name="first" value="0">
@@ -339,25 +346,27 @@
 										<ul class = "full-ul">
 											<li class = "full-li">
 												<div class = "list-top">
-													<c:out value = "${searchData.get('m_email')}"></c:out>
-												</div>
-												<div class = "list-middle">
 													<div class = "in-list-top">
 														<c:out value = "${searchData.get('rec_title')}"></c:out>
 													</div>
 													<div class = "in-list-middle">
-														<c:out value = "${searchData.get('rec_title')}"></c:out>
+														<c:out value = "${searchData.get('region_name')}"></c:out>
 													</div>
 													<div class = "in-list-bottom">
-														<c:out value = "${searchData.get('rec_title')}"></c:out>
+														<c:out value = "${searchData.get('rec_apply_enddate')}"></c:out> 까지
 													</div>
-													
+												</div>
+												<div class = "list-middle">
+													<div class="row">담당자 이메일</div>
+													<div class="row">${searchData.get('m_email')}</div>
 												</div>
 												<div class = "list-bottom">
 													<c:out value = "${recruit.get('rec_apply_startdate')}"></c:out>
-													<button onclick="recruitmentView(${searchData.get('rec_idx')})">자세히</button>
-													<a href = "/view/recruitment/recruitmentEdit.jsp?rec_idx=${searchData.get('rec_idx')}">수정</a>
-												</div>
+													<button class="btn detail" onclick="recruitmentView(${searchData.get('rec_idx')})">자세히</button>
+													<c:if test="${mEmail eq searchData.get('m_email')}">
+														<button class="btn edit" onclick="recruitmentEdit(${searchData.get('rec_idx')})">수정</button>
+													</c:if>
+													</div>
 										  </li>
 										</ul>
 									</div>		
