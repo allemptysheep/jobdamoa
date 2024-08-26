@@ -224,10 +224,10 @@
          <form action="/MainSearchServ" method="post">
             <div class="row select-search-option">
                <div class="col-6 region-select-box">
-                  <button type="button" class="btn" id="btn-region" onclick="selectRegion()">지역선택</button>
+                  <button type="button" class="btn" id="btn-region" onclick="selectRegion()"><fmt:message key="Home.Region.Select" /></button>
                </div>
                <div class="col-6 job-select-box">
-                  <button type="button" class="btn" id="btn-job" onclick="selectJob()">직업선택</button>
+                  <button type="button" class="btn" id="btn-job" onclick="selectJob()"><fmt:message key="Home.Job.Select" /></button>
                </div>
             </div>
             <div class="row area-region" id="area-region">
@@ -241,10 +241,10 @@
                      <c:forEach items="${regionList}" var="region" varStatus="regionStatus">
                         <c:choose>
                            <c:when test="${region.get('regionCode') eq 101000}">
-                              <button type="button" style="background-color: black;color:white;" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')})">${region.get('regionName')}</button>
+                              <button type="button" style="background-color: black;color:white;" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')})"><fmt:message key="${region.get('regionCode')}" /></button>
                            </c:when>
                            <c:when test="${region.get('regionCode') ne 101000}">
-                              <button type="button" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')})">${region.get('regionName')}</button>
+                              <button type="button" class="btn region" id="${region.get('regionCode')}" onclick="regionClick(${region.get('regionCode')})"><fmt:message key="${region.get('regionCode')}" /></button>
                            </c:when>
                         </c:choose>
                      </c:forEach>
