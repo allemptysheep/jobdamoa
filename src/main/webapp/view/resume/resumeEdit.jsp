@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp"%>
+<%@include file="/view/member/is_signIn.jsp"%>
 <%@ page import="member.MemberDAO" %>
 <link href="/css/member/signup.scss" rel="stylesheet" type="text/css">
 <fmt:bundle basename="resource.language">
@@ -35,14 +36,18 @@
 		
 		ResumeDAO resumeDAO = new ResumeDAO(application);
 		ResumeDTO resumeData =  resumeDAO.selectResume(resumeInfoIdx);
-
+		
+		System.out.println("resumeData : " + resumeData);
+		
 		pageContext.setAttribute("resumeInfoIdx", resumeInfoIdx);
 		pageContext.setAttribute("resumeData", resumeData);
 	%>
 <div class="container main">
 	<h1>이력서 수정</h1>
 <form action="/ResumeServ" method="post">
-		<input name="resumeInfoIdx" value="${resumeInfoIdx}" readonly="readonly" hidden>
+		<input type="hidden" name="resumeInfoIdx" value="${resumeInfoIdx}" readonly="readonly">
+		<input type="hidden" name="resumeData" value="${resumeData}" readonly="readonly">
+		<input type="hidden" name="resumeData" value="${resumeData.key}" readonly="readonly">
 					<div class="row">	
 						<div class="col-4">
 							<h4>이력서이름</h4>
@@ -99,7 +104,7 @@
 					<div class="row">
 					
 						<div class="col-2">
-							<input class="form-control text-center" type="text" id="sample4_postcode" placeholder="우편번호" name="z1" value="${resumeData.z1}">
+							<input class="form-control text-center" type="text" id="sample4_postcode" placeholder="우편번호" name="zipCode" value="${resumeData.zipcode}">
 						</div>
 							<input class="btn btn-dark" type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
 						</div>
@@ -109,10 +114,10 @@
 					<td>
 					<div class="row">
 						<div class="col-6">
-							<input class="form-control text-center" type="text" id="sample4_roadAddress" placeholder="도로명주소" name="z2" value="${resumeData.z2}">
+							<input class="form-control text-center" type="text" id="sample4_roadAddress" placeholder="도로명주소" name="roadAdd" value="${resumeData.roadAdd}">
 						</div>
 						<div class="col-6">
-							<input class="form-control text-center" type="text" id="sample4_jibunAddress" placeholder="지번주소" name="z3" value="${resumeData.z3}">
+							<input class="form-control text-center" type="text" id="sample4_jibunAddress" placeholder="지번주소" name="jibunAdd" value="${resumeData.jibunAdd}">
 							<span id="guide" style="color:#999;display:none"></span>
 						</div>
 					</div>
@@ -122,10 +127,10 @@
 					<td>
 					<div class="row">
 						<div class="col-6">
-							<input class="form-control text-center" type="text" id="sample4_detailAddress" placeholder="상세주소" name="z4" value="${resumeData.z4}">
+							<input class="form-control text-center" type="text" id="sample4_detailAddress" placeholder="상세주소" name="detailAdd" value="${resumeData.detailAdd}">
 						</div>
 						<div class="col-6">
-							<input class="form-control text-center" type="text" id="sample4_extraAddress" placeholder="참고항목" name="z5" value="${resumeData.z5}">
+							<input class="form-control text-center" type="text" id="sample4_extraAddress" placeholder="참고항목" name="refAdd" value="${resumeData.refAdd}">
 						</div>
 					</div>
 					</td>
@@ -144,27 +149,27 @@
 				<tr>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="h1" type="text" class="form-control form-control-sm text-center"  placeholder="EX) @@고등학교" value="${resumeData.h1}">
+						<input name="eduName" type="text" class="form-control form-control-sm text-center"  placeholder="EX) @@고등학교" value="${resumeData.eduName}">
 					</div>
 					</div></td>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="h2" type="text" class="form-control form-control-sm text-center"  placeholder="EX) @@과" value="${resumeData.h2}">
+						<input name="eduClass" type="text" class="form-control form-control-sm text-center"  placeholder="EX) @@과" value="${resumeData.eduClass}">
 					</div>
 					</div></td>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="h3" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900-3-1~" value="${resumeData.h3}">
+						<input name="eduEnt" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900-3-1~" value="${resumeData.eduEnt}">
 					</div>
 					</div></td>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="h4" type="text" class="form-control form-control-sm text-center"  placeholder="EX) ~1900-2-21" value="${resumeData.h4}">
+						<input name="eduGrad" type="text" class="form-control form-control-sm text-center"  placeholder="EX) ~1900-2-21" value="${resumeData.eduGrad}">
 					</div>
 					</div></td>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="h5" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 재학중/졸업/퇴학/휴학" value="${resumeData.h5}">
+						<input name="eduGradEn" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 재학중/졸업/퇴학/휴학" value="${resumeData.eduGradEn}">
 					</div>
 					</div></td>					
 				</tr>				
@@ -184,27 +189,27 @@
 				<tr>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="wloc" type="text" class="form-control form-control-sm text-center"  placeholder="EX) @@테크" value="${resumeData.wloc}">
+						<input name="expLoc" type="text" class="form-control form-control-sm text-center"  placeholder="EX) @@테크" value="${resumeData.expLoc}">
 					</div>
 					</div></td>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="wrank" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 사원/대리..." value="${resumeData.wrank}">
+						<input name="expRank" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 사원/대리..." value="${resumeData.expRank}">
 					</div>
 					</div></td>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="mwork" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 소프트웨어 개발" value="${resumeData.mwork}">
+						<input name="expResp" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 소프트웨어 개발" value="${resumeData.expResp}">
 					</div>
 					</div></td>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="swork" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900년-1-1 " value="${resumeData.swork}">
+						<input name="expSWork" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900년-1-1 " value="${resumeData.expSWork}">
 					</div>
 					</div></td>
 					<td><div class="row">
 					<div class="col-12">
-						<input name="ework" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900-1-1" value="${resumeData.ework}">
+						<input name="expEWork" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900-1-1" value="${resumeData.expEWork}">
 					</div>
 					</div></td>
 				</tr>
@@ -227,22 +232,22 @@
 		<tr>
 			<td height="20"><div class="row">
 					<div class="col-12">
-						<input name="dqua" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900-1-1" value="${resumeData.dqua}">
+						<input name="quaDate" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900-1-1" value="${resumeData.quaDate}">
 					</div>
 					</div></td>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="nqua" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 정보처리기사" value="${resumeData.nqua}">
+						<input name="quaName" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 정보처리기사" value="${resumeData.quaName}">
 					</div>
 					</div></td>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="rqua" type="text" class="form-control form-control-sm text-center"  placeholder="EX) @@점/@급" value="${resumeData.rqua}">
+						<input name="quaRank" type="text" class="form-control form-control-sm text-center"  placeholder="EX) @@점/@급" value="${resumeData.quaRank}">
 					</div>
 					</div></td>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="pqua" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 기관이름" value="${resumeData.pqua}">
+						<input name="quaAppr" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 기관이름" value="${resumeData.quaAppr}">
 					</div>
 					</div></td>
 		</tr>
@@ -258,13 +263,13 @@
 			<th width="15%">희망직종</th>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="jhope" type="text" class="form-control form-control-sm"  placeholder="EX) 프로그래머" value="${resumeData.jhope}">
+						<input name="hopeJob" type="text" class="form-control form-control-sm"  placeholder="EX) 프로그래머" value="${resumeData.hopeJob}">
 					</div>
 					</div></td>
 			<th width="15%">희망급여</th>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="phope" type="text" class="form-control form-control-sm"  placeholder="EX) @@@만원" value="${resumeData.phope}">
+						<input name="hopePay" type="text" class="form-control form-control-sm"  placeholder="EX) @@@만원" value="${resumeData.hopePay}">
 					</div>
 					</div></td>
 		</tr>
@@ -272,13 +277,13 @@
 			<th>희망근무지</th>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="lhope" type="text" class="form-control form-control-sm"  placeholder="EX) 지역이름" value="${resumeData.lhope}">
+						<input name="hopeLoc" type="text" class="form-control form-control-sm"  placeholder="EX) 지역이름" value="${resumeData.hopeLoc}">
 					</div>
 					</div></td>
 			<th>종전급여</th>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="presv" type="text" class="form-control form-control-sm"  placeholder="EX) @@@만원" value="${resumeData.presv}">
+						<input name="hopePres" type="text" class="form-control form-control-sm"  placeholder="EX) @@@만원" value="${resumeData.hopePres}">
 					</div>
 					</div></td>
 		</tr>
@@ -296,22 +301,22 @@
 		
 			<td height="20"><div class="row">
 					<div class="col-12">
-						<input name="dact" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900-1-1" value="${resumeData.dact}">					
+						<input name="extDate" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 1900-1-1" value="${resumeData.extDate}">					
 					</div>
 					</div></td>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="cact" type="text" class="form-control form-control-sm text-center"  placeholder="" value="${resumeData.cact}" >
+						<input name="extContent" type="text" class="form-control form-control-sm text-center"  placeholder="" value="${resumeData.extContent}" >
 					</div>
 					</div></td>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="nact" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 기관이름" value="${resumeData.nact}" >
+						<input name="extName" type="text" class="form-control form-control-sm text-center"  placeholder="EX) 기관이름" value="${resumeData.extName}" >
 					</div>
 					</div></td>
 			<td><div class="row">
 					<div class="col-12">
-						<input name="hact" type="text" class="form-control form-control-sm text-center"  placeholder="" value="${resumeData.hact}">
+						<input name="extEct" type="text" class="form-control form-control-sm text-center"  placeholder="" value="${resumeData.extEct}">
 					</div>
 					</div></td>
 		</tr>

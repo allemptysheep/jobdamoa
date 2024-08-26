@@ -13,36 +13,36 @@ public class ResumeDTO {
 	String ename;
 	String birth;
 	String phone;
-	String z1;
-	String z2;
-	String z3;
-	String z4;
-	String z5;
+	String zipcode;
+	String roadAdd;
+	String jibunAdd;
+	String detailAdd;
+	String refAdd;
 	//edu
-	String h1;
-	String h2;
-	String h3;
-	String h4;
-	String h5;
+	String eduName;
+	String eduClass;
+	String eduEnt;
+	String eduGrad;
+	String eduGradEn;
 	//exp
-	String wloc;
-	String wrank;
-	String mwork;
-	String swork;
-	String ework;
+	String expLoc;
+	String expRank;
+	String expResp;
+	String expSWork;
+	String expEWork;
 	//qua
-	String dqua;
-	String nqua;
-	String rqua;
-	String pqua;
+	String quaDate;
+	String quaName;
+	String quaRank;
+	String quaAppr;
 	//hope
-	String jhope;
-	String phope;
-	String lhope;
-	String presv;
+	String hopeJob;
+	String hopePay;
+	String hopeLoc;
+	String hopePres;
 	//ext
-	String dact;
-	String cact;
-	String nact;
-	String hact;
+	String extDate;
+	String extContent;
+	String extName;
+	String extEct;
 }
