@@ -287,7 +287,7 @@
             
             <div class="row submit">
                <div class="col submit">
-					<input type="text" id="keyword" name="keyword">
+					<input class="form-control" type="text" id="keyword" name="keyword">
 					<input type="hidden" id="regionList" name="regionList" value='${regionCodeList}'>
 					<input type="hidden" id="guList" name="guList">
 					<input hidden="true" name="first" value="0">
@@ -296,6 +296,16 @@
                </div>
             </div>
          </form>
+      </div>
+      <div class="row contents">
+      	<div class="row">
+      		<div class="section main-slider" data-anchor="firstPage">
+				<jsp:include page="/view/slider/slider.jsp" flush="false" >
+	            	<jsp:param name="sliderName" value="mainSlider" />
+					<jsp:param name="innerClass" value="mainSlider" />
+	             </jsp:include>
+			</div>
+      	</div>
       </div>
    </div>
 </fmt:bundle>

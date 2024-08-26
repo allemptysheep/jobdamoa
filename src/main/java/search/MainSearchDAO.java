@@ -55,8 +55,8 @@ public class MainSearchDAO extends DBConnect {
 		}
 
 		if (keyword != "") {
-			keyword = "%" + keyword + "% ";
-			query += "AND rec_contents LIKE " + keyword;
+			keyword = "'%" + keyword + "%' ";
+			query += "AND rec_title LIKE " + keyword;
 		}
 		
 		query += " ORDER BY rec_idx DESC " + ") recruitment, (SELECT @ROWNUM := 0) tmp" + ") AS boardT"
@@ -135,8 +135,8 @@ public class MainSearchDAO extends DBConnect {
 		}
 
 		if (keyword != "") {
-			keyword = "%" + keyword + "% ";
-			query += "AND rec_contents LIKE " + keyword;
+			keyword = "'%" + keyword + "%' ";
+			query += "AND rec_title LIKE " + keyword;
 		}
 
 		System.out.println(query);
