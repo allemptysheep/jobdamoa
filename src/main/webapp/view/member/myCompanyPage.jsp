@@ -55,7 +55,6 @@
 	%>
 	<div class="container main">
 		<a href = "/view/member/myCompanyEdit.jsp">회사 정보 수정</a>
-		<a href = "#">내가 등록한 채용공고</a>
-		<%@ include file="/include/footer.jsp"%>
+		<a href = "/view/member/myRecruitmentList.jsp">내가 등록한 채용공고</a>
 	</div>
 </fmt:bundle>

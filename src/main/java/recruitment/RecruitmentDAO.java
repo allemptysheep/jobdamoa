@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 import org.json.simple.JSONObject;
 
 import common.DBConnect;
+import resume.ResumeListDTO;
 
 public class RecruitmentDAO extends DBConnect {
 		public RecruitmentDAO (ServletContext application) {
@@ -140,6 +141,48 @@ public class RecruitmentDAO extends DBConnect {
 			return recruitmentDTO;
 		}
 		
+		// 개별 호출
+		public RecruitmentDTO getMyRecruitList(String mEmail, int start, int end) {
+			RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
+			List<Object> recruitmentList = new ArrayList<Object>(); 
+		    String query = "SELECT * FROM recruitment WHERE m_email = (?) LIMIT ?, ?;";
+		    
+			try {
+		         psmt = con.prepareStatement(query);
+		         psmt.setString(1, mEmail);
+		         psmt.setInt(2, start);
+		         psmt.setInt(3, end);
+		         rs = psmt.executeQuery();
+		         
+		         while (rs.next()) {
+					   JSONObject jsonObject = new JSONObject();
+					   jsonObject.put("rec_idx", rs.getInt("rec_idx"));
+					   jsonObject.put("rec_title", rs.getString("rec_title"));
+					   jsonObject.put("rec_contents", rs.getString("rec_contents"));
+					   jsonObject.put("c_name", rs.getString("c_name"));
+					   jsonObject.put("rec_hire_type", rs.getString("rec_hire_type"));
+					   jsonObject.put("rec_work_history", rs.getString("rec_work_history"));
+					   jsonObject.put("region_name", rs.getString("region_name"));
+					   jsonObject.put("region_code", rs.getString("region_code"));
+					   jsonObject.put("gu_name", rs.getString("gu_name"));
+					   jsonObject.put("gu_code", rs.getString("gu_code"));
+					   jsonObject.put("rec_apply_startdate", rs.getDate("rec_apply_startdate"));
+					   jsonObject.put("rec_apply_enddate", rs.getDate("rec_apply_enddate"));
+					   jsonObject.put("rec_apply_method", rs.getString("rec_apply_method"));
+					   jsonObject.put("m_email", rs.getString("m_email"));
+					   
+					   recruitmentList.add(jsonObject);
+		         }
+		         System.out.println(recruitmentList);
+		         recruitmentDTO.setRecruitmentData(recruitmentList);
+		      } catch (Exception e) {
+		         // TODO: handle exception
+		         e.printStackTrace();
+		      }
+			
+			return recruitmentDTO;
+		}
+		
 		public RecruitmentDTO getRecruitDTO(int rec_idx) {
 			RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
 		    String query = "SELECT * FROM recruitment WHERE rec_idx = (?);";
@@ -236,6 +279,7 @@ public class RecruitmentDAO extends DBConnect {
 			return rs;
 		}
 		
+		// 전체 카운트
 		public int selectCount() {
 
 			int totalCount=0;
@@ -263,4 +307,69 @@ public class RecruitmentDAO extends DBConnect {
 			
 			return totalCount;
 		}
+		
+		// 개별 카운트
+		public int selectMyCount(String mEmail) {
+
+			int totalCount=0;
+			
+			String sql="select count(*) as cnt from recruitment WHERE m_email = (?)";
+			
+			
+			try {
+				psmt=con.prepareStatement(sql);
+		        psmt.setString(1, mEmail);
+				
+				rs=psmt.executeQuery();
+				
+				//검색 건수가 1건이므로 
+				rs.next();
+				
+				//검색 총건수
+				totalCount=rs.getInt("cnt");
+				
+				System.out.println("totalCount:"+totalCount);
+				
+			} catch (Exception e) {
+				System.out.println("오류");
+				e.printStackTrace();
+			}
+			
+			return totalCount;
+		}
+		
+		   // resume list select
+		   public List<Object>  selectRecruitmentResumeList(String recIdx) {
+			  ResumeListDTO resumeListDTO = new ResumeListDTO();
+			  List<Object> rList = new ArrayList<Object>(); 
+		      String query = "SELECT * FROM submitted_resume WHERE rec_idx = (?)";
+		      
+		      try {
+		         psmt = con.prepareStatement(query);
+				 psmt.setString(1, recIdx);
+		         rs = psmt.executeQuery();
+		         
+		         // while row 당 처리
+		         while (rs.next()) {
+		        	 // {data: "data"}
+		        	
+					JSONObject jsonObject = new JSONObject();							// {}
+					jsonObject.put("subResumeIdx", rs.getInt("sub_resume_idx"));		// {resumeInfoIdx: 1}
+					jsonObject.put("recIdx", rs.getInt("rec_idx"));		// {resumeInfoIdx: 1}
+					jsonObject.put("resumeInfoIdx", rs.getInt("resume_info_idx"));		// {resumeInfoIdx: 1}
+					jsonObject.put("mEmail", rs.getString("m_email"));					// {resumeInfoIdx: 1, mEmail: test@gmail.com, resumeName: test}
+					
+					rList.add(jsonObject);	// [{resumeInfoIdx: 1, mEmail: test@gmail.com, resumeName: test}]
+		         }
+		         
+		         // [{resumeInfoIdx: 1, mEmail: test@gmail.com, resumeName: test}, {resumeInfoIdx: 2, mEmail: test@gmail.com, resumeName: test2}]
+		         //
+		         System.out.println(rList);
+		      } catch (Exception e) {
+		         // TODO: handle exception
+		         e.printStackTrace();
+		      }
+
+		      return rList;
+		   }
 }

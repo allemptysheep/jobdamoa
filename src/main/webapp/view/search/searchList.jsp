@@ -350,7 +350,8 @@
 														<c:out value = "${searchData.get('rec_title')}"></c:out>
 													</div>
 													<div class = "in-list-middle">
-														<c:out value = "${searchData.get('region_name')}"></c:out>
+														<c:out value = "${searchData.get('region_name')}"></c:out> 
+														<c:out value = "${searchData.get('gu_name')}"></c:out>
 													</div>
 													<div class = "in-list-bottom">
 														<c:out value = "${searchData.get('rec_apply_enddate')}"></c:out> 까지
