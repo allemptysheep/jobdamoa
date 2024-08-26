@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import common.FileUtil;
+
 /**
  * Servlet implementation class SliderServ
  */
@@ -61,10 +63,9 @@ public class SliderServ extends HttpServlet {
 		String uri = request.getRequestURI();
 		// 업로드 경로
 		String uploadPath = getServletContext().getRealPath("/resources/slider-img");
-		MultipartRequest multi = new MultipartRequest(request, uploadPath, 5*1024*1024, "UTF-8", new DefaultFileRenamePolicy());
 		System.out.println("test slider serv");
 
-		String op = multi.getParameter("operator");
+		String op = request.getParameter("operator");
 		SliderDAO sliderDAO = new SliderDAO(application);
 		sliderDAO.deleteMainSlider(op);
 		String inputName = "sliderFile-" + op;
@@ -73,21 +74,14 @@ public class SliderServ extends HttpServlet {
 		System.out.println("inputName : " + inputName);
 		
 		try {
-			// 파일 이름 지정
-			Enumeration files = multi.getFileNames();
-			System.out.println(files);
-			while(files.hasMoreElements()){
-				String planFile = (String)files.nextElement();						// 첨부파일 존재하면
-				System.out.println(planFile);
-				String planFileName = multi.getOriginalFileName(planFile);		// 사용자가 올린 파일명
-				String planFileRName = multi.getFilesystemName(planFile);			// 중복 파일 있을때 
-				String planFileSName = multi.getFilesystemName(planFile);			// 썸네일 파일
-
-				System.out.println(planFileName);
-				System.out.println(planFileName);
-				System.out.println(planFileRName);
-				sliderDAO.insertMainSlider(op, planFileName, planFileRName);
-			}
+			ArrayList<String> listFileName = FileUtil.multipleFile(request, uploadPath, inputName);
+			System.out.println(listFileName);
+			 for(String originalFileName : listFileName) {
+				 System.out.println(originalFileName);
+				 String savedFileName = FileUtil.renameFile(uploadPath, originalFileName);
+				 System.out.println(savedFileName);
+				 sliderDAO.insertMainSlider(op, originalFileName, savedFileName);
+			 }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
