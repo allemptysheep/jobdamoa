@@ -1,9 +1,10 @@
 <%@page import="java.util.List"%>
 <%@page import="resume.ResumeDAO"%>
+<%@page import="selfIntro.SelfIntroDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp"%>
 <%@include file="/view/member/is_signIn.jsp"%>
-<link href="/css/baseform.scss" rel="stylesheet" type="text/css">
+<link href="/css/member/mypage.scss" rel="stylesheet" type="text/css">
 <fmt:bundle basename="resource.language">
 	<%
 	
@@ -61,68 +62,76 @@
 		ResumeDAO resumeDAO = new ResumeDAO(application);
 		List<Object> resumeList = resumeDAO.selectResumeList(mEmail);
 		
+		SelfIntroDAO selfintroDAO = new SelfIntroDAO(application);
+		List<Object>introList = selfintroDAO.selectSelfIntroList(mEmail);
+		
 		pageContext.setAttribute("resumeList", resumeList);			// [{},{},{},{}]
+		pageContext.setAttribute("introList", introList);
 	%>
 	<div class="container main">
-		<table border="1" width="100%">
-			<tr align="center">
-				<th>개인회원 홈</th>
-				<th>내가 쓴 이력서</th>
-				<th>내가 쓴 자소서</th>
-			</tr>
-			<tr>
-				<th width="20%" rowspan="4">
-					<ul>
-						<li>이력서 관리
-							<ul><a href="/view/resume/resumeWrite.jsp">이력서 등록</a></ul>
-							<ul><a href="/view/resume/resumeList.jsp">이력서 현황</a></ul>
-							<ul><a href="/view/selfIntro/selfIntroWrite.jsp">자소서 등록</a></ul>
-							<ul><a href="/view/selfIntro/selfIntroList.jsp">자소서 현황</a></ul>
-						</li>
-					</ul>
-					<ul>
-						<li>입사지원ㆍ제안관리
-							<ul><a href="#">입사지원 현황</a></ul>
-							<ul><a href="#">취업활동 증명서</a></ul>
-							<ul><a href="#">받은 포지션 제안</a></ul>
-						</li>
-					</ul>
-					<ul>
-						<li>AI 추천
-							<ul><a href="#">새로운 추천공고</a></ul>
-							<ul><a href="#">확인한 추천공고</a></ul>
-						</li>
-					</ul>
-					<ul>
-						<li><a href="#">역량 테스트(MICT)</a>
-						</li>
-					</ul>
-					<ul>
-						<li>스크랩/관심기업
-							<ul><a href="#">스크랩 공고</a></ul>
-							<ul><a href="#">관심기업/헤드헌터</a></ul>
-							<ul><a href="#">MY 알림</a></ul>
-						</li>
-					</ul>
-					
-				</th>
-				<c:forEach items="${resumeList}" var="resume" varStatus="resumeStatus">		
-		
-				<td rowspan="4">${resume.resumeName}</td>
-				</c:forEach>
-				<td rowspan="4"></td>
-				<th rowspan="4"></th>
-				
-			</tr>		
-			<tr>
-				<td></td>				
-			</tr>
-			<tr>
-				<td></td>		
-			</tr>		
-			<tr>
-				<td></td>
-			</tr>			
-		</table>
+		<div class = "my-page-container">
+			<table border="1" width="100%" class = "mypage-table">
+				<tr align="center">
+					<th class = "mypage-top-title">개인회원 홈</th>
+					<th class = "mypage-top-title">내가 쓴 이력서</th>
+					<th class = "mypage-top-title">내가 쓴 자소서</th>
+				</tr>
+				<tr>
+					<th width="20%" rowspan="4">
+						<div class = "mypage-menu-container">
+							<h2 class = "mypage-menu-title">이력서 관리</h2>
+								<ul class = "mypage-menu">
+										<li class = "mypage-menu-item"><a href="/view/resume/resumeWrite.jsp">이력서 등록</a></li>
+										<li class = "mypage-menu-item"><a href="/view/resume/resumeList.jsp">이력서 현황</a></li>
+										<li class = "mypage-menu-item"><a href="/view/selfIntro/selfIntroWrite.jsp">자소서 등록</a></li>
+										<li class = "mypage-menu-item"><a href="/view/selfIntro/selfIntroList.jsp">자소서 현황</a></li>
+								</ul>
+								<div class = "matainance-none">
+									<h2>입사지원ㆍ제안관리</h2>
+										<li><a href="#">입사지원 현황</a></li>
+										<li><a href="#">취업활동 증명서</a></li>
+										<li><a href="#">받은 포지션 제안</a></li>
+								<ul>
+									<li>AI 추천
+										<ul><a href="#">새로운 추천공고</a></ul>
+										<ul><a href="#">확인한 추천공고</a></ul>
+									</li>
+								</ul>
+								<ul>
+									<li><a href="#">역량 테스트(MICT)</a>
+									</li>
+								</ul>
+								<ul>
+									<li>스크랩/관심기업
+										<ul><a href="#">스크랩 공고</a></ul>
+										<ul><a href="#">관심기업/헤드헌터</a></ul>
+										<ul><a href="#">MY 알림</a></ul>
+									</li>
+								</ul>
+								</div>
+						</div>
+					</th>
+					<td rowspan="4">
+						<ul class = "text-center resume-list">
+							<c:forEach items="${resumeList}" var="resume" varStatus="resumeStatus">		
+								<li class = "resume-list-item">
+									<a href = "/view/resume/resumeView.jsp?resumeInfoIdx=${resume.resumeInfoIdx }">${resume.resumeName}</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</td>
+					<td rowspan="4">
+						<ul class = "text-center selfintro-list">
+							<c:forEach items="${introList}" var="intro" varStatus="introStatus">		
+								<li class = "selfintro-list-item">
+									<a href = "/view/selfIntro/selfIntroView.jsp?selfIntroIdx=${intro.selfIntroIdx }">${intro.selfIntroName}</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</td>
+				</tr>					
+			</table>
+		</div>
+			
 	</div>
 </fmt:bundle>

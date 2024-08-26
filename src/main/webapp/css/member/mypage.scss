@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+.my-page-container {
+	margin-top : 3rem;
+	background-color: #F1F1F1;
+	color: #000;
+	
+	.matainance-none {
+		display: none;
+	}
+	
+	 .resume-list {
+		margin : 1rem 0;
+		.resume-list-item {
+			
+			list-style: none;
+			a {
+				color : #000;
+			}
+		}
+	 }
+	 
+	 .selfintro-list {
+			margin : 1rem 0;
+		.selfintro-list-item {
+			
+			list-style: none;
+			a{
+				color: #000;
+			}
+		}
+	 }	
+	 
+	 .mypage-menu {
+			
+		.mypage-menu-item {
+			list-style: none;
+			a {
+				font-weight: normal;
+				color: #000;
+			}
+		}
+	 }
+	 
+	 h2.mypage-menu-title,
+	 .mypage-top-title {
+		font-weight: 700;
+		font-size: 1.3rem;
+	 }
+	 
+	 .mypage-menu-container {
+		margin : 15px;
+		
+	 }
+	 
+	 .mypage-table {
+		tbody {
+			box-shadow:  5px 5px #e2e2e2;
+			border-color: #e2e2e2;
+		}
+	 }
+}
