@@ -10,6 +10,7 @@ SliderDAO sliderDAO = new SliderDAO(application);
 SliderDTO sliderDTO = sliderDAO.selectSlider(sliderName);
 
 List<Object> list = sliderDTO.getSliderData();
+System.out.println(list);
 pageContext.setAttribute("mainSliderList", list);
 %>
 <div id="carouselExampleIndicators" class="carousel slide"

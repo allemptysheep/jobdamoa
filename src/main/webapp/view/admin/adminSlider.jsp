@@ -22,7 +22,7 @@
 							<div>메인</div>
 						</div>
 						<div class="row">
-							<form action="/SliderServ" method="post" enctype="multipart/form-data">
+							<form action="/SliderServ" method="post">
 								<div class="row">
 									<div class="col-8">
 										<input class="form-control" type="file" name="sliderFile-mainSlider" multiple="multiple">
