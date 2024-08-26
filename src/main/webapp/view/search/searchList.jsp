@@ -261,10 +261,10 @@
 			<form action="/MainSearchServ" method="post">
 				<div class="row select-search-option">
 					<div class="col-6 region-select-box">
-						<button type="button" class="btn" id="btn-region" onclick="selectRegion()">지역선택</button>
+						<button type="button" class="btn" id="btn-region" onclick="selectRegion()"><fmt:message key="Home.Region.Select" /></button>
 					</div>
 					<div class="col-6 job-select-box">
-						<button type="button" class="btn" id="btn-job" onclick="selectJob()">직업선택</button>
+						<button type="button" class="btn" id="btn-job" onclick="selectJob()"><fmt:message key="Home.Job.Select" /></button>
 					</div>
 				</div>
 				<div class="row area-region" id="area-region">

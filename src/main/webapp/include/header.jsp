@@ -72,9 +72,6 @@
 		      <li class="nav-item">
 		        <a class="nav-link header" href="/"><fmt:message key="Home" /></a>
 		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link header" href="/view/search/search.jsp"><fmt:message key="Search" /></a>
-		      </li>
 		    </ul>
 		  </div>
 		  
